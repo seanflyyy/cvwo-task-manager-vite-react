@@ -1,9 +1,10 @@
 // import SearchBar from '../components/SeachBar';
-import * as ContainerClass from './Misc/constants';
-import NewListItem, { SingleTaskItem } from './ListItem/ListItem';
-import { getTasks } from './Misc/database';
-import SearchField from '../components/SearchField';
-import CreateTaskField from '../components/CreateNewTaskField';
+import * as ContainerClass from '../misc/constants';
+import NewListItem from './ListItem';
+import { SingleTaskItem } from '../../model/task';
+import { getTasks } from '../misc/database';
+import SearchField from '../SearchField';
+import CreateTaskField from '../CreateNewTaskField';
 import { Grid, List, Paper } from '@mui/material';
 import React, { useState } from 'react';
 import { makeStyles } from '@mui/styles';
@@ -15,11 +16,8 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-interface HandleTaskSelect {
-    setTaskID: React.MouseEventHandler<HTMLDivElement>;
-}
 
-const StyledList: React.FC<HandleTaskSelect> = (setTaskID) => {
+const StyledList: React.FC = () => {
     const classes = useStyles();
     const [query, setQuery] = useState('');
     const data = getTasks();
@@ -45,10 +43,9 @@ const StyledList: React.FC<HandleTaskSelect> = (setTaskID) => {
                                 return task;
                             }
                         })
-                        .map((task: SingleTaskItem) => {
-                            const object = { task: task, onSelect: setTaskID };
-                            return <NewListItem key={task.id} {...object} />;
-                        })}
+                        .map((task: SingleTaskItem) => (
+                            <NewListItem key={task.id} {...task} />
+                        ))}
                 </List>
             </Paper>
 

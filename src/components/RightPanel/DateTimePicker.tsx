@@ -1,5 +1,5 @@
-import { SingleTaskItem } from '../../ListItem/ListItem';
-import * as ContainerClass from '../../Misc/constants';
+import { SingleTaskItem } from '../../model/task';
+import * as ContainerClass from '../misc/constants';
 import React, { useState, useEffect } from 'react';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 // import DateFnsUtils from '@date-io/date-fns';

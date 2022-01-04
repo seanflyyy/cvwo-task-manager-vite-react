@@ -1,6 +1,6 @@
-import StyledList from '../components/StyledList';
-import RightPanel from '../components/RightPanel/RightPanel';
-import LeftPanel from '../components/LeftPanel/LeftPanel';
+import StyledList from '../components/TasksPanel/StyledList';
+import RightPanel from '../components/rightPanel/RightPanel';
+import LeftPanel from '../components/leftPanel/LeftPanel';
 import React, { useState } from 'react';
 import { Typography, Grid } from '@mui/material';
 import Typewriter from 'typewriter-effect';
@@ -38,17 +38,6 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const StyledPage: React.FC = () => {
-    const classes = useStyles();
-    const [selectedTaskID, setTaskID] = useState(0);
-
-    // function generateListData() {
-
-    // }
-
-    function setSelectedTask(id: number) {
-        setTaskID(id);
-    }
-
     return (
         // <div className={classes.page}>
         // {/* <div className={classes.box}>
@@ -85,10 +74,10 @@ const StyledPage: React.FC = () => {
                     <LeftPanel />
                 </Item>
                 <Item>
-                    <StyledList setTaskID={() => setSelectedTask} />
+                    <StyledList />
                 </Item>
                 <Item>
-                    <RightPanel {...selectedTaskID} />
+                    <RightPanel />
                 </Item>
             </Grid>
         </Grid>

@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counter-slice';
+import taskSelectedReducer from '../features/selectedTask/selected-task-slice';
 import { apiSlice } from '../features/dogs/dogs-api-slice';
 
 
 export const store = configureStore({
     reducer: { 
         counter: counterReducer,
+        task: taskSelectedReducer,
         [apiSlice.reducerPath]: apiSlice.reducer,
     },
     middleware: (getDefaultMiddleware) => {

@@ -1,5 +1,6 @@
-import TagItem, { SingleTag } from './TagItem';
-import { getLabels } from '../Misc/database';
+import TagItem from './TagItem';
+import { SingleTag } from '../../model/tag';
+import { getLabels } from '../misc/database';
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
 import List from '@mui/material/List';

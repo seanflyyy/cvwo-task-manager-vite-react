@@ -1,4 +1,4 @@
-import * as ContainerClass from './Misc/constants';
+import * as ContainerClass from './misc/constants';
 import React, { useState } from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import { InputBase, Paper } from '@mui/material';
