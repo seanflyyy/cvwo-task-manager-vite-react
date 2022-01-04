@@ -7,11 +7,20 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@mui/core": "^5.0.0-alpha.54",
+    "@mui/icons-material": "^5.2.5",
+    "@mui/lab": "^5.0.0-alpha.63",
+    "@mui/material": "^5.2.7",
+    "@mui/styles": "^5.2.3",
     "@reduxjs/toolkit": "^1.7.0-rc.0",
     "axios": "^0.24.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-redux": "^7.2.6"
+    "react-redux": "^7.2.6",
+    "react-router-dom": "^6.2.1",
+    "typewriter-effect": "^2.18.2"
   },
   "devDependencies": {
     "@types/react": "^17.0.33",
