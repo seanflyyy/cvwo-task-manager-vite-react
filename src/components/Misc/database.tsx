@@ -1,6 +1,7 @@
 import * as ContainerClass from './constants';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { TaskContent } from '../../model/task';
 
 export const getLabels = () => {
     const [data, setData] = useState([]);
@@ -49,3 +50,12 @@ export const getSpecificTask = (id: number) => {
     console.log(data);
     return data;
 };
+
+export const updateTask = (id: number, taskContent: TaskContent) => {
+    // useEffect(() => {
+    (async () => {
+    const result = await axios.patch(`${ContainerClass.databaseLink}/tasks/${id}`, taskContent);
+    })();
+    // }, []);
+};
+

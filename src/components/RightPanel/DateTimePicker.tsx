@@ -5,33 +5,28 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 // import DateFnsUtils from '@date-io/date-fns';
 import { LocalizationProvider, DateTimePicker } from '@mui/lab';
 import TextField from '@mui/material/TextField';
-import axios from 'axios';
+import { useAppDispatch } from '../../app/hooks';
+import { updateDate } from '../../features/selectedTask/selected-task-slice';
+import { updateTask } from '../misc/database';
 
 const DateTimeWidget: React.FC<SingleTaskItem> = (props) => {
-    const taskID = props['id'];
-    const taskDueDate = props['attributes']['due'];
-    const [date, setDate] = useState<string | null>(taskDueDate);
+    const taskID = props.id;
+    const dispatch = useAppDispatch();
 
-    const setDateBackend = (dateTime: string | null) => {
-        useEffect(() => {
-            (async () => {
-                axios.patch(`${ContainerClass.databaseLink}/tasks/${taskID}`, { due: dateTime }).then((res) => {
-                    console.log(res);
-                    console.log(res.data);
-                });
-            })();
-        }, []);
+    const setDate = (dateTime: string) => {
+        dispatch(updateDate(dateTime));
+        updateTask(props.id, props.attributes);
     };
 
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DateTimePicker
                 renderInput={(props) => <TextField {...props} />}
-                label="DateTimePicker"
-                value={date}
+                value={props.attributes.due}
                 onChange={(newValue) => {
-                    setDate(newValue);
-                    setDateBackend(newValue);
+                    if (newValue != null) {
+                        setDate(newValue);
+                    }
                 }}
             />
         </LocalizationProvider>

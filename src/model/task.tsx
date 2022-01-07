@@ -3,7 +3,7 @@ export interface SingleTaskItem {
     id: number;
 }
 
-interface TaskContent {
+export interface TaskContent {
     title: string;
     completed: boolean;
     due: string;
