@@ -8,6 +8,7 @@ import {
 import { makeStyles } from "@mui/styles";
 import React from "react";
 import { useAppDispatch } from "../../app/hooks";
+import { openRightPanel } from "../../features/rightPanel/right-panel-slice";
 import { setTask } from "../../features/selectedTask/selected-task-slice";
 import { SingleTaskItem } from "../../model/task";
 
@@ -30,6 +31,7 @@ const NewListItem: React.FC<SingleTaskItem> = (props) => {
 
   function handleClick() {
     console.log(props);
+    dispatch(openRightPanel());
     dispatch(setTask(props));
   }
 

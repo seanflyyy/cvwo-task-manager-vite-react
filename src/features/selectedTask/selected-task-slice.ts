@@ -31,17 +31,6 @@ const taskSlice = createSlice({
     name: 'taskSelected',
     initialState, 
     reducers: {
-        // incremented(state) {
-        //     state.value++;
-        //     // it's okay to do this because immer warps our state
-        //     // updates and tracks all mutations we try to do 
-        //     // replays them into safe immutable update when we are done
-        // },
-        // amountAdded(state, action: PayloadAction<number>) {
-        //     state.value+= action.payload;
-        // },
-        // // decrement
-        // // reset
         setTask(state, action:PayloadAction<SingleTaskItem>) {
             state.attributes.completed = action.payload.attributes.completed; 
             state.attributes.due = action.payload.attributes.due; 

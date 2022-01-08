@@ -20,6 +20,8 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
+
+
 const LeftPanel: React.FC = () => {
     const classes = useStyles();
     const data = getLabels();

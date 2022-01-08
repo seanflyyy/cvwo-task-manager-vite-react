@@ -9,6 +9,7 @@ import { getLabels } from "../misc/database";
 import { SingleTag } from "../../model/tag";
 import SubmitButton from "./components/SubmitButton";
 import { IoMdClose } from "react-icons/Io";
+import { closeRightPanel } from "../../features/rightPanel/right-panel-slice";
 
 const useStyles = makeStyles(() => ({
   grid: {
@@ -41,7 +42,6 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-
 const RightPanel: React.FC = () => {
   const classes = useStyles();
   const selectedTask = useAppSelector((state) => state.task);
@@ -52,8 +52,7 @@ const RightPanel: React.FC = () => {
     slug: tag.attributes.slug,
   }));
   const initialValueTag= tags.find((x) => x.id == selectedTask.attributes.label_id);
-
-
+  const dispatch = useAppDispatch();
 
   return (
     <Paper
@@ -61,7 +60,7 @@ const RightPanel: React.FC = () => {
       component="form"
       className={classes.list}>
       <div> 
-        <IconButton className={classes.iconButton}>
+        <IconButton className={classes.iconButton} onClick={() => {dispatch(closeRightPanel())}}>
           <IoMdClose />
         </IconButton>
       </div>
