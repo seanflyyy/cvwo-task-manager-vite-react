@@ -3,6 +3,8 @@ import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import {InputBase, Paper } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import { useAppDispatch } from '../../app/hooks';
+import { setFilterKeyword } from '../../features/mainPanel/main-panel-slice';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -38,11 +40,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     margin: theme.spacing(0.5, 0, 0.5, 0),
 }));
 
-type Props = {
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-};
 
-const SearchField: React.FC<Props> = ({ onChange }) => {
+const SearchField: React.FC = () => {
+    const dispatch = useAppDispatch(); 
+
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        // do the rest here
+        console.log(e.nativeEvent.target);
+        dispatch(setFilterKeyword(e.target.value));
+    };
+
     return (
         // <Box sx={{ flexGrow: 1, backgroundColor: 'black' }}>
         <Paper elevation={3}>

@@ -3,8 +3,7 @@ import * as ContainerClass from '../../misc/constants';
 import NewListItem from './ListItem';
 import { SingleTaskItem } from '../../model/task';
 import { getTasks } from '../../misc/database';
-import SearchField from '../SearchField';
-import CreateTaskField from '../CreateNewTaskField';
+import CreateTaskField from './CreateNewTaskField';
 import { Grid, List, Paper } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@mui/styles';
@@ -20,36 +19,29 @@ const useStyles = makeStyles(() => ({
 
 const StyledList: React.FC = () => {
     const classes = useStyles();
-    const [query, setQuery] = useState('');
     const data = getTasks();
-    const tagFilter = useAppSelector((state) => state.mainPanel);
+    const filter = useAppSelector((state) => state.mainPanel);
 
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        // do the rest here
-        console.log(e.nativeEvent.target);
-        setQuery(e.target.value);
-    };
 
     return (
         <Grid container direction="column" alignItems="center">
-            <SearchField onChange={handleChange} />
-
-            <br />
+            {/* <SearchField onChange={handleChange} /> */}
+            <CreateTaskField />
+            
             <Paper elevation={3} style={{ maxHeight: 400 }}>
                 <List className={classes.list}>
                     {data
                         .filter((task: SingleTaskItem) => {
-                            if (query === '') {
+                            if (filter.filterKeyword === '') {
                                 return task;
-                            } else if (task['attributes']['title'].toLowerCase().includes(query.toLowerCase())) {
+                            } else if (task['attributes']['title'].toLowerCase().includes(filter.filterKeyword.toLowerCase())) {
                                 return task;
                             }
                         })
                         .filter((task: SingleTaskItem) => {
-                            if (tagFilter.tagID == null) {
+                            if (filter.tagID == null) {
                                 return task;
-                            } else if (task.attributes.label_id == tagFilter.tagID) {
+                            } else if (task.attributes.label_id == filter.tagID) {
                                 return task; 
                             }
                         })
@@ -60,7 +52,7 @@ const StyledList: React.FC = () => {
             </Paper>
 
             <br />
-            <CreateTaskField />
+         
 
             {/* <br />
             <Button variant="contained" color="secondary" component={Link} to="/">

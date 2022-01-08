@@ -5,6 +5,7 @@ import * as React from 'react';
 import Paper from '@mui/material/Paper';
 import List from '@mui/material/List';
 import { makeStyles } from '@mui/styles';
+import SearchField from './SearchField';
 
 const useStyles = makeStyles(() => ({
     grid: {
@@ -14,8 +15,16 @@ const useStyles = makeStyles(() => ({
         // display: 'block',code
     },
     list: {
-        width: window.outerWidth / 4,
-        height: '100%',
+        height: '100%', 
+        width: '20%',
+        position: 'fixed',
+        // zIndex: 1,
+        top: 0,
+        left: 0, 
+        // backgroundColor: '#232323', 
+        overflowX: 'hidden', 
+        // display: 'flex',
+        flexDirection: 'column' 
         // padding: '20px',
     },
 }));
@@ -28,7 +37,8 @@ const LeftPanel: React.FC = () => {
 
     return (
         <Paper elevation={3} className={classes.list}>
-            <List className={classes.list}>
+            <SearchField />
+            <List>
                 {data.map((tag: SingleTag) => (
                     <TagItem key={tag.id} {...tag} />
                 ))}

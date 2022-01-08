@@ -43,6 +43,7 @@ const StyledPage: React.FC = () => {
 
   return (
     <Grid container direction="column">
+      <LeftPanel />
       <Typography variant="h5" component="div" gutterBottom>
         <Typewriter
           options={{
@@ -56,6 +57,9 @@ const StyledPage: React.FC = () => {
           }}
         />
       </Typography>
+      <br /> 
+      <StyledList />
+
       <Grid
         container
         spacing={2}
@@ -63,12 +67,9 @@ const StyledPage: React.FC = () => {
         direction="row"
         paddingTop="20px"
       >
-        <Item>
-          <LeftPanel />
-        </Item>
-        <Item>
-          <StyledList />
-        </Item>
+
+        {/* <Item> */}
+        {/* </Item> */}
         {rightPanelOpen.rightPanel && (
           <Item>
             <RightPanel />

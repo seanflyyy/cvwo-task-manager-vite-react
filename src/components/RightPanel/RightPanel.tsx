@@ -17,13 +17,19 @@ const useStyles = makeStyles(() => ({
   },
   iconButton: {
     position: 'absolute',
-    right: '8%',
+    right: '5%',
   },
-  list: {
-    justifyContent: "center",
-    width: window.outerWidth / 4,
-    height: "100%",
-    alignItems: "center",
+  form: {
+    height: '100%', 
+    width: '20%',
+    position: 'fixed',
+    // zIndex: 1,
+    top: 0,
+    right: 0, 
+    // backgroundColor: '#232323', 
+    overflowX: 'hidden', 
+    // display: 'flex',
+    flexDirection: 'column' 
     
   },
   textField: {
@@ -58,7 +64,7 @@ const RightPanel: React.FC = () => {
     <Paper
       elevation={3}
       component="form"
-      className={classes.list}>
+      className={classes.form}>
       <div> 
         <IconButton className={classes.iconButton} onClick={() => {dispatch(closeRightPanel())}}>
           <IoMdClose />
