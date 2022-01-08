@@ -3,8 +3,10 @@ import { makeStyles } from "@mui/styles";
 import { TextField, Paper, Grid, Checkbox } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import DateTimeWidget from "./DateTimePicker";
-import { TaskNameField } from "./TaskNameField";
-import { DateTimeField } from "./DateTimeField";
+import TaskNameField from "./TaskNameField";
+import SelectTag from "./SelectTag";
+import { getLabels } from "../misc/database";
+import { SingleTag } from "../../model/tag";
 
 const useStyles = makeStyles(() => ({
   grid: {
@@ -13,6 +15,7 @@ const useStyles = makeStyles(() => ({
   list: {
     width: window.outerWidth / 4,
     height: "100%",
+    alignItems: "center",
   },
   textField: {
     paddingLeft: 15,
@@ -30,15 +33,17 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-// const styles = theme => ({
-//     multilineColor:{
-//         color:'red'
-//     }
-// });
+
 const RightPanel: React.FC = () => {
   const classes = useStyles();
   const selectedTask = useAppSelector((state) => state.task);
-//   const dispatch = useAppDispatch();
+  const tags = getLabels().map((tag: SingleTag) => ({
+    title: tag.attributes.title,
+    color: tag.attributes.color,
+    id: tag.id,
+    slug: tag.attributes.slug,
+  }));
+  const initialValueTag= tags.find((x) => x.id == selectedTask.attributes.label_id);
 
 
 
@@ -49,6 +54,7 @@ const RightPanel: React.FC = () => {
       className={classes.list}>
       <TaskNameField {...selectedTask} />
       <DateTimeWidget {...selectedTask} />
+      <SelectTag {...{initialValue: initialValueTag, listData: tags, taskData: selectedTask}} />
     </Paper>
   );
 };

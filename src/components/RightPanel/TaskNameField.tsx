@@ -22,7 +22,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const TaskNameField: React.FC<SingleTaskItem> = (props) => {
+const TaskNameField: React.FC<SingleTaskItem> = (props) => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
 
@@ -53,3 +53,5 @@ export const TaskNameField: React.FC<SingleTaskItem> = (props) => {
     </Grid>
   );
 };
+
+export default TaskNameField;
