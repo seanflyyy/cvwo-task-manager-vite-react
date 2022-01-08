@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import DateTimeWidget from "./components/DateTimePicker";
 import TaskNameField from "./components/TaskNameField";
 import SelectTag from "./components/SelectTag";
-import { getLabels } from "../misc/database";
+import { getLabels } from "../../misc/database";
 import { SingleTag } from "../../model/tag";
 import SubmitButton from "./components/SubmitButton";
 import { IoMdClose } from "react-icons/Io";

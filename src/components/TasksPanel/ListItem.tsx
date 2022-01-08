@@ -11,10 +11,8 @@ import { useAppDispatch } from "../../app/hooks";
 import { openRightPanel } from "../../features/rightPanel/right-panel-slice";
 import { setTask } from "../../features/selectedTask/selected-task-slice";
 import { SingleTaskItem } from "../../model/task";
-
-interface HandleTaskSelect {
-  setTaskID: React.MouseEventHandler<HTMLDivElement>;
-}
+import { getLabel } from "../../misc/database";
+import CircleIcon from "@mui/icons-material/Circle";
 
 const useStyles = makeStyles(() => ({
   checkbox: {
@@ -28,11 +26,41 @@ const useStyles = makeStyles(() => ({
 const NewListItem: React.FC<SingleTaskItem> = (props) => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
+  const tagData = getLabel(props.attributes.label_id);
+
+  console.log("tag data is");
+  console.log(tagData);
 
   function handleClick() {
     console.log(props);
     dispatch(openRightPanel());
     dispatch(setTask(props));
+  }
+
+  function convertDateToString(dateTime: string) {
+    const date: Date = new Date(dateTime);
+    const dateString = date.toString();
+    const listDate: Array<string> = dateString.split(' ');
+    const [dayOfWeek, month, dayOfMonth, year, time] = listDate;
+    const convertedTime = convertTimeTo12Hours(time);
+    const output = dayOfWeek + ', ' + dayOfMonth + ' ' + month + ', ' + convertedTime;
+    return output;
+  }
+
+  function convertTimeTo12Hours (time: any) {
+    var convertedTime = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+  
+    if (time.length > 1) { 
+      // time = time.split(':')
+      // hour = time[0];
+      // minute = time[1];
+      convertedTime = convertedTime.slice (1); 
+      console.log(time)
+
+      convertedTime[3] = +convertedTime[0] < 12 ? ' AM' : ' PM'; 
+      convertedTime[0] = +convertedTime[0] % 12 || 12; 
+    }
+    return convertedTime.join (''); // return adjusted time or original string
   }
 
   return (
@@ -47,8 +75,14 @@ const NewListItem: React.FC<SingleTaskItem> = (props) => {
           }}
         />
       </ListItemIcon>
-      <ListItemText primary={props["attributes"]["title"]} />
-      <ListItemText primary={props["attributes"]["label_id"]} />
+      <ListItemText primary={props["attributes"]["title"]} secondary={convertDateToString(props["attributes"]["due"])} />
+        {/* <ListItemText primary={convertDateToString(props["attributes"]["due"])} /> */}
+      
+      {tagData != null ? (
+        <CircleIcon sx={{ color: tagData!.attributes.color }} />
+      ) : (
+        <div></div>
+      )}
     </ListItemButton>
   );
 };

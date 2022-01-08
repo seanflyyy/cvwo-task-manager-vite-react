@@ -1,5 +1,5 @@
 import { SingleTaskItem } from '../../../model/task';
-import * as ContainerClass from '../../misc/constants';
+import * as ContainerClass from '../../../misc/constants';
 import React, { useState, useEffect, useRef } from 'react';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 // import DateFnsUtils from '@date-io/date-fns';
@@ -7,7 +7,7 @@ import { LocalizationProvider, DateTimePicker } from '@mui/lab';
 import TextField from '@mui/material/TextField';
 import { useAppDispatch } from '../../../app/hooks';
 import { updateDate } from '../../../features/selectedTask/selected-task-slice';
-import { updateTask } from '../../misc/database';
+import { updateTask } from '../../../misc/database';
 import { makeStyles } from '@mui/styles';
 import { Stack } from '@mui/material';
 import { BsCalendarEvent } from 'react-icons/bs';

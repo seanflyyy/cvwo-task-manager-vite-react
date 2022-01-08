@@ -2,7 +2,7 @@ import Button from '@mui/material/Button';
 import { useAppDispatch } from '../../../app/hooks';
 import { closeRightPanel } from '../../../features/rightPanel/right-panel-slice';
 import { SingleTaskItem } from '../../../model/task';
-import { updateTask } from '../../misc/database';
+import { updateTask } from '../../../misc/database';
 
 const SubmitButton: React.FC<SingleTaskItem> = (props) => {
   const dispatch = useAppDispatch();

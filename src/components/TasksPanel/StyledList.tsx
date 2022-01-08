@@ -1,13 +1,14 @@
 // import SearchBar from '../components/SeachBar';
-import * as ContainerClass from '../misc/constants';
+import * as ContainerClass from '../../misc/constants';
 import NewListItem from './ListItem';
 import { SingleTaskItem } from '../../model/task';
-import { getTasks } from '../misc/database';
+import { getTasks } from '../../misc/database';
 import SearchField from '../SearchField';
 import CreateTaskField from '../CreateNewTaskField';
 import { Grid, List, Paper } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@mui/styles';
+import { useAppSelector } from '../../app/hooks';
 
 const useStyles = makeStyles(() => ({
     list: {
@@ -21,6 +22,8 @@ const StyledList: React.FC = () => {
     const classes = useStyles();
     const [query, setQuery] = useState('');
     const data = getTasks();
+    const tagFilter = useAppSelector((state) => state.mainPanel);
+
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         // do the rest here
@@ -41,6 +44,13 @@ const StyledList: React.FC = () => {
                                 return task;
                             } else if (task['attributes']['title'].toLowerCase().includes(query.toLowerCase())) {
                                 return task;
+                            }
+                        })
+                        .filter((task: SingleTaskItem) => {
+                            if (tagFilter.tagID == null) {
+                                return task;
+                            } else if (task.attributes.label_id == tagFilter.tagID) {
+                                return task; 
                             }
                         })
                         .map((task: SingleTaskItem) => (
