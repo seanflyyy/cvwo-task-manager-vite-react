@@ -1,9 +1,8 @@
-import { Checkbox, Grid, TextField } from "@mui/material";
+import { Checkbox, Grid, Stack, TextField } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { useAppDispatch } from "../../app/hooks";
-import { updateTitle } from "../../features/selectedTask/selected-task-slice";
-import { SingleTaskItem } from "../../model/task";
-import { updateTask } from "../misc/database";
+import { useAppDispatch } from "../../../app/hooks"
+import { updateTitle } from "../../../features/selectedTask/selected-task-slice";
+import { SingleTaskItem } from "../../../model/task";
 
 const useStyles = makeStyles(() => ({
   textField: {
@@ -30,14 +29,14 @@ const TaskNameField: React.FC<SingleTaskItem> = (props) => {
     dispatch(updateTitle(event.target.value));
   }
 
-  function keyPress(e: any){
-    if(e.keyCode == 13){
-      updateTask(props.id, props.attributes);
-    }
- }
+//   function keyPress(e: any){
+//     if(e.keyCode == 13){
+//       updateTask(props.id, props.attributes);
+//     }
+//  }
 
   return (
-    <Grid className={classes.firstElement}>
+    <Stack spacing={0.5} direction="row">
       <Checkbox value={props.attributes.completed} />
       <TextField
         className={classes.textField}
@@ -47,10 +46,10 @@ const TaskNameField: React.FC<SingleTaskItem> = (props) => {
         InputProps={{
           className: classes.text,
         }}
-        onKeyDown={keyPress}
+        // onKeyDown={keyPress}
         variant="standard"
       />
-    </Grid>
+    </Stack>
   );
 };
 

@@ -1,21 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@mui/styles";
-import { TextField, Paper, Grid, Checkbox } from "@mui/material";
+import { TextField, Paper, Grid, Checkbox, IconButton } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import DateTimeWidget from "./DateTimePicker";
-import TaskNameField from "./TaskNameField";
-import SelectTag from "./SelectTag";
+import DateTimeWidget from "./components/DateTimePicker";
+import TaskNameField from "./components/TaskNameField";
+import SelectTag from "./components/SelectTag";
 import { getLabels } from "../misc/database";
 import { SingleTag } from "../../model/tag";
+import SubmitButton from "./components/SubmitButton";
+import { IoMdClose } from "react-icons/Io";
 
 const useStyles = makeStyles(() => ({
   grid: {
     height: "100%",
   },
+  iconButton: {
+    position: 'absolute',
+    right: '8%',
+  },
   list: {
+    justifyContent: "center",
     width: window.outerWidth / 4,
     height: "100%",
     alignItems: "center",
+    
   },
   textField: {
     paddingLeft: 15,
@@ -52,9 +60,26 @@ const RightPanel: React.FC = () => {
       elevation={3}
       component="form"
       className={classes.list}>
+      <div> 
+        <IconButton className={classes.iconButton}>
+          <IoMdClose />
+        </IconButton>
+      </div>
+      <br /> 
+      <br /> 
       <TaskNameField {...selectedTask} />
+      <br/>
       <DateTimeWidget {...selectedTask} />
+      <br/>
+
       <SelectTag {...{initialValue: initialValueTag, listData: tags, taskData: selectedTask}} />
+      <br />
+      <br />
+      <div> 
+        <SubmitButton {...selectedTask} />
+      </div> 
+      
+      
     </Paper>
   );
 };

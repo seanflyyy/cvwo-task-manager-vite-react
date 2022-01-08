@@ -1,13 +1,11 @@
-import { SingleTaskItem } from "../../model/task";
+import { SingleTaskItem } from "../../../model/task";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-import { getLabels, updateTask } from "../../components/misc/database";
-import { SingleTag } from "../../model/tag";
 import CircleIcon from "@mui/icons-material/Circle";
 import Box from "@mui/material/Box";
 import { Grid, ListItem, ListItemIcon, ListItemText } from "@mui/material";
-import { useAppDispatch } from "../../app/hooks";
-import { updateTag } from "../../features/selectedTask/selected-task-slice";
+import { useAppDispatch } from "../../../app/hooks";
+import { updateTag } from "../../../features/selectedTask/selected-task-slice";
 import { useEffect, useState } from "react";
 
 interface ComboTag {
@@ -28,14 +26,12 @@ const SelectTag: React.FC<ListProps> = (props) => {
   const [value, setValue] = useState(props.initialValue);
   const setTag = (tagID: number) => {
     dispatch(updateTag(tagID));
-    updateTask(props.taskData.id, props.taskData.attributes);
-    // console.log(props.taskData.attributes);
   };
 
   return (
     <div> 
       <div> 
-        {props.initialValue?.title}
+        {"Task Tag:"} {props.initialValue?.title}
       </div> 
       <Autocomplete 
         disablePortal
@@ -51,7 +47,7 @@ const SelectTag: React.FC<ListProps> = (props) => {
         }}
         options={props.listData}
         isOptionEqualToValue={(option, value) => option.id === value.id}
-        sx={{ width: '100%' }}
+        sx={{ width: 192 }}
         getOptionLabel={(option) => option.title}
         renderOption={(props, option) => (
           <Box

@@ -63,7 +63,7 @@ const taskSlice = createSlice({
             state.attributes.title = state.attributes.title; 
             state.id =  state.id; 
         },
-        updateTag(state, action:PayloadAction<number | null>) {
+        updateTag(state, action:PayloadAction<number>) {
             state.attributes.completed = state.attributes.completed; 
             state.attributes.due = state.attributes.due; 
             state.attributes.label_id = action.payload ; 
