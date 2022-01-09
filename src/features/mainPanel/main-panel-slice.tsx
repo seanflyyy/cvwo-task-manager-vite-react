@@ -44,5 +44,5 @@ const mainPanelSlice = createSlice({
 // in redux, we usually see action creators, a function that
 // returns an action object create slice made one of that for us
 
-export const { setFilter , setFilterKeyword } = mainPanelSlice.actions;
+export const { setFilter , setFilterKeyword, setTaskList, setTaskData } = mainPanelSlice.actions;
 export default mainPanelSlice.reducer;

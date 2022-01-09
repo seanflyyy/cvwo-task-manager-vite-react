@@ -25,8 +25,8 @@ const DateTimeWidget: React.FC<SingleTaskItem> = (props) => {
 
     
     const setDate = (dateTime: string) => {
+        dateTime = dateTime.toString();
         dispatch(updateDate(dateTime));
-        // updateTask(props.id, props.attributes);
     };
 
     return (

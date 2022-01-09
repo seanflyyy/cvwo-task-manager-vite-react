@@ -30,7 +30,6 @@ const NewListItem: React.FC<SingleTaskItem> = (props) => {
   const dispatch = useAppDispatch();
   var tagData = getLabel(props.attributes.label_id);
 
-
   function handleClick() {
     dispatch(openRightPanel());
     dispatch(setTask(props));
