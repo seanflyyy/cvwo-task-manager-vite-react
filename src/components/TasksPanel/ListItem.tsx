@@ -4,6 +4,8 @@ import {
   Checkbox,
   ListItemIcon,
   ListItemText,
+  Divider,
+  ListItem,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import React from "react";
@@ -64,26 +66,27 @@ const NewListItem: React.FC<SingleTaskItem> = (props) => {
   }
 
   return (
-    <ListItemButton onClick={handleClick}>
-      <ListItemIcon>
-        <Checkbox
-          value={props["attributes"]["completed"]}
-          edge="start"
-          classes={{
-            root: classes.checkbox,
-            checked: classes.checked,
-          }}
-        />
-      </ListItemIcon>
-      <ListItemText primary={props["attributes"]["title"]} secondary={convertDateToString(props["attributes"]["due"])} />
-        {/* <ListItemText primary={convertDateToString(props["attributes"]["due"])} /> */}
-      
-      {tagData != null ? (
-        <CircleIcon sx={{ color: tagData!.attributes.color }} />
-      ) : (
-        <div></div>
-      )}
-    </ListItemButton>
+      <ListItem button divider onClick={handleClick}>
+        <ListItemIcon>
+          <Checkbox
+            value={props["attributes"]["completed"]}
+            edge="start"
+            classes={{
+              root: classes.checkbox,
+              checked: classes.checked,
+            }}
+          />
+        </ListItemIcon>
+        <ListItemText primary={props["attributes"]["title"]} secondary={convertDateToString(props["attributes"]["due"])} />
+          {/* <ListItemText primary={convertDateToString(props["attributes"]["due"])} /> */}
+        
+        {tagData != null ? (
+          <CircleIcon sx={{ color: tagData!.attributes.color }} />
+        ) : (
+          <div></div>
+        )}
+      </ListItem>
+
   );
 };
 

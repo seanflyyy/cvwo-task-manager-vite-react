@@ -70,12 +70,11 @@ const StyledPage: React.FC = () => {
 
         {/* <Item> */}
         {/* </Item> */}
-        {rightPanelOpen.rightPanel && (
-          <Item>
-            <RightPanel />
-          </Item>
-        )}
+        
       </Grid>
+      {rightPanelOpen.rightPanel && (
+            <RightPanel />
+        )}
     </Grid>
   );
 };

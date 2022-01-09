@@ -4,7 +4,7 @@ import NewListItem from './ListItem';
 import { SingleTaskItem } from '../../model/task';
 import { getTasks } from '../../misc/database';
 import CreateTaskField from './CreateNewTaskField';
-import { Grid, List, Paper } from '@mui/material';
+import { Divider, Grid, List, Paper } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import { useAppSelector } from '../../app/hooks';
@@ -27,7 +27,7 @@ const StyledList: React.FC = () => {
         <Grid container direction="column" alignItems="center">
             {/* <SearchField onChange={handleChange} /> */}
             <CreateTaskField />
-            
+            <br /> 
             <Paper elevation={3} style={{ maxHeight: 400 }}>
                 <List className={classes.list}>
                     {data

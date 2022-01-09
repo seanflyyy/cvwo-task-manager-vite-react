@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
     },
     list: {
         height: '100%', 
-        width: '20%',
+        width: '22%',
         position: 'fixed',
         // zIndex: 1,
         top: 0,
