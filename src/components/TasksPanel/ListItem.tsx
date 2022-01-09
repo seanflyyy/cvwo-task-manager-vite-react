@@ -31,13 +31,7 @@ const NewListItem: React.FC<SingleTaskItem> = (props) => {
   var tagData = getLabel(props.attributes.label_id);
 
 
-  console.log("tag data is");
-  console.log(props.attributes.label_id);
-  console.log(tagData);
-
-
   function handleClick() {
-    console.log(props);
     dispatch(openRightPanel());
     dispatch(setTask(props));
   }
@@ -56,11 +50,7 @@ const NewListItem: React.FC<SingleTaskItem> = (props) => {
     var convertedTime = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
   
     if (time.length > 1) { 
-      // time = time.split(':')
-      // hour = time[0];
-      // minute = time[1];
       convertedTime = convertedTime.slice (1); 
-      console.log(time)
 
       convertedTime[3] = +convertedTime[0] < 12 ? ' AM' : ' PM'; 
       convertedTime[0] = +convertedTime[0] % 12 || 12; 
