@@ -27,7 +27,7 @@ const StyledList: React.FC = () => {
         <Grid container direction="column" alignItems="center">
             {/* <SearchField onChange={handleChange} /> */}
             <CreateTaskField />
-            <br /> 
+            <br />
             <Paper elevation={3} style={{ maxHeight: 400 }}>
                 <List className={classes.list}>
                     {data

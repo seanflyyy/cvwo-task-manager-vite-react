@@ -1,4 +1,4 @@
-import StyledList from "../components/TasksPanel/StyledList";
+import StyledList from "../components/mainPanel/StyledList";
 import RightPanel from "../components/rightPanel/RightPanel";
 import LeftPanel from "../components/leftPanel/LeftPanel";
 import React, { useState } from "react";

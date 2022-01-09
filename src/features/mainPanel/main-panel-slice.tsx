@@ -1,17 +1,20 @@
 // DUCKS pattern
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { SingleTaskItem } from "../../model/task";
 // represents shape of state of slice handled by reducer
 // type of state
 
 interface MainPanelState {
-  tagID: number | null;
+  tagID: number;
   filterKeyword: string; 
+  data: SingleTaskItem[];
 }
 
 // initial value
 const initialState: MainPanelState = {
-  tagID: null,
+  tagID: 0,
   filterKeyword: '',
+  data: [],
 };
 
 // slice that contains the reducer logic
@@ -26,7 +29,15 @@ const mainPanelSlice = createSlice({
     setFilterKeyword(state, action: PayloadAction<string>) {
       state.tagID = state.tagID;
       state.filterKeyword = action.payload;
-    }
+    },
+    setTaskList(state, action: PayloadAction<SingleTaskItem[]>) {
+      state.data = action.payload; 
+    },
+    setTaskData(state, action: PayloadAction<SingleTaskItem>) {
+      const taskID = action.payload;
+      const index = state.data.findIndex((task) => action.payload.id == task.id);
+      state.data[index] = action.payload;
+    },
   },
 });
 
