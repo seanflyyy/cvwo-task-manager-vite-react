@@ -39,6 +39,7 @@ const LeftPanel: React.FC = () => {
         <Paper elevation={3} className={classes.list}>
             <SearchField />
             <List>
+                <TagItem key={0} {...{id: 0, attributes: {title: "All Tasks", color: "grey", slug: "all-tasks"}}} /> 
                 {data.map((tag: SingleTag) => (
                     <TagItem key={tag.id} {...tag} />
                 ))}

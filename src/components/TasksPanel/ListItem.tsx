@@ -13,7 +13,7 @@ import { useAppDispatch } from "../../app/hooks";
 import { openRightPanel } from "../../features/rightPanel/right-panel-slice";
 import { setTask } from "../../features/selectedTask/selected-task-slice";
 import { SingleTaskItem } from "../../model/task";
-import { getLabel } from "../../misc/database";
+import { getLabel, getLabels } from "../../misc/database";
 import CircleIcon from "@mui/icons-material/Circle";
 
 const useStyles = makeStyles(() => ({
@@ -28,10 +28,13 @@ const useStyles = makeStyles(() => ({
 const NewListItem: React.FC<SingleTaskItem> = (props) => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
-  const tagData = getLabel(props.attributes.label_id);
+  var tagData = getLabel(props.attributes.label_id);
+
 
   console.log("tag data is");
+  console.log(props.attributes.label_id);
   console.log(tagData);
+
 
   function handleClick() {
     console.log(props);

@@ -1,11 +1,11 @@
 export interface SingleTag {
     id: number;
     attributes: TagContent;
-    relationships: {
-        tasks: {
-            data: Tasks;
-        };
-    };
+    // relationships: {
+    //     tasks: {
+    //         data: Tasks;
+    //     };
+    // };
 }
 
 interface TagContent {

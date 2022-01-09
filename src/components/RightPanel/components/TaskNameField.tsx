@@ -29,12 +29,6 @@ const TaskNameField: React.FC<SingleTaskItem> = (props) => {
     dispatch(updateTitle(event.target.value));
   }
 
-//   function keyPress(e: any){
-//     if(e.keyCode == 13){
-//       updateTask(props.id, props.attributes);
-//     }
-//  }
-
   return (
     <Stack spacing={0.5} direction="row">
       <Checkbox value={props.attributes.completed} />

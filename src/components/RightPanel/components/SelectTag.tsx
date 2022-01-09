@@ -35,10 +35,6 @@ const SelectTag: React.FC<ListProps> = (props) => {
       </div> 
       <Autocomplete 
         disablePortal
-        value={props.initialValue || props.listData[0]}
-        onSelect={(item) => {
-          item.currentTarget;
-        }}
         id="controllable-states-demo"
         onChange={(event: any, newValue: ComboTag | null) => {
           if (newValue != null) {

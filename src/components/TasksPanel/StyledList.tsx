@@ -39,7 +39,7 @@ const StyledList: React.FC = () => {
                             }
                         })
                         .filter((task: SingleTaskItem) => {
-                            if (filter.tagID == null) {
+                            if (filter.tagID == 0) {
                                 return task;
                             } else if (task.attributes.label_id == filter.tagID) {
                                 return task; 
