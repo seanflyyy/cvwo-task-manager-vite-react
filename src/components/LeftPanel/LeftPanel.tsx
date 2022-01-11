@@ -1,11 +1,14 @@
+import * as ContainerClass from "../../misc/constants";
 import TagItem from './TagItem';
 import { SingleTag } from '../../model/tag';
-import { getLabels } from '../../misc/database';
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import Paper from '@mui/material/Paper';
 import List from '@mui/material/List';
 import { makeStyles } from '@mui/styles';
 import SearchField from './SearchField';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import axios from 'axios';
+import { setAllTags } from "../../features/leftPanel/left-panel-slice";
 
 const useStyles = makeStyles(() => ({
     grid: {
@@ -33,14 +36,29 @@ const useStyles = makeStyles(() => ({
 
 const LeftPanel: React.FC = () => {
     const classes = useStyles();
-    const data = getLabels();
+    const tags = useAppSelector((state) => state.leftPanel.allTags);
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        (async () => {
+            await axios.get(`${ContainerClass.databaseLink}/labels`)
+            .then(resp => {
+                const tags = resp.data['data'];
+                dispatch(setAllTags(tags));
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        })();
+    }, [])
+
 
     return (
         <Paper elevation={3} className={classes.list}>
             <SearchField />
             <List>
                 <TagItem key={0} {...{id: 0, attributes: {title: "All Tasks", color: "grey", slug: "all-tasks"}}} /> 
-                {data.map((tag: SingleTag) => (
+                {tags.map((tag: SingleTag) => (
                     <TagItem key={tag.id} {...tag} />
                 ))}
             </List>

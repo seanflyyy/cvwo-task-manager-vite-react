@@ -51,7 +51,7 @@ const useStyles = makeStyles(() => ({
 const RightPanel: React.FC = () => {
   const classes = useStyles();
   const selectedTask = useAppSelector((state) => state.task);
-  const tags = getLabels().map((tag: SingleTag) => ({
+  const tags = useAppSelector((state) => state.leftPanel.allTags).map((tag: SingleTag) => ({
     title: tag.attributes.title,
     color: tag.attributes.color,
     id: tag.id,

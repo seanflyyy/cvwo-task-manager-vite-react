@@ -8,6 +8,7 @@ interface MainPanelState {
   tagID: number;
   filterKeyword: string; 
   data: SingleTaskItem[];
+  counter: number;
 }
 
 // initial value
@@ -15,6 +16,7 @@ const initialState: MainPanelState = {
   tagID: 0,
   filterKeyword: '',
   data: [],
+  counter: 0,
 };
 
 // slice that contains the reducer logic
@@ -38,11 +40,22 @@ const mainPanelSlice = createSlice({
       const index = state.data.findIndex((task) => action.payload.id == task.id);
       state.data[index] = action.payload;
     },
+    addToMainPanelTaskList(state, action:PayloadAction<SingleTaskItem>) {
+      console.log(state.data);
+      var listOfTags = state.data; 
+      listOfTags.push(action.payload);
+      console.log(listOfTags);
+
+      state.data = state.data;
+    },
+    setMainPanelCounter(state, action: PayloadAction<number>) {
+      state.counter = state.counter + action.payload;
+    }
   },
 });
 
 // in redux, we usually see action creators, a function that
 // returns an action object create slice made one of that for us
 
-export const { setFilter , setFilterKeyword, setTaskList, setTaskData } = mainPanelSlice.actions;
+export const { setFilter , setFilterKeyword, setTaskList, setTaskData, addToMainPanelTaskList, setMainPanelCounter } = mainPanelSlice.actions;
 export default mainPanelSlice.reducer;

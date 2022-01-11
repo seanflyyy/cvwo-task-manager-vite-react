@@ -2,42 +2,48 @@
 import * as ContainerClass from '../../misc/constants';
 import NewListItem from './ListItem';
 import { SingleTaskItem } from '../../model/task';
-import { getTasks } from '../../misc/database';
 import CreateTaskField from './CreateNewTaskField';
 import { Divider, Grid, List, Paper } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { setTaskList } from '../../features/mainPanel/main-panel-slice';
+import { setMainPanelCounter, setTaskList } from '../../features/mainPanel/main-panel-slice';
+import axios from 'axios';
 
 const useStyles = makeStyles(() => ({
     list: {
         width: ContainerClass.centerContainerWidth,
-        height: window.innerHeight / 2,
+        height: '100%',
     },
 }));
 
 
 const StyledList: React.FC = () => {
     const classes = useStyles();
-    // const data = getTasks();
     const mainPanel = useAppSelector((state) => state.mainPanel);
-    // const dispatch = useAppDispatch();
-    const [counter, setCounter] = useState(0);
+    const dispatch = useAppDispatch();
     
-
-    if (counter == 0) {
-        getTasks();
-        setCounter(1);
-    }
-
+    useEffect(() => {
+        (async () => {
+            await axios
+              .get(`${ContainerClass.databaseLink}/labels`)
+              .then((resp) => {
+                const tasks = resp.data["included"];
+                dispatch(setTaskList(tasks));
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          })();
+    }, []);
+    
 
     return (
         <Grid container direction="column" alignItems="center">
             {/* <SearchField onChange={handleChange} /> */}
             <CreateTaskField />
-            <br />
-            <Paper elevation={3} style={{ maxHeight: 400 }}>
+            <div />
+            {/* <Paper elevation={3} > */}
                 <List className={classes.list}>
                     {mainPanel.data
                         .filter((task: SingleTaskItem) => {
@@ -58,7 +64,7 @@ const StyledList: React.FC = () => {
                             <NewListItem key={task.id} {...task} />
                         ))}
                 </List>
-            </Paper>
+            {/* </Paper> */}
 
             <br />
          

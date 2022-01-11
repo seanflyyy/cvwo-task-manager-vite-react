@@ -13,7 +13,7 @@ import { useAppDispatch } from "../../app/hooks";
 import { openRightPanel } from "../../features/rightPanel/right-panel-slice";
 import { setTask } from "../../features/selectedTask/selected-task-slice";
 import { SingleTaskItem } from "../../model/task";
-import { getLabel, getLabels } from "../../misc/database";
+import { getLabel } from "../../misc/database";
 import CircleIcon from "@mui/icons-material/Circle";
 
 const useStyles = makeStyles(() => ({
