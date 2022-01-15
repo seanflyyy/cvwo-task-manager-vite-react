@@ -12,6 +12,7 @@ import React from 'react';
 
 import {makeStyles} from '@mui/styles';
 import {Paper, List, ListItem} from '@mui/material';
+import {SingleTaskItem} from '../../model/task';
 
 const useStyles = makeStyles(() => ({
   grid: {
@@ -45,7 +46,7 @@ const useStyles = makeStyles(() => ({
 
 const RightPanel: React.FC = () => {
   const classes = useStyles();
-  const selectedTask = useAppSelector(state => state.task);
+  const selectedTask: SingleTaskItem = useAppSelector(state => state.task);
   const tags = useAppSelector(state => state.leftPanel.allTags).map(
     (tag: SingleTag) => ({
       title: tag.attributes.title,

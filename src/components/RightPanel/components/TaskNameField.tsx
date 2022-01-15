@@ -4,6 +4,7 @@ import {SingleTaskItem} from '../../../model/task';
 
 import {Checkbox, Grid, Stack, TextField} from '@mui/material';
 import {makeStyles} from '@mui/styles';
+import CustomCheckbox from '../../mainPanel/CustomCheckbox';
 
 const useStyles = makeStyles(() => ({
   textField: {
@@ -32,7 +33,8 @@ const TaskNameField: React.FC<SingleTaskItem> = props => {
 
   return (
     <Stack spacing={0.5} direction="row">
-      <Checkbox value={props.attributes.completed} />
+      {/* <Checkbox chcked={props.attributes.completed} /> */}
+      <CustomCheckbox {...props} />
       <TextField
         className={classes.textField}
         id="standard-basic"

@@ -2,73 +2,27 @@
 import {useAppDispatch, useAppSelector} from '../../app/hooks';
 import {SingleTaskItem} from '../../model/task';
 import {SingleTag} from '../../model/tag';
-import {
-  closeRightPanel,
-  openRightPanel,
-} from '../../features/rightPanel/right-panel-slice';
-import {
-  setTask,
-  updateCompletedState,
-} from '../../features/selectedTask/selected-task-slice';
-import * as ContainerClass from '../../misc/constants';
+import {openRightPanel} from '../../features/rightPanel/right-panel-slice';
+import {setTask} from '../../features/selectedTask/selected-task-slice';
 
-import React, {useState} from 'react';
+import React from 'react';
 
 import CircleIcon from '@mui/icons-material/Circle';
 
-import {Checkbox, ListItemIcon, ListItemText, ListItem} from '@mui/material';
-import {makeStyles} from '@mui/styles';
-import {updateTask} from '../../misc/database';
-import {
-  setTaskData,
-  setTaskList,
-} from '../../features/mainPanel/main-panel-slice';
-import axios from 'axios';
-const useStyles = makeStyles(() => ({
-  checkbox: {
-    '&$checked': {
-      color: '#F5B369',
-    },
-  },
-  checked: {},
-}));
+import {ListItemIcon, ListItemText, ListItem} from '@mui/material';
+
+import CustomCheckbox from './CustomCheckbox';
 
 const NewListItem: React.FC<SingleTaskItem> = props => {
-  const classes = useStyles();
   const dispatch = useAppDispatch();
-  const [checked, setChecked] = useState(props.attributes.completed);
   const allTags = useAppSelector(state => state.leftPanel.allTags);
-  const mainPanel = useAppSelector(state => state.mainPanel);
   const tagData = allTags.find(
     (tag: SingleTag) => tag.id == props.attributes.label_id
   );
 
-  // const tagData = getLabel(props.attributes.label_id);
-
   function handleTaskBodyClick() {
     dispatch(openRightPanel());
     dispatch(setTask(props));
-  }
-
-  function getTasks() {
-    // reloads the task list in the main section
-    (async () => {
-      await axios
-        .get(`${ContainerClass.databaseLink}/labels`)
-        .then(resp => {
-          const tasks = resp.data['included'];
-          if (tasks == mainPanel.data) {
-            // recursively call database until the currentList has been updated
-            getTasks();
-          } else {
-            dispatch(setTaskList(tasks));
-            console.log('dispatched');
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    })();
   }
 
   function convertDateToString(dateTime: string) {
@@ -111,29 +65,8 @@ const NewListItem: React.FC<SingleTaskItem> = props => {
   return (
     <ListItem>
       <ListItemIcon>
-        <Checkbox
-          onChange={() => {
-            setChecked(!checked);
-            dispatch(updateCompletedState());
-            updateTask(props.id, {
-              title: props.attributes.title,
-              completed: !props.attributes.completed,
-              due: props.attributes.due,
-              label_id: props.attributes.label_id,
-            });
-            getTasks();
-            console.log('updating state');
-          }}
-          checked={checked}
-          // checked={props['attributes']['completed']}
-          edge="start"
-          classes={{
-            root: classes.checkbox,
-            checked: classes.checked,
-          }}
-        />
+        <CustomCheckbox {...props} />
       </ListItemIcon>
-
       <ListItem button divider onClick={handleTaskBodyClick}>
         <ListItemText
           primary={props.attributes.title}
