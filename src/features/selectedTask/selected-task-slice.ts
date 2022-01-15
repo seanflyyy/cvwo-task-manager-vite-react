@@ -47,11 +47,20 @@ const taskSlice = createSlice({
     updateTag(state, action: PayloadAction<number>) {
       state.attributes.label_id = action.payload;
     },
+    updateCompletedState(state) {
+      state.attributes.completed = !state.attributes.completed;
+    },
   },
 });
 
 // in redux, we usually see action creators, a function that
 // returns an action object create slice made one of that for us
 
-export const {setTask, updateTitle, updateDate, updateTag} = taskSlice.actions;
+export const {
+  setTask,
+  updateTitle,
+  updateDate,
+  updateTag,
+  updateCompletedState,
+} = taskSlice.actions;
 export default taskSlice.reducer;

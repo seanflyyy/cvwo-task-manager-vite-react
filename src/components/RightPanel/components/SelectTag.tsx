@@ -30,7 +30,7 @@ const SelectTag: React.FC<ListProps> = props => {
   return (
     <div>
       <div>
-        {'Task Tag:'} {props.initialValue?.title}
+        {'Tag is'} {props.initialValue?.title}
       </div>
       <Autocomplete
         disablePortal
@@ -62,7 +62,7 @@ const SelectTag: React.FC<ListProps> = props => {
             {/* </ListItem> */}
           </Box>
         )}
-        renderInput={params => <TextField {...params} label="Assigned Tag" />}
+        renderInput={params => <TextField {...params} label="Assign" />}
       />
     </div>
   );

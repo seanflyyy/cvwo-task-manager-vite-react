@@ -68,6 +68,13 @@ const LeftPanel: React.FC = () => {
         {tags.map((tag: SingleTag) => (
           <TagItem key={tag.id} {...tag} />
         ))}
+        <TagItem
+          key={-1}
+          {...{
+            id: -1,
+            attributes: {title: 'Completed', color: 'black', slug: 'completed'},
+          }}
+        />
       </List>
     </Paper>
   );

@@ -131,6 +131,8 @@ const CreateTaskField: React.FC = () => {
           '\n' +
           '-Event on Monday at 8am assign General' +
           '\n' +
+          '-Event on mon at 8am assign General' +
+          '\n' +
           '-Event on 01/01 at 8am assign General'
       );
     }

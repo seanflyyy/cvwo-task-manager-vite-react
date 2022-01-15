@@ -61,11 +61,16 @@ const StyledList: React.FC = () => {
           .filter((task: SingleTaskItem) => {
             if (mainPanel.tagID == 0) {
               return task;
+            } else if (
+              mainPanel.tagID == -1 &&
+              task.attributes.completed == true
+            ) {
+              return task;
             } else if (task.attributes.label_id == mainPanel.tagID) {
               return task;
             }
           })
-          .map((task: SingleTaskItem) => (
+          .map((task: SingleTaskItem, index: number) => (
             <NewListItem key={task.id} {...task} />
           ))}
       </List>

@@ -35,20 +35,17 @@ export const getSpecificTask = (id: number) => {
 
 export const updateTask = (id: number, taskContent: TaskContent) => {
   (async () => {
-    await axios.patch(
-      `${ContainerClass.databaseLink}/tasks/${id}`,
-      taskContent
-    );
+    await axios
+      .patch(`${ContainerClass.databaseLink}/tasks/${id}`, taskContent)
+      .then(resp => console.log(resp.status));
   })();
 };
 
 export const createTaskOnDatabase = async (taskContent: TaskContent) => {
-  (async () => {
-    await axios
-      .post(`${ContainerClass.databaseLink}/tasks`, taskContent)
-      .then(resp => {
-        console.log(resp.status);
-      })
-      .catch(err => console.log(err));
-  })();
+  await axios
+    .post(`${ContainerClass.databaseLink}/tasks`, taskContent)
+    .then(resp => {
+      console.log(resp.status);
+    })
+    .catch(err => console.log(err));
 };
