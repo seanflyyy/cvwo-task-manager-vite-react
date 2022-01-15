@@ -1,6 +1,5 @@
 // DUCKS pattern
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {SingleTaskItem} from '../../model/task';
 // represents shape of state of slice handled by reducer
 // type of state
 import {SingleTag} from '../../model/tag';

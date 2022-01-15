@@ -1,8 +1,9 @@
-import {Checkbox, Grid, Stack, TextField} from '@mui/material';
-import {makeStyles} from '@mui/styles';
 import {useAppDispatch} from '../../../app/hooks';
 import {updateTitle} from '../../../features/selectedTask/selected-task-slice';
 import {SingleTaskItem} from '../../../model/task';
+
+import {Checkbox, Grid, Stack, TextField} from '@mui/material';
+import {makeStyles} from '@mui/styles';
 
 const useStyles = makeStyles(() => ({
   textField: {

@@ -1,34 +1,30 @@
-import React, {useState, useEffect} from 'react';
-import {makeStyles} from '@mui/styles';
-import {TextField, Paper, Grid, Checkbox, IconButton} from '@mui/material';
-import {useAppDispatch, useAppSelector} from '../../app/hooks';
 import DateTimeWidget from './components/DateTimePicker';
 import TaskNameField from './components/TaskNameField';
 import SelectTag from './components/SelectTag';
-import {getLabels} from '../../misc/database';
-import {SingleTag} from '../../model/tag';
+import DeleteTaskButton from './components/DeleteTaskButton';
 import SubmitButton from './components/SubmitButton';
-import {IoMdClose} from 'react-icons/Io';
-import {closeRightPanel} from '../../features/rightPanel/right-panel-slice';
+import ClosePanelButton from './components/ClosePanelButton';
+
+import {SingleTag} from '../../model/tag';
+import {useAppSelector} from '../../app/hooks';
+
+import React from 'react';
+
+import {makeStyles} from '@mui/styles';
+import {Paper, List, ListItem} from '@mui/material';
 
 const useStyles = makeStyles(() => ({
   grid: {
     height: '100%',
   },
-  iconButton: {
-    position: 'absolute',
-    right: '5%',
-  },
+
   form: {
     height: '100%',
     width: '22%',
     position: 'fixed',
-    // zIndex: 1,
     top: 0,
     right: 0,
-    // backgroundColor: '#232323',
     overflowX: 'hidden',
-    // display: 'flex',
     flexDirection: 'column',
   },
   textField: {
@@ -59,41 +55,35 @@ const RightPanel: React.FC = () => {
     })
   );
   const initialValueTag = tags.find(
+    // eslint-disable-next-line eqeqeq
     x => x.id == selectedTask.attributes.label_id
   );
-  const dispatch = useAppDispatch();
 
   return (
     <Paper elevation={3} component="form" className={classes.form}>
-      <div>
-        <IconButton
-          className={classes.iconButton}
-          onClick={() => {
-            dispatch(closeRightPanel());
-          }}
-        >
-          <IoMdClose />
-        </IconButton>
-      </div>
-      <br />
-      <br />
-      <TaskNameField {...selectedTask} />
-      <br />
-      <DateTimeWidget {...selectedTask} />
-      <br />
-
-      <SelectTag
-        {...{
-          initialValue: initialValueTag,
-          listData: tags,
-          taskData: selectedTask,
-        }}
-      />
-      <br />
-      <br />
-      <div>
+      <List>
+        <ListItem>
+          <ClosePanelButton />
+        </ListItem>
+        <ListItem>
+          <TaskNameField {...selectedTask} />
+        </ListItem>
+        <ListItem>
+          <DateTimeWidget {...selectedTask} />
+        </ListItem>
+        <ListItem>
+          <SelectTag
+            {...{
+              initialValue: initialValueTag,
+              listData: tags,
+              taskData: selectedTask,
+            }}
+          />
+        </ListItem>
         <SubmitButton {...selectedTask} />
-      </div>
+        {/* <ListItem> */}
+        <DeleteTaskButton {...selectedTask} />
+      </List>
     </Paper>
   );
 };

@@ -1,9 +1,11 @@
-import StyledPage from "./pages/StyledPage";
-import React from "react";
-import "./App.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { createTheme, ThemeProvider } from "@mui/material";
-import { blue, orange } from "@mui/material/colors";
+import './App.css';
+import StyledPage from './pages/StyledPage';
+
+import React from 'react';
+
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {createTheme, ThemeProvider} from '@mui/material';
+import {blue, orange} from '@mui/material/colors';
 
 const theme = createTheme({
   palette: {
@@ -18,16 +20,14 @@ const App: React.FC = () => {
       <ThemeProvider theme={theme}>
         <BrowserRouter>
           <Routes>
-    //         {/* <Route path="/styled" element={<StyledPage />} /> */}
+            // {/* <Route path="/styled" element={<StyledPage />} /> */}
             <Route path="/" element={<StyledPage />} />
             // {/* <Route path="/" element={<Home />} /> */}
           </Routes>
-        </BrowserRouter>  
+        </BrowserRouter>
       </ThemeProvider>
     </div>
   );
 };
 
 export default App;
-
-

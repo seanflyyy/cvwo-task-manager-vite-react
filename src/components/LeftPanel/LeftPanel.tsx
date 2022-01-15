@@ -1,14 +1,17 @@
-import * as ContainerClass from '../../misc/constants';
 import TagItem from './TagItem';
+import SearchField from './SearchField';
+
+import * as ContainerClass from '../../misc/constants';
+import {setAllTags} from '../../features/leftPanel/left-panel-slice';
 import {SingleTag} from '../../model/tag';
+import {useAppDispatch, useAppSelector} from '../../app/hooks';
+
 import React, {useEffect} from 'react';
+import axios from 'axios';
+
 import Paper from '@mui/material/Paper';
 import List from '@mui/material/List';
 import {makeStyles} from '@mui/styles';
-import SearchField from './SearchField';
-import {useAppDispatch, useAppSelector} from '../../app/hooks';
-import axios from 'axios';
-import {setAllTags} from '../../features/leftPanel/left-panel-slice';
 
 const useStyles = makeStyles(() => ({
   grid: {

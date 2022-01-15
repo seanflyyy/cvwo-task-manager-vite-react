@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 // DUCKS pattern
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {SingleTaskItem} from '../../model/task';

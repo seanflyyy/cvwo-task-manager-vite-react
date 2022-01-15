@@ -1,12 +1,12 @@
 import {SingleTaskItem} from '../../../model/task';
+import {useAppDispatch} from '../../../app/hooks';
+import {updateTag} from '../../../features/selectedTask/selected-task-slice';
+
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import CircleIcon from '@mui/icons-material/Circle';
 import Box from '@mui/material/Box';
-import {Grid, ListItem, ListItemIcon, ListItemText} from '@mui/material';
-import {useAppDispatch} from '../../../app/hooks';
-import {updateTag} from '../../../features/selectedTask/selected-task-slice';
-import {useEffect, useState} from 'react';
+import {ListItemIcon, ListItemText} from '@mui/material';
 
 interface ComboTag {
   title: string;
@@ -23,7 +23,6 @@ export interface ListProps {
 
 const SelectTag: React.FC<ListProps> = props => {
   const dispatch = useAppDispatch();
-  const [value, setValue] = useState(props.initialValue);
   const setTag = (tagID: number) => {
     dispatch(updateTag(tagID));
   };
@@ -36,7 +35,11 @@ const SelectTag: React.FC<ListProps> = props => {
       <Autocomplete
         disablePortal
         id="controllable-states-demo"
-        onChange={(event: any, newValue: ComboTag | null) => {
+        onChange={(
+          e: React.SyntheticEvent<Element, Event>,
+          newValue: ComboTag | null
+        ) => {
+          // eslint-disable-next-line eqeqeq
           if (newValue != null) {
             setTag(newValue.id);
           }

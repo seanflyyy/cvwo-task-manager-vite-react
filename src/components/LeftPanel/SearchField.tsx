@@ -1,10 +1,12 @@
 import * as ContainerClass from '../../misc/constants';
+import {useAppDispatch} from '../../app/hooks';
+import {setFilterKeyword} from '../../features/mainPanel/main-panel-slice';
+
 import * as React from 'react';
+
 import {styled, alpha} from '@mui/material/styles';
 import {InputBase, Paper} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import {useAppDispatch} from '../../app/hooks';
-import {setFilterKeyword} from '../../features/mainPanel/main-panel-slice';
 
 const Search = styled('div')(({theme}) => ({
   position: 'relative',

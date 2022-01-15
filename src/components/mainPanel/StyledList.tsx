@@ -1,15 +1,17 @@
 /* eslint-disable eqeqeq */
-// import SearchBar from '../components/SeachBar';
-import * as ContainerClass from '../../misc/constants';
 import NewListItem from './ListItem';
-import {SingleTaskItem} from '../../model/task';
 import CreateTaskField from './CreateNewTaskField';
-import {Grid, List} from '@mui/material';
-import React, {useEffect} from 'react';
-import {makeStyles} from '@mui/styles';
-import {useAppSelector, useAppDispatch} from '../../app/hooks';
+
+import * as ContainerClass from '../../misc/constants';
+import {SingleTaskItem} from '../../model/task';
 import {setTaskList} from '../../features/mainPanel/main-panel-slice';
+import {useAppSelector, useAppDispatch} from '../../app/hooks';
+
+import React, {useEffect} from 'react';
 import axios from 'axios';
+
+import {Grid, List} from '@mui/material';
+import {makeStyles} from '@mui/styles';
 
 const useStyles = makeStyles(() => ({
   list: {

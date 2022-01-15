@@ -1,16 +1,13 @@
+import {useAppDispatch} from '../../../app/hooks';
 import {SingleTaskItem} from '../../../model/task';
-import * as ContainerClass from '../../../misc/constants';
-import React, {useState, useEffect, useRef} from 'react';
+import {updateDate} from '../../../features/selectedTask/selected-task-slice';
+
+import React from 'react';
+
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
-// import DateFnsUtils from '@date-io/date-fns';
 import {LocalizationProvider, DateTimePicker} from '@mui/lab';
 import TextField from '@mui/material/TextField';
-import {useAppDispatch} from '../../../app/hooks';
-import {updateDate} from '../../../features/selectedTask/selected-task-slice';
-import {updateTask} from '../../../misc/database';
 import {makeStyles} from '@mui/styles';
-import {Stack} from '@mui/material';
-import {BsCalendarEvent} from 'react-icons/bs';
 
 const useStyles = makeStyles(() => ({
   div: {
@@ -19,7 +16,6 @@ const useStyles = makeStyles(() => ({
 }));
 
 const DateTimeWidget: React.FC<SingleTaskItem> = props => {
-  const taskID = props.id;
   const dispatch = useAppDispatch();
   const classes = useStyles();
 
@@ -36,6 +32,7 @@ const DateTimeWidget: React.FC<SingleTaskItem> = props => {
         renderInput={props => <TextField {...props} />}
         value={props.attributes.due}
         onChange={newValue => {
+          // eslint-disable-next-line eqeqeq
           if (newValue != null) {
             setDate(newValue);
           }

@@ -1,10 +1,12 @@
-import {ListItemButton, ListItemIcon, ListItemText} from '@mui/material';
-import React from 'react';
-import CircleIcon from '@mui/icons-material/Circle';
 import {SingleTag} from '../../model/tag';
-import {useAppDispatch, useAppSelector} from '../../app/hooks';
 import {setFilter} from '../../features/mainPanel/main-panel-slice';
 import {setSelectedTag} from '../../features/leftPanel/left-panel-slice';
+import {useAppDispatch, useAppSelector} from '../../app/hooks';
+
+import React from 'react';
+
+import {ListItemButton, ListItemIcon, ListItemText} from '@mui/material';
+import CircleIcon from '@mui/icons-material/Circle';
 
 const TagItem: React.FC<SingleTag> = props => {
   const dispatch = useAppDispatch();

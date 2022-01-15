@@ -1,4 +1,3 @@
-import {configureStore} from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counter-slice';
 import taskSelectedReducer from '../features/selectedTask/selected-task-slice';
 import panelOpenReducer from '../features/rightPanel/right-panel-slice';
@@ -6,6 +5,8 @@ import mainPanelReducer from '../features/mainPanel/main-panel-slice';
 import leftPanelReducer from '../features/leftPanel/left-panel-slice';
 
 import {apiSlice} from '../features/dogs/dogs-api-slice';
+
+import {configureStore} from '@reduxjs/toolkit';
 
 export const store = configureStore({
   reducer: {

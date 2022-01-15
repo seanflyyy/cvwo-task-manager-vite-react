@@ -1,15 +1,16 @@
 /* eslint-disable eqeqeq */
-// import DateTimeWidget from '../RightPanel/formComponents/DateTimePicker';
-import {Checkbox, ListItemIcon, ListItemText, ListItem} from '@mui/material';
-import {makeStyles} from '@mui/styles';
-import React from 'react';
 import {useAppDispatch, useAppSelector} from '../../app/hooks';
+import {SingleTaskItem} from '../../model/task';
+import {SingleTag} from '../../model/tag';
 import {openRightPanel} from '../../features/rightPanel/right-panel-slice';
 import {setTask} from '../../features/selectedTask/selected-task-slice';
-import {SingleTaskItem} from '../../model/task';
-import CircleIcon from '@mui/icons-material/Circle';
-import {SingleTag} from '../../model/tag';
 
+import React from 'react';
+
+import CircleIcon from '@mui/icons-material/Circle';
+
+import {Checkbox, ListItemIcon, ListItemText, ListItem} from '@mui/material';
+import {makeStyles} from '@mui/styles';
 const useStyles = makeStyles(() => ({
   checkbox: {
     '&$checked': {

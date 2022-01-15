@@ -1,15 +1,18 @@
 /* eslint-disable eqeqeq */
-import * as ContainerClass from '../../misc/constants';
-import React, {useState} from 'react';
-import {styled, alpha} from '@mui/material/styles';
-import {InputBase, Paper} from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
+
 import {useAppSelector, useAppDispatch} from '../../app/hooks';
 import {SingleTag} from '../../model/tag';
-import {createTaskOnDatabase} from '../../misc/database';
 import {TaskContent} from '../../model/task';
 import {setTaskList} from '../../features/mainPanel/main-panel-slice';
+import * as ContainerClass from '../../misc/constants';
+import {createTaskOnDatabase} from '../../misc/database';
+
+import React, {useState} from 'react';
 import axios from 'axios';
+
+import AddIcon from '@mui/icons-material/Add';
+import {styled, alpha} from '@mui/material/styles';
+import {InputBase, Paper} from '@mui/material';
 
 const CreateTask = styled('div')(({theme}) => ({
   position: 'relative',
@@ -74,12 +77,6 @@ const CreateTaskField: React.FC = () => {
             dispatch(setTaskList(tasks));
             console.log('dispatched');
           }
-
-          // console.log('database result is');
-          // console.log(tasks);
-
-          // console.log('current list is');
-          // console.log(mainPanel.data);
         })
         .catch(err => {
           console.log(err);
