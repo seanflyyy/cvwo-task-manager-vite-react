@@ -24,6 +24,8 @@ const DateTimeWidget: React.FC<SingleTaskItem> = props => {
     dispatch(updateDate(dateTime));
   };
 
+  console.log(props.attributes.due);
+
   return (
     // <Stack spacing={5} direction="row">
     <LocalizationProvider dateAdapter={AdapterDateFns}>

@@ -63,7 +63,7 @@ const CreateTaskField: React.FC = () => {
     event.preventDefault();
   }
 
-  const getTasks = () => {
+  function getTasks() {
     // reloads the task list in the main section
     (async () => {
       await axios
@@ -82,7 +82,7 @@ const CreateTaskField: React.FC = () => {
           console.log(err);
         });
     })();
-  };
+  }
 
   function createTask(task: string) {
     const [taskName = '', dueDateAndTag = ''] = task
@@ -92,30 +92,78 @@ const CreateTaskField: React.FC = () => {
       .split(' assign ')
       .map(x => x.trim());
 
-    const validityCheckOutput = isInputValid(taskName, dueDate, assignedTag);
+    const adjustedDay =
+      convertDayToDate(dueDate.split(' at ')[0]) + dueDate.split(' at ')[1];
+    const validityCheckOutput = isInputValid(
+      taskName,
+      adjustedDay,
+      assignedTag
+    );
 
     if (validityCheckOutput == 'Valid') {
-      console.log(assignedTag);
       const tagID = listOfTags.find(
         (tag: SingleTag) =>
           tag.attributes.title.toLowerCase() == assignedTag?.toLowerCase()
       )!.id;
+
       const taskContent: TaskContent = {
         title: taskName,
         completed: false,
-        due: dueDate,
+        due: adjustedDay + ContainerClass.timezoneOffset,
         label_id: tagID,
       };
 
-      alert(' A new task was created:' + task);
       setFieldState('');
       createTaskOnDatabase(taskContent);
       getTasks();
     } else {
-      alert(validityCheckOutput);
+      // alert('date\nerror');
+      alert(
+        validityCheckOutput +
+          '\n\n' +
+          'Please ensure that your input is of the appropriate format.' +
+          '\n\n' +
+          'Example formats are: ' +
+          '\n' +
+          '-Event on 1 January at 8am assign General' +
+          '\n' +
+          '-Event on 1 January 2021 at 8am assign General' +
+          '\n' +
+          '-Event on Monday at 8am assign General' +
+          '\n' +
+          '-Event on 01/01 at 8am assign General'
+      );
+    }
+  }
+  function convertDayToDate(date: string) {
+    function getDateFromToday(numDays: number) {
+      const today = new Date();
+      const futureDate = new Date();
+      futureDate.setDate(today.getDate() + numDays);
+      return futureDate.toString();
     }
 
-    // console.log(response);
+    const daysOfWeek = [
+      getDateFromToday(0),
+      getDateFromToday(1),
+      getDateFromToday(2),
+      getDateFromToday(3),
+      getDateFromToday(4),
+      getDateFromToday(5),
+      getDateFromToday(6),
+    ].map((day: string) => {
+      const dayOfWeek = day.split(' ')[0].toLowerCase();
+      const fullDate = day.split(' ').slice(1, 4).join(' ');
+      return {[dayOfWeek]: fullDate};
+    });
+
+    const dateDesired = daysOfWeek.find((item: Object) =>
+      date.toLowerCase().includes(Object.keys(item)[0])
+    );
+
+    return typeof dateDesired == 'undefined'
+      ? date
+      : Object.values(dateDesired)[0];
   }
 
   function isInputValid(
@@ -124,9 +172,12 @@ const CreateTaskField: React.FC = () => {
     assignedTag: string
   ) {
     if (taskName == '') {
+      console.log(taskName);
       return 'An invalid task name provided. Please ensure that you have provided a valid task name.';
     } else if (!isNaN(Date.parse(dueDate))) {
-      return 'An invalid date and time has been provided. Please ensure that you have provided a valid date and time.';
+      const errorMessage =
+        'An invalid date and time has been provided.\r\nPlease ensure that you have provided a valid date and time.';
+      return errorMessage;
     } else if (
       listOfTags.find(
         x => x.attributes.title.toLowerCase() == assignedTag.toLowerCase()

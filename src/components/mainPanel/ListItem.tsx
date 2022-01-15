@@ -35,8 +35,12 @@ const NewListItem: React.FC<SingleTaskItem> = props => {
   }
 
   function convertDateToString(dateTime: string) {
+    // console.log(props.attributes.title);
+
     const date: Date = new Date(dateTime);
     const dateString = date.toString();
+    // console.log(dateString);
+
     const listDate: Array<string> = dateString.split(' ');
     const [dayOfWeek, month, dayOfMonth, year, time] = listDate;
     const convertedTime = convertTimeTo12Hours(time);
