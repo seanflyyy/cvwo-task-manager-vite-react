@@ -1,17 +1,17 @@
-import { Checkbox, Grid, Stack, TextField } from "@mui/material";
-import { makeStyles } from "@mui/styles";
-import { useAppDispatch } from "../../../app/hooks"
-import { updateTitle } from "../../../features/selectedTask/selected-task-slice";
-import { SingleTaskItem } from "../../../model/task";
+import {Checkbox, Grid, Stack, TextField} from '@mui/material';
+import {makeStyles} from '@mui/styles';
+import {useAppDispatch} from '../../../app/hooks';
+import {updateTitle} from '../../../features/selectedTask/selected-task-slice';
+import {SingleTaskItem} from '../../../model/task';
 
 const useStyles = makeStyles(() => ({
   textField: {
     paddingLeft: 15,
-    width: "70%",
-    overflowWrap: "break-word",
+    width: '70%',
+    overflowWrap: 'break-word',
   },
   text: {
-    fontWeight: "bolder",
+    fontWeight: 'bolder',
   },
   firstElement: {
     paddingLeft: 0,
@@ -21,7 +21,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const TaskNameField: React.FC<SingleTaskItem> = (props) => {
+const TaskNameField: React.FC<SingleTaskItem> = props => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
 

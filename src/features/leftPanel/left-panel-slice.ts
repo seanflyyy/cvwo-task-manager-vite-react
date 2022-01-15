@@ -1,12 +1,12 @@
 // DUCKS pattern
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { SingleTaskItem } from "../../model/task";
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {SingleTaskItem} from '../../model/task';
 // represents shape of state of slice handled by reducer
 // type of state
-import { SingleTag } from '../../model/tag';
+import {SingleTag} from '../../model/tag';
 
 interface leftPanelState {
-  selectedTag: number; 
+  selectedTag: number;
   allTags: SingleTag[];
 }
 
@@ -18,22 +18,20 @@ const initialState: leftPanelState = {
 
 // slice that contains the reducer logic
 const leftPanelSlice = createSlice({
-  name: "taskList",
+  name: 'taskList',
   initialState,
   reducers: {
     setSelectedTag(state, action: PayloadAction<number>) {
-      state.selectedTag = action.payload; 
+      state.selectedTag = action.payload;
     },
     setAllTags(state, action: PayloadAction<SingleTag[]>) {
       state.allTags = action.payload;
-    }
+    },
   },
 });
-
-
 
 // in redux, we usually see action creators, a function that
 // returns an action object create slice made one of that for us
 
-export const { setSelectedTag , setAllTags } = leftPanelSlice.actions;
+export const {setSelectedTag, setAllTags} = leftPanelSlice.actions;
 export default leftPanelSlice.reducer;
