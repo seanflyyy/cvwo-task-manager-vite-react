@@ -12,6 +12,7 @@ import axios from 'axios';
 import Paper from '@mui/material/Paper';
 import List from '@mui/material/List';
 import {makeStyles} from '@mui/styles';
+import CreateTaskButton from './CreateTagButton';
 
 const useStyles = makeStyles(() => ({
   grid: {
@@ -37,7 +38,7 @@ const useStyles = makeStyles(() => ({
 
 const LeftPanel: React.FC = () => {
   const classes = useStyles();
-  const tags = useAppSelector(state => state.leftPanel.allTags);
+  const leftPanel = useAppSelector(state => state.leftPanel);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -65,7 +66,7 @@ const LeftPanel: React.FC = () => {
             attributes: {title: 'All Tasks', color: 'grey', slug: 'all-tasks'},
           }}
         />
-        {tags.map((tag: SingleTag) => (
+        {leftPanel.allTags.map((tag: SingleTag) => (
           <TagItem key={tag.id} {...tag} />
         ))}
         <TagItem
@@ -76,6 +77,7 @@ const LeftPanel: React.FC = () => {
           }}
         />
       </List>
+      <CreateTaskButton />
     </Paper>
   );
 };

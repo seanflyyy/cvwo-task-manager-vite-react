@@ -18,3 +18,9 @@ interface Tasks {
   id: string;
   type: string;
 }
+
+
+export interface CreateTagContent {
+  title: string; 
+  color: string; 
+}

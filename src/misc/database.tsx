@@ -2,7 +2,7 @@ import * as ContainerClass from './constants';
 import {useState} from 'react';
 import axios from 'axios';
 import {TaskContent} from '../model/task';
-import {SingleTag} from '../model/tag';
+import {CreateTagContent, SingleTag} from '../model/tag';
 
 export const getLabel = (tagID: number) => {
   const [data, setData] = useState<SingleTag>();
@@ -44,6 +44,16 @@ export const updateTask = (id: number, taskContent: TaskContent) => {
 export const createTaskOnDatabase = async (taskContent: TaskContent) => {
   await axios
     .post(`${ContainerClass.databaseLink}/tasks`, taskContent)
+    .then(resp => {
+      console.log(resp.status);
+    })
+    .catch(err => console.log(err));
+};
+
+
+export const createTagOnDatabase = async (createTagContent: CreateTagContent) => {
+  await axios
+    .post(`${ContainerClass.databaseLink}/labels`, createTagContent)
     .then(resp => {
       console.log(resp.status);
     })

@@ -4,11 +4,11 @@ import {SingleTaskItem} from '../../model/task';
 import {useAppSelector, useAppDispatch} from '../../app/hooks';
 import {setTaskList} from '../../features/mainPanel/main-panel-slice';
 
-import {useState} from 'react';
 import axios from 'axios';
 
 import {Checkbox} from '@mui/material';
 import {makeStyles} from '@mui/styles';
+import {updateCompletedState} from '../../features/selectedTask/selected-task-slice';
 
 const useStyles = makeStyles(() => ({
   checkbox: {
@@ -22,8 +22,8 @@ const useStyles = makeStyles(() => ({
 const CustomCheckbox: React.FC<SingleTaskItem> = props => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
-  //   const [checked, setChecked] = useState(props.attributes.completed);
   const mainPanel = useAppSelector(state => state.mainPanel);
+  const selectedTask: SingleTaskItem = useAppSelector(state => state.task);
 
   function getTasks(taskID: number) {
     // reloads the task list in the main section
@@ -33,7 +33,6 @@ const CustomCheckbox: React.FC<SingleTaskItem> = props => {
         .then(resp => {
           const tasks = resp.data['included'];
           // eslint-disable-next-line eqeqeq
-          console.log(taskID);
 
           if (
             tasks.find((task: SingleTaskItem) => task.id === taskID).attributes
@@ -41,7 +40,7 @@ const CustomCheckbox: React.FC<SingleTaskItem> = props => {
             mainPanel.data.find((task: SingleTaskItem) => task.id === taskID)
               ?.attributes.completed
           ) {
-            console.log('froggy');
+            console.log('getting tasks again');
             // recursively call database until the currentList has been updated
             getTasks(taskID);
           } else {
@@ -59,6 +58,9 @@ const CustomCheckbox: React.FC<SingleTaskItem> = props => {
     <Checkbox
       onChange={() => {
         // setChecked(!checked);
+        if (props.id === selectedTask.id) {
+          dispatch(updateCompletedState());
+        }
         updateTask(props.id, {
           title: props.attributes.title,
           completed: !props.attributes.completed,

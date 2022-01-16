@@ -70,7 +70,7 @@ const StyledList: React.FC = () => {
               return task;
             }
           })
-          .map((task: SingleTaskItem, index: number) => (
+          .map((task: SingleTaskItem) => (
             <NewListItem key={task.id} {...task} />
           ))}
       </List>

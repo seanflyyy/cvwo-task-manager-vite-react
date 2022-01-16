@@ -2,7 +2,7 @@ import {useAppDispatch} from '../../../app/hooks';
 import {updateTitle} from '../../../features/selectedTask/selected-task-slice';
 import {SingleTaskItem} from '../../../model/task';
 
-import {Checkbox, Grid, Stack, TextField} from '@mui/material';
+import {Stack, TextField} from '@mui/material';
 import {makeStyles} from '@mui/styles';
 import CustomCheckbox from '../../mainPanel/CustomCheckbox';
 
@@ -37,7 +37,8 @@ const TaskNameField: React.FC<SingleTaskItem> = props => {
       <CustomCheckbox {...props} />
       <TextField
         className={classes.textField}
-        id="standard-basic"
+        id="outlined-multiline-flexible"
+        multiline
         value={props.attributes.title}
         onChange={handleChange}
         InputProps={{
