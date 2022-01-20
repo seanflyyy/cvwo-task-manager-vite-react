@@ -75,7 +75,7 @@ const CreateTaskField: React.FC = () => {
             getTasks();
           } else {
             dispatch(setTaskList(tasks));
-            console.log('dispatched');
+            console.log('Created task');
           }
         })
         .catch(err => {

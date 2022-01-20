@@ -9,7 +9,7 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import { CirclePicker } from 'react-color';
+import { SketchPicker } from 'react-color';
 import CircleIcon from '@mui/icons-material/Circle';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import {ListItem, ListItemIcon} from '@mui/material';
@@ -27,6 +27,7 @@ const useStyles = makeStyles(() => ({
   createTagButton: {
     bottom: 0,
     position: 'absolute',
+    backgroundColor: 'white',
     width: '100%',
     left: 0,
     height: '7%',
@@ -112,7 +113,6 @@ const CreateTagButton: React.FC = () => {
       <Button
         onClick={handleOpen}
         className={classes.createTagButton}
-        // variant="outlined"
         startIcon={<AddIcon />}
       >
         Create New Tag
@@ -156,15 +156,12 @@ const CreateTagButton: React.FC = () => {
               
             </ListItem>
             {openChild &&
-            <div className={classes.colorPicker}
-            >
-                  <CirclePicker
+            <div className={classes.colorPicker}>
+                  <SketchPicker
                         color={selectedColor}
                         onChangeComplete={handleChangeComplete}
-                  />
-            </div>
-                    
-                  }
+            />
+            </div>}
           </Box>
         </Fade>
       </Modal>

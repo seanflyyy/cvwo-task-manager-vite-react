@@ -21,7 +21,7 @@ const useStyles = makeStyles(() => ({
     // paddingBottom: '10vh',
     // display: 'block',code
   },
-  list: {
+  leftPanel: {
     height: '100%',
     width: '22%',
     position: 'fixed',
@@ -29,11 +29,16 @@ const useStyles = makeStyles(() => ({
     top: 0,
     left: 0,
     // backgroundColor: '#232323',
-    overflowX: 'hidden',
     // display: 'flex',
     flexDirection: 'column',
     // padding: '20px',
   },
+  list: {
+    maxHeight: '88%',
+    display: 'flex',
+    flexDirection: 'column', 
+    overflow: 'auto',
+  }
 }));
 
 const LeftPanel: React.FC = () => {
@@ -56,27 +61,30 @@ const LeftPanel: React.FC = () => {
   }, []);
 
   return (
-    <Paper elevation={3} className={classes.list}>
+    <Paper elevation={3} className={classes.leftPanel}>
       <SearchField />
-      <List>
-        <TagItem
-          key={0}
-          {...{
-            id: 0,
-            attributes: {title: 'All Tasks', color: 'grey', slug: 'all-tasks'},
-          }}
-        />
-        {leftPanel.allTags.map((tag: SingleTag) => (
-          <TagItem key={tag.id} {...tag} />
-        ))}
-        <TagItem
-          key={-1}
-          {...{
-            id: -1,
-            attributes: {title: 'Completed', color: 'black', slug: 'completed'},
-          }}
-        />
-      </List>
+      <div className={classes.list}> 
+        <List >
+          <TagItem
+            key={0}
+            {...{
+              id: 0,
+              attributes: {title: 'All Tasks', color: 'grey', slug: 'all-tasks'},
+            }}
+          />
+          <TagItem
+            key={-1}
+            {...{
+              id: -1,
+              attributes: {title: 'Completed', color: 'black', slug: 'completed'},
+            }}
+          />
+          {leftPanel.allTags.map((tag: SingleTag) => (
+            <TagItem key={tag.id} {...tag} />
+          ))}
+
+        </List>
+      </div> 
       <CreateTaskButton />
     </Paper>
   );
