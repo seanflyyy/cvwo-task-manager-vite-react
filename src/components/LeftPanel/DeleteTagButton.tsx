@@ -34,8 +34,8 @@ const useStyles = makeStyles(() => ({
 }));
 
 const style = {
-  justifyContent: 'center',
-  alignItems: 'center',
+
+  // alignItems: 'center',
   textAlign: 'center',
   position: 'absolute' as 'absolute',
   top: '50%',
@@ -60,20 +60,15 @@ const DeleteTagButton: React.FC<SingleTag> = (props) => {
 
   console.log(props.relationships.tasks.data);
 
+  /**
+   * Deletes tasks under tag and the tag and updates the task list and tag list.
+   */
   const handleDeleteTaskEvent = () => {
-    // go ahead to delete all the tasks on the backend first by looping
-    // through the props.relationships.tasks.data.
     props.relationships.tasks.data.forEach((element: TaskForTags) => {
       deleteTask(+element.id);
     });
-
-    // when done, calling getTasks() to update the task panel
     getTasks();
-
-    // delete the tag
     deleteTag(props.id);
-
-    // update the tag list
     getTags();
   };
 
@@ -204,15 +199,15 @@ const DeleteTagButton: React.FC<SingleTag> = (props) => {
             <Stack direction="row" spacing={2}>
               <Button
                 variant="outlined"
-                onClick={() => handleDeleteTaskEvent()}>
-                Delete
-              </Button>
-              <Button
-                variant="outlined"
                 color="error"
                 onClick={() => handleClose()}
               >
                 Cancel
+              </Button>
+              <Button
+                variant="outlined"
+                onClick={() => handleDeleteTaskEvent()}>
+                Delete
               </Button>
             </Stack>
           </Grid>

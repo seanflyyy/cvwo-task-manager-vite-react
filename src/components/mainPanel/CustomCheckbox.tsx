@@ -9,6 +9,8 @@ import axios from 'axios';
 
 import {Checkbox} from '@mui/material';
 import {makeStyles} from '@mui/styles';
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 import React from 'react';
 
@@ -61,6 +63,8 @@ const CustomCheckbox: React.FC<SingleTaskItem> = (props) => {
 
   return (
     <Checkbox
+      icon={<RadioButtonUncheckedIcon/>}
+      checkedIcon={<CheckCircleIcon/>}
       onChange={() => {
         // setChecked(!checked);
         if (props.id === selectedTask.id) {

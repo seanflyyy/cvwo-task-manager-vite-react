@@ -41,6 +41,15 @@ export const updateTask = (id: number, taskContent: TaskContent) => {
   })();
 };
 
+export const updateTag = (id: number, tagContent: CreateTagContent) => {
+  (async () => {
+    await axios
+        .patch(`${ContainerClass.databaseLink}/labels/${id}`, tagContent)
+        .then((resp) => console.log(resp.status));
+  })();
+};
+
+
 export const createTaskOnDatabase = async (taskContent: TaskContent) => {
   await axios
       .post(`${ContainerClass.databaseLink}/tasks`, taskContent)
@@ -60,3 +69,4 @@ export const createTagOnDatabase = async (createTagContent: CreateTagContent) =>
       })
       .catch((err) => console.log(err));
 };
+

@@ -12,7 +12,7 @@ import axios from 'axios';
 import Paper from '@mui/material/Paper';
 import List from '@mui/material/List';
 import {makeStyles} from '@mui/styles';
-import CreateTaskButton from './CreateTagButton';
+import CreateOrEditTagButton from './CreateOrEditTagButton';
 import DividerForList from './DividerForList';
 
 const useStyles = makeStyles(() => ({
@@ -82,18 +82,29 @@ const LeftPanel: React.FC = () => {
               id: 0,
               attributes: {
                 title: 'All Tasks',
-                color: 'grey',
+                color: 'black',
                 slug: 'all-tasks',
               },
               relationships: emptyRelationshipData,
             }}
           />
           <TagItem
+            key={-2}
+            {...{
+              id: -2,
+              attributes: {
+                title: 'Incomplete',
+                color: 'black',
+                slug: 'completed',
+              },
+              relationships: emptyRelationshipData,
+            }} />
+          <TagItem
             key={-1}
             {...{
               id: -1,
               attributes: {
-                title: 'Completed',
+                title: 'Complete',
                 color: 'black',
                 slug: 'completed',
               },
@@ -106,7 +117,7 @@ const LeftPanel: React.FC = () => {
 
         </List>
       </div>
-      <CreateTaskButton />
+      <CreateOrEditTagButton {...{createOrEdit: 'Create', tagData: null}}/>
     </Paper>
   );
 };

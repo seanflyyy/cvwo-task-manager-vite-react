@@ -66,6 +66,9 @@ const StyledList: React.FC = () => {
               task.attributes.completed == true
               ) {
                 return task;
+              } else if (
+                mainPanel.tagID == -2 && task.attributes.completed == false) {
+                return task;
               } else if (task.attributes.label_id == mainPanel.tagID) {
                 return task;
               }
