@@ -13,6 +13,7 @@ import Paper from '@mui/material/Paper';
 import List from '@mui/material/List';
 import {makeStyles} from '@mui/styles';
 import CreateTaskButton from './CreateTagButton';
+import DividerForList from './DividerForList';
 
 const useStyles = makeStyles(() => ({
   grid: {
@@ -36,55 +37,75 @@ const useStyles = makeStyles(() => ({
   list: {
     maxHeight: '88%',
     display: 'flex',
-    flexDirection: 'column', 
+    flexDirection: 'column',
     overflow: 'auto',
-  }
+  },
 }));
+
+const emptyRelationshipData = {
+  tasks: {
+    data: [{
+      id: '',
+      type: '',
+    }],
+  },
+};
 
 const LeftPanel: React.FC = () => {
   const classes = useStyles();
-  const leftPanel = useAppSelector(state => state.leftPanel);
+  const leftPanel = useAppSelector((state) => state.leftPanel);
   const dispatch = useAppDispatch();
+
 
   useEffect(() => {
     (async () => {
       await axios
-        .get(`${ContainerClass.databaseLink}/labels`)
-        .then(resp => {
-          const tags = resp.data['data'];
-          dispatch(setAllTags(tags));
-        })
-        .catch(err => {
-          console.log(err);
-        });
+          .get(`${ContainerClass.databaseLink}/labels`)
+          .then((resp) => {
+            const tags = resp.data['data'];
+            dispatch(setAllTags(tags));
+          })
+          .catch((err) => {
+            console.log(err);
+          });
     })();
   }, []);
 
   return (
     <Paper elevation={3} className={classes.leftPanel}>
       <SearchField />
-      <div className={classes.list}> 
+      <div className={classes.list}>
         <List >
           <TagItem
             key={0}
             {...{
               id: 0,
-              attributes: {title: 'All Tasks', color: 'grey', slug: 'all-tasks'},
+              attributes: {
+                title: 'All Tasks',
+                color: 'grey',
+                slug: 'all-tasks',
+              },
+              relationships: emptyRelationshipData,
             }}
           />
           <TagItem
             key={-1}
             {...{
               id: -1,
-              attributes: {title: 'Completed', color: 'black', slug: 'completed'},
-            }}
-          />
+              attributes: {
+                title: 'Completed',
+                color: 'black',
+                slug: 'completed',
+              },
+              relationships: emptyRelationshipData,
+            }} />
+          <DividerForList/>
           {leftPanel.allTags.map((tag: SingleTag) => (
             <TagItem key={tag.id} {...tag} />
           ))}
 
         </List>
-      </div> 
+      </div>
       <CreateTaskButton />
     </Paper>
   );

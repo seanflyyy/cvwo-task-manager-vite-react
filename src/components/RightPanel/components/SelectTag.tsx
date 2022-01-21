@@ -7,6 +7,8 @@ import TextField from '@mui/material/TextField';
 import CircleIcon from '@mui/icons-material/Circle';
 import Box from '@mui/material/Box';
 import {ListItemIcon, ListItemText} from '@mui/material';
+import React from 'react';
+
 
 interface ComboTag {
   title: string;
@@ -21,7 +23,7 @@ export interface ListProps {
   taskData: SingleTaskItem;
 }
 
-const SelectTag: React.FC<ListProps> = props => {
+const SelectTag: React.FC<ListProps> = (props) => {
   const dispatch = useAppDispatch();
   const setTag = (tagID: number) => {
     dispatch(updateTag(tagID));
@@ -36,8 +38,8 @@ const SelectTag: React.FC<ListProps> = props => {
         disablePortal
         id="controllable-states-demo"
         onChange={(
-          e: React.SyntheticEvent<Element, Event>,
-          newValue: ComboTag | null
+            e: React.SyntheticEvent<Element, Event>,
+            newValue: ComboTag | null,
         ) => {
           // eslint-disable-next-line eqeqeq
           if (newValue != null) {
@@ -47,7 +49,7 @@ const SelectTag: React.FC<ListProps> = props => {
         options={props.listData}
         isOptionEqualToValue={(option, value) => option.id === value.id}
         sx={{width: 192}}
-        getOptionLabel={option => option.title}
+        getOptionLabel={(option) => option.title}
         renderOption={(props, option) => (
           <Box
             component="li"
@@ -62,7 +64,7 @@ const SelectTag: React.FC<ListProps> = props => {
             {/* </ListItem> */}
           </Box>
         )}
-        renderInput={params => <TextField {...params} label="Assign" />}
+        renderInput={(params) => <TextField {...params} label="Assign" />}
       />
     </div>
   );

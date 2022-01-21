@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const DateTimeWidget: React.FC<SingleTaskItem> = props => {
+const DateTimeWidget: React.FC<SingleTaskItem> = (props) => {
   const dispatch = useAppDispatch();
   const classes = useStyles();
 
@@ -29,9 +29,9 @@ const DateTimeWidget: React.FC<SingleTaskItem> = props => {
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DateTimePicker
         className={classes.div}
-        renderInput={props => <TextField {...props} />}
+        renderInput={(props) => <TextField {...props} />}
         value={props.attributes.due}
-        onChange={newValue => {
+        onChange={(newValue) => {
           // eslint-disable-next-line eqeqeq
           if (newValue != null) {
             setDate(newValue);

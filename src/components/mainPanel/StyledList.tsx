@@ -22,20 +22,20 @@ const useStyles = makeStyles(() => ({
 
 const StyledList: React.FC = () => {
   const classes = useStyles();
-  const mainPanel = useAppSelector(state => state.mainPanel);
+  const mainPanel = useAppSelector((state) => state.mainPanel);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     (async () => {
       await axios
-        .get(`${ContainerClass.databaseLink}/labels`)
-        .then(resp => {
-          const tasks = resp.data['included'];
-          dispatch(setTaskList(tasks));
-        })
-        .catch(err => {
-          console.log(err);
-        });
+          .get(`${ContainerClass.databaseLink}/labels`)
+          .then((resp) => {
+            const tasks = resp.data['included'];
+            dispatch(setTaskList(tasks));
+          })
+          .catch((err) => {
+            console.log(err);
+          });
     })();
   }, []);
 
@@ -47,41 +47,36 @@ const StyledList: React.FC = () => {
       {/* <Paper elevation={3} > */}
       <List className={classes.list}>
         {mainPanel.data
-          .filter((task: SingleTaskItem) => {
-            if (mainPanel.filterKeyword === '') {
-              return task;
-            } else if (
-              task['attributes']['title']
-                .toLowerCase()
-                .includes(mainPanel.filterKeyword.toLowerCase())
-            ) {
-              return task;
-            }
-          })
-          .filter((task: SingleTaskItem) => {
-            if (mainPanel.tagID == 0) {
-              return task;
-            } else if (
-              mainPanel.tagID == -1 &&
+            .filter((task: SingleTaskItem) => {
+              if (mainPanel.filterKeyword === '') {
+                return task;
+              } else if (
+                task['attributes']['title']
+                    .toLowerCase()
+                    .includes(mainPanel.filterKeyword.toLowerCase())
+              ) {
+                return task;
+              }
+            })
+            .filter((task: SingleTaskItem) => {
+              if (mainPanel.tagID == 0) {
+                return task;
+              } else if (
+                mainPanel.tagID == -1 &&
               task.attributes.completed == true
-            ) {
-              return task;
-            } else if (task.attributes.label_id == mainPanel.tagID) {
-              return task;
-            }
-          })
-          .map((task: SingleTaskItem) => (
-            <NewListItem key={task.id} {...task} />
-          ))}
+              ) {
+                return task;
+              } else if (task.attributes.label_id == mainPanel.tagID) {
+                return task;
+              }
+            })
+            .map((task: SingleTaskItem) => (
+              <NewListItem key={task.id} {...task} />
+            ))}
       </List>
       {/* </Paper> */}
 
       <br />
-
-      {/* <br />
-            <Button variant="contained" color="secondary" component={Link} to="/">
-                {'Back to Home'}
-            </Button> */}
     </Grid>
   );
 };

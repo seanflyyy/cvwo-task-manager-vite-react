@@ -2,25 +2,22 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import {makeStyles} from '@mui/styles';
-import {Grid, Paper} from '@mui/material';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import { SketchPicker } from 'react-color';
+import {SketchPicker} from 'react-color';
 import CircleIcon from '@mui/icons-material/Circle';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import {ListItem, ListItemIcon} from '@mui/material';
 import IconButton from '@mui/material/IconButton';
-import { createTagOnDatabase } from '../../misc/database';
+import {createTagOnDatabase} from '../../misc/database';
 import axios from 'axios';
 import * as ContainerClass from '../../misc/constants';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import {useAppDispatch, useAppSelector} from '../../app/hooks';
 import {setAllTags} from '../../features/leftPanel/left-panel-slice';
-
-
 
 
 const useStyles = makeStyles(() => ({
@@ -38,7 +35,7 @@ const useStyles = makeStyles(() => ({
   },
   textField: {
     paddingRight: 17,
-  }
+  },
 }));
 
 const style = {
@@ -66,41 +63,50 @@ const CreateTagButton: React.FC = () => {
   const handleClose = () => setOpen(false);
   const handleChildOpen = () => setOpenChild(true);
   const handleChildClose = () => setOpenChild(false);
-  
+
   const dispatch = useAppDispatch();
-  const leftPanel = useAppSelector(state => state.leftPanel);
+  const leftPanel = useAppSelector((state) => state.leftPanel);
 
-
-
+  /**
+   * Gets all tags from database.
+   */
   function getAllTags() {
     (async () => {
       await axios
-        .get(`${ContainerClass.databaseLink}/labels`)
-        .then(resp => {
-          const tags = resp.data['data'];
-          if (tags.length == leftPanel.allTags.length) {
-            getAllTags();
-          } else {
-            dispatch(setAllTags(tags));
-            console.log('Created tag');
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+          .get(`${ContainerClass.databaseLink}/labels`)
+          .then((resp) => {
+            const tags = resp.data['data'];
+            if (tags.length == leftPanel.allTags.length) {
+              getAllTags();
+            } else {
+              dispatch(setAllTags(tags));
+              console.log('Created tag');
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
     })();
   }
-    
 
+  /**
+   * Gets all tags from database.
+   * @param {React.ChangeEventHandler<HTMLInputElement>} event - Event Handler
+   */
   function handleTextFieldChange(event: React.ChangeEvent<HTMLInputElement>) {
     setText(event.target.value);
   }
 
+  /**
+   * Creates tags and updates main panel task list.
+   * @param {React.ChangeEventHandler<HTMLInputElement>} event - Event Handler
+   */
   function createTag() {
     createTagOnDatabase({title: textFieldText, color: selectedColor});
     getAllTags();
     handleChildClose();
     handleClose();
+    setText('');
   }
 
   const handleChangeComplete = (color: any) => {
@@ -133,34 +139,34 @@ const CreateTagButton: React.FC = () => {
             <Typography variant="h4" sx={{paddingLeft: 3.5, paddingBottom: 1}}>
               Create Tag
             </Typography>
-            <ListItem> 
-              
+            <ListItem>
+
               <ListItemIcon>
                 <IconButton onClick={handleChildOpen}>
                   <CircleIcon sx={{color: selectedColor, fontSize: 34}}/>
                 </IconButton>
               </ListItemIcon>
-              <div className={classes.textField}> 
-              <TextField
-                id="outlined-basic"
-                label="Tag Name"
-                variant="outlined"
-                multiline
-                value={textFieldText}
-                onChange={handleTextFieldChange}
-              />
-              </div> 
+              <div className={classes.textField}>
+                <TextField
+                  id="outlined-basic"
+                  label="Tag Name"
+                  variant="outlined"
+                  multiline
+                  value={textFieldText}
+                  onChange={handleTextFieldChange}
+                />
+              </div>
               <Button onClick={createTag} variant="contained">
                 <CheckCircleIcon sx={{fontSize: 30}}/>
               </Button>
-              
+
             </ListItem>
             {openChild &&
             <div className={classes.colorPicker}>
-                  <SketchPicker
-                        color={selectedColor}
-                        onChangeComplete={handleChangeComplete}
-            />
+              <SketchPicker
+                color={selectedColor}
+                onChangeComplete={handleChangeComplete}
+              />
             </div>}
           </Box>
         </Fade>

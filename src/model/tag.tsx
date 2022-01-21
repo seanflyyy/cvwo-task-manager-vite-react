@@ -1,11 +1,11 @@
 export interface SingleTag {
   id: number;
   attributes: TagContent;
-  // relationships: {
-  //     tasks: {
-  //         data: Tasks;
-  //     };
-  // };
+  relationships: {
+      tasks: {
+          data: TaskForTags[];
+      };
+  };
 }
 
 interface TagContent {
@@ -14,13 +14,13 @@ interface TagContent {
   slug: string;
 }
 
-interface Tasks {
+export interface TaskForTags {
   id: string;
   type: string;
 }
 
 
 export interface CreateTagContent {
-  title: string; 
-  color: string; 
+  title: string;
+  color: string;
 }

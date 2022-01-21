@@ -3,10 +3,10 @@ import {closeRightPanel} from '../../../features/rightPanel/right-panel-slice';
 import {setTaskData} from '../../../features/mainPanel/main-panel-slice';
 import {SingleTaskItem} from '../../../model/task';
 import {updateTask} from '../../../misc/database';
-
+import React from 'react';
 import Button from '@mui/material/Button';
 
-const SubmitButton: React.FC<SingleTaskItem> = props => {
+const SubmitButton: React.FC<SingleTaskItem> = (props) => {
   const dispatch = useAppDispatch();
 
   return (

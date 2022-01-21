@@ -13,18 +13,26 @@ import {ListItemIcon, ListItemText, ListItem} from '@mui/material';
 
 import CustomCheckbox from './CustomCheckbox';
 
-const NewListItem: React.FC<SingleTaskItem> = props => {
+const NewListItem: React.FC<SingleTaskItem> = (props) => {
   const dispatch = useAppDispatch();
-  const allTags = useAppSelector(state => state.leftPanel.allTags);
+  const allTags = useAppSelector((state) => state.leftPanel.allTags);
   const tagData = allTags.find(
-    (tag: SingleTag) => tag.id == props.attributes.label_id
+      (tag: SingleTag) => tag.id == props.attributes.label_id,
   );
 
+  /**
+   * Handle click on the task.
+   */
   function handleTaskBodyClick() {
     dispatch(openRightPanel());
     dispatch(setTask(props));
   }
 
+  /**
+   * Convert date time to a string with the foramt Wed, 19 Jan 2022, 3:30 PM
+   * @param {string} dateTime - the date time from props.attributes.due
+   * @return {string}
+   */
   function convertDateToString(dateTime: string) {
     // console.log(props.attributes.title);
 
@@ -48,10 +56,15 @@ const NewListItem: React.FC<SingleTaskItem> = props => {
     return output;
   }
 
+  /**
+   * Convert the time portion of the props.attributes.due into a 12 hour format.
+   * @param {any} time = this will be the time in 24 hours format.
+   * @return {string}
+   */
   function convertTimeTo12Hours(time: any) {
     let convertedTime = time
-      .toString()
-      .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+        .toString()
+        .match(/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
 
     if (time.length > 1) {
       convertedTime = convertedTime.slice(1);
@@ -72,8 +85,6 @@ const NewListItem: React.FC<SingleTaskItem> = props => {
           primary={props.attributes.title}
           secondary={convertDateToString(props.attributes.due)}
         />
-        {/* <ListItemText primary={convertDateToString(props["attributes"]["due"])} /> */}
-
         <CircleIcon sx={{color: tagData?.attributes.color}} />
       </ListItem>
 

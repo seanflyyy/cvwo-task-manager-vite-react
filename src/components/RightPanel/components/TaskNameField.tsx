@@ -5,6 +5,7 @@ import {SingleTaskItem} from '../../../model/task';
 import {Stack, TextField} from '@mui/material';
 import {makeStyles} from '@mui/styles';
 import CustomCheckbox from '../../mainPanel/CustomCheckbox';
+import React from 'react';
 
 const useStyles = makeStyles(() => ({
   textField: {
@@ -23,10 +24,14 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const TaskNameField: React.FC<SingleTaskItem> = props => {
+const TaskNameField: React.FC<SingleTaskItem> = (props) => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
 
+  /**
+   * Updates task name field on the backend when data in field is changed.
+   * @param {React.ChangeEvent<HTMLInputElement>} event - change event handler
+   */
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     dispatch(updateTitle(event.target.value));
   }

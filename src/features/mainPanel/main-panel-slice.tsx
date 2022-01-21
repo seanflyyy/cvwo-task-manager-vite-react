@@ -36,7 +36,7 @@ const mainPanelSlice = createSlice({
     },
     setTaskData(state, action: PayloadAction<SingleTaskItem>) {
       const taskID = action.payload;
-      const index = state.data.findIndex(task => taskID.id == task.id);
+      const index = state.data.findIndex((task) => taskID.id == task.id);
       state.data[index] = action.payload;
     },
     addToMainPanelTaskList(state, action: PayloadAction<SingleTaskItem>) {

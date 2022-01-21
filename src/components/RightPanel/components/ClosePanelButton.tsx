@@ -6,6 +6,8 @@ import {IoMdClose} from 'react-icons/Io';
 import {makeStyles} from '@mui/styles';
 import {IconButton} from '@mui/material';
 
+import React from 'react';
+
 const useStyles = makeStyles(() => ({
   closePanelButton: {
     position: 'absolute',

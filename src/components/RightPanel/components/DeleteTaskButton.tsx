@@ -9,6 +9,7 @@ import {FiTrash} from 'react-icons/Fi';
 
 import {makeStyles} from '@mui/styles';
 import {IconButton} from '@mui/material';
+import React from 'react';
 
 const useStyles = makeStyles(() => ({
   deleteTaskButton: {
@@ -20,22 +21,22 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const DeleteTaskButton: React.FC<SingleTaskItem> = props => {
+const DeleteTaskButton: React.FC<SingleTaskItem> = (props) => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
-  const mainPanel = useAppSelector(state => state.mainPanel);
+  const mainPanel = useAppSelector((state) => state.mainPanel);
 
   const deleteTask = (taskID: number) => {
     console.log(taskID);
     (async () => {
       await axios
-        .delete(`${ContainerClass.databaseLink}/tasks/${taskID}`)
-        .then(resp => {
-          console.log(resp.status);
-        })
-        .catch(err => {
-          console.log(err);
-        });
+          .delete(`${ContainerClass.databaseLink}/tasks/${taskID}`)
+          .then((resp) => {
+            console.log(resp.status);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
     })();
   };
 
@@ -43,20 +44,20 @@ const DeleteTaskButton: React.FC<SingleTaskItem> = props => {
     // reloads the task list in the main section
     (async () => {
       await axios
-        .get(`${ContainerClass.databaseLink}/labels`)
-        .then(resp => {
-          const tasks = resp.data['included'];
-          if (tasks.length === mainPanel.data.length) {
+          .get(`${ContainerClass.databaseLink}/labels`)
+          .then((resp) => {
+            const tasks = resp.data['included'];
+            if (tasks.length === mainPanel.data.length) {
             // recursively call database until the currentList has been updated
-            getTasks();
-          } else {
-            dispatch(setTaskList(tasks));
-            console.log('dispatched');
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+              getTasks();
+            } else {
+              dispatch(setTaskList(tasks));
+              console.log('dispatched');
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
     })();
   };
   return (

@@ -46,18 +46,18 @@ const useStyles = makeStyles(() => ({
 
 const RightPanel: React.FC = () => {
   const classes = useStyles();
-  const selectedTask: SingleTaskItem = useAppSelector(state => state.task);
-  const tags = useAppSelector(state => state.leftPanel.allTags).map(
-    (tag: SingleTag) => ({
-      title: tag.attributes.title,
-      color: tag.attributes.color,
-      id: tag.id,
-      slug: tag.attributes.slug,
-    })
+  const selectedTask: SingleTaskItem = useAppSelector((state) => state.task);
+  const tags = useAppSelector((state) => state.leftPanel.allTags).map(
+      (tag: SingleTag) => ({
+        title: tag.attributes.title,
+        color: tag.attributes.color,
+        id: tag.id,
+        slug: tag.attributes.slug,
+      }),
   );
   const initialValueTag = tags.find(
-    // eslint-disable-next-line eqeqeq
-    x => x.id == selectedTask.attributes.label_id
+      // eslint-disable-next-line eqeqeq
+      (x) => x.id == selectedTask.attributes.label_id,
   );
 
   return (

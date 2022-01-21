@@ -9,7 +9,7 @@ export const getLabel = (tagID: number) => {
 
   (async () => {
     const result = await axios.get(
-      `${ContainerClass.databaseLink}/labels/${tagID}`
+        `${ContainerClass.databaseLink}/labels/${tagID}`,
     );
     const tasks = result.data['data'];
     setData(tasks);
@@ -24,7 +24,7 @@ export const getSpecificTask = (id: number) => {
 
   (async () => {
     const result = await axios.get(
-      `${ContainerClass.databaseLink}/tasks/${id}`
+        `${ContainerClass.databaseLink}/tasks/${id}`,
     );
     const task = result.data['data'];
     setData(task);
@@ -36,26 +36,27 @@ export const getSpecificTask = (id: number) => {
 export const updateTask = (id: number, taskContent: TaskContent) => {
   (async () => {
     await axios
-      .patch(`${ContainerClass.databaseLink}/tasks/${id}`, taskContent)
-      .then(resp => console.log(resp.status));
+        .patch(`${ContainerClass.databaseLink}/tasks/${id}`, taskContent)
+        .then((resp) => console.log(resp.status));
   })();
 };
 
 export const createTaskOnDatabase = async (taskContent: TaskContent) => {
   await axios
-    .post(`${ContainerClass.databaseLink}/tasks`, taskContent)
-    .then(resp => {
-      console.log(resp.status);
-    })
-    .catch(err => console.log(err));
+      .post(`${ContainerClass.databaseLink}/tasks`, taskContent)
+      .then((resp) => {
+        console.log(resp.status);
+      })
+      .catch((err) => console.log(err));
 };
 
 
+// eslint-disable-next-line max-len
 export const createTagOnDatabase = async (createTagContent: CreateTagContent) => {
   await axios
-    .post(`${ContainerClass.databaseLink}/labels`, createTagContent)
-    .then(resp => {
-      console.log(resp.status);
-    })
-    .catch(err => console.log(err));
+      .post(`${ContainerClass.databaseLink}/labels`, createTagContent)
+      .then((resp) => {
+        console.log(resp.status);
+      })
+      .catch((err) => console.log(err));
 };
