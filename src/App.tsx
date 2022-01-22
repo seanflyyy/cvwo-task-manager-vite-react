@@ -8,6 +8,9 @@ import {createTheme, ThemeProvider} from '@mui/material';
 import {blue, orange} from '@mui/material/colors';
 import Home from './components/Home';
 import Dashboard from './components/Dashboard';
+import axios from 'axios';
+import {useAppDispatch, useAppSelector} from './app/hooks';
+import {forceUserLogout, handleLogin} from './features/auth/auth-slice';
 
 const theme = createTheme({
   palette: {
@@ -17,6 +20,36 @@ const theme = createTheme({
 });
 
 const App: React.FC = () => {
+  const [counter, setCounter] = React.useState(0);
+  const auth = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+
+  if (counter == 0) {
+    checkLoginStatus();
+    setCounter(1);
+  }
+
+  /**
+   * Checks login status by making a call to log in route.
+   */
+  function checkLoginStatus() {
+    axios.get('http://localhost:3000/logged_in', {withCredentials: true})
+        .then((response) => {
+          if (response.data.logged_in &&
+            auth.loggedInStatus === 'NOT_LOGGED_IN') {
+            localStorage.setItem('token', response.data.token);
+            dispatch(handleLogin(response.data.user));
+          } else if (!response.data.logged_in &&
+            auth.loggedInStatus === 'LOGGED_IN') {
+            localStorage.setItem('token', '');
+            dispatch(forceUserLogout());
+          }
+        })
+        .catch((error) => {
+          console.log('check login error', error);
+        });
+  }
+
   return (
     <div className="App">
       <ThemeProvider theme={theme}>

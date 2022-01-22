@@ -32,7 +32,7 @@ const Registration: React.FC = () => {
     }, {withCredentials: true},
     ).then((response) => {
       if (response.data.status === 'created') {
-        localStorage.setItem('token', response.data.jwt);
+        localStorage.setItem('token', response.data.token);
         console.log('registration res', response);
 
         dispatch(handleLogin(response.data.user));

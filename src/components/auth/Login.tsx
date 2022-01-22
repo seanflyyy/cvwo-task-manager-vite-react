@@ -31,7 +31,7 @@ const Login: React.FC = () => {
     ).then((response) => {
       if (response.data.logged_in) {
         console.log('res from login', response);
-        localStorage.setItem('token', response.data.jwt);
+        localStorage.setItem('token', response.data.token);
 
         dispatch(handleLogin(response.data.user));
         navigate('/dashboard');

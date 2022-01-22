@@ -37,11 +37,21 @@ const authSlice = createSlice({
       state.loggedInStatus = 'LOGGED_IN';
       state.user = action.payload;
     },
+    forceUserLogout(state) {
+      state.loggedInStatus = 'NOT_LOGGED_IN';
+      state.user = {
+        email: '',
+        created_at: '',
+        id: 0,
+        password_digest: '',
+        updated_at: '',
+      };
+    },
   },
 });
 
 // in redux, we usually see action creators, a function that
 // returns an action object create slice made one of that for us
 
-export const {handleLogin} = authSlice.actions;
+export const {handleLogin, forceUserLogout} = authSlice.actions;
 export default authSlice.reducer;
