@@ -8,8 +8,10 @@ import Typewriter from 'typewriter-effect';
 
 import {Typography, Grid} from '@mui/material';
 
+import {useHistory} from 'react-router-dom';
+
 const StyledPage: React.FC = () => {
-  const rightPanelOpen = useAppSelector(state => state.rightPanel);
+  const rightPanelOpen = useAppSelector((state) => state.rightPanel);
 
   return (
     <Grid container direction="column">
@@ -19,11 +21,11 @@ const StyledPage: React.FC = () => {
           options={{
             cursor: '',
           }}
-          onInit={typewriter => {
+          onInit={(typewriter) => {
             typewriter
-              .changeDelay(80)
-              .typeString('Welcome to your Task Manager!')
-              .start();
+                .changeDelay(80)
+                .typeString('Welcome to your Task Manager!')
+                .start();
           }}
         />
       </Typography>
