@@ -8,12 +8,11 @@ import {
 } from '../../features/auth/auth-slice';
 import {useNavigate} from 'react-router-dom';
 
-const Registration: React.FC = () => {
+const Login: React.FC = () => {
   const [formValues, setFormValues] = React.useState({
     email: '',
     password: '',
-    password_confirmation: '',
-    registrationErrors: '',
+    loginErrors: '',
   });
 
   const dispatch = useAppDispatch();
@@ -23,24 +22,23 @@ const Registration: React.FC = () => {
    * @param {any} event - Form submit event
    */
   function handleSubmit(event: any) {
-    axios.post('http://localhost:3000/registrations', {
+    axios.post('http://localhost:3000/sessions', {
       user: {
         email: formValues.email,
         password: formValues.password,
-        password_confirmation: formValues.password_confirmation,
       },
     }, {withCredentials: true},
     ).then((response) => {
-      if (response.data.status === 'created') {
+      if (response.data.logged_in) {
+        console.log('res from login', response);
         localStorage.setItem('token', response.data.jwt);
-        console.log('registration res', response);
 
         dispatch(handleLogin(response.data.user));
         navigate('/dashboard');
       }
     })
         .catch((error) => {
-          console.log('registration error', error);
+          console.log('login error', error);
         });
     event.preventDefault();
   }
@@ -69,17 +67,11 @@ const Registration: React.FC = () => {
           value={formValues.password}
           onChange={handleChange}
           required/>
-        <input
-          type="password" name="password_confirmation"
-          placeholder="Password confirmation"
-          value={formValues.password_confirmation}
-          onChange={handleChange}
-          required/>
 
-        <button type="submit">Register</button>
+        <button type="submit">Login</button>
       </form>
     </h1>
   </div>;
 };
 
-export default Registration;
+export default Login;
