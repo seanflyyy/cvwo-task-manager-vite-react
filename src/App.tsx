@@ -10,7 +10,7 @@ import Home from './components/Home';
 import Dashboard from './components/Dashboard';
 import axios from 'axios';
 import {useAppDispatch, useAppSelector} from './app/hooks';
-import {forceUserLogout, handleLogin} from './features/auth/auth-slice';
+import {handleLogout, handleLogin} from './features/auth/auth-slice';
 
 const theme = createTheme({
   palette: {
@@ -42,7 +42,7 @@ const App: React.FC = () => {
           } else if (!response.data.logged_in &&
             auth.loggedInStatus === 'LOGGED_IN') {
             localStorage.setItem('token', '');
-            dispatch(forceUserLogout());
+            dispatch(handleLogout());
           }
         })
         .catch((error) => {
