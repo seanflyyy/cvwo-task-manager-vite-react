@@ -1,29 +1,98 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
+import axios from 'axios';
+import {useAppDispatch} from '../../app/hooks';
+import {
+  handleLogin,
+} from '../../features/auth/auth-slice';
+import {useNavigate} from 'react-router-dom';
+import validator from 'validator';
 
 const theme = createTheme();
 
 const SignUp: React.FC = () => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const [formValues, setFormValues] = React.useState({
+    email: '',
+    password: '',
+    password_confirmation: '',
+  });
+  const [emailError, setEmailError] = React.useState('');
+  const [passwordError, setPasswordError] = React.useState('');
+
+
+  /**
+   * Handles form handle submit
+   * @param {any} event - Form submit event
+   */
+  function handleSubmit(event: any) {
+    if (isEmailValid()) {
+      event.preventDefault();
+    } else {
+      axios.post('http://localhost:3000/registrations', {
+        user: {
+          email: formValues.email,
+          password: formValues.password,
+          password_confirmation: formValues.password_confirmation,
+        },
+      }, {withCredentials: true},
+      ).then((response) => {
+        if (response.data.status === 'created') {
+          localStorage.setItem('token', response.data.token);
+          console.log('registration res', response);
+
+          dispatch(handleLogin(response.data.user));
+          navigate('/dashboard');
+        } else if (response.data.status == 422) {
+          setPasswordError(response.data.error.split(': ')[1]);
+          // alert(response.data.error);
+        }
+      })
+          .catch((error) => {
+            alert(error);
+          });
+      event.preventDefault();
+    }
+  }
+
+  /**
+   * Handles textfield change
+   * @param {any} event - Form change event
+   */
+  function handleChange(event: any) {
+    if (event.target.name === 'email') {
+      event.target.value === '' ?
+      setEmailError('') :
+      setEmailError(' ');
+    } else {
+      event.target.value === '' ?
+      setPasswordError('') :
+      setPasswordError(' ');
+    }
+    setFormValues({...formValues, [event.target.name]: event.target.value});
+  }
+
+  /**
+   * Validates email
+   * @return {boolean}
+   */
+  const isEmailValid = () => {
+    if (validator.isEmail(formValues.email)) {
+      setEmailError(' ');
+      return false;
+    } else {
+      setEmailError('Invalid Email');
+      return true;
+    }
   };
 
   return (
@@ -38,62 +107,62 @@ const SignUp: React.FC = () => {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
-            <LockOutlinedIcon />
-          </Avatar>
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt: 3}}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
-              </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
+                  error={emailError == '' ||
+                  emailError === 'Invalid Email'}
+                  helperText={emailError === '' ?
+                'Empty field' :
+                emailError}
+                  value={formValues.email}
                   id="email"
                   label="Email Address"
                   name="email"
+                  type="email"
                   autoComplete="email"
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
+                  value={formValues.password}
                   name="password"
                   label="Password"
+                  error={passwordError !== ' '}
+                  helperText={passwordError===''?
+                  'Empty field' :
+                  passwordError}
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary"
-                  />}
-                  label="I want to receive inspiration,
-                  marketing promotions and updates via email."
+                <TextField
+                  required
+                  fullWidth
+                  value={formValues.password_confirmation}
+                  name="password_confirmation"
+                  label="Password confirmation"
+                  error={passwordError !== ' '}
+                  helperText={passwordError===''?
+                  'Empty field' :
+                  passwordError}
+                  type="password"
+                  id="password_confirmation"
+                  autoComplete="new-password"
+                  onChange={handleChange}
+
                 />
               </Grid>
             </Grid>
@@ -105,13 +174,12 @@ const SignUp: React.FC = () => {
             >
               Sign Up
             </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="#" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
+
+            <Link href="/login" variant="body2">
+                  Already have an account? Log In
+            </Link>
+
+
           </Box>
         </Box>
       </Container>

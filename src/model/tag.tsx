@@ -12,6 +12,7 @@ interface TagContent {
   title: string;
   color: string;
   slug: string;
+  user_id: number;
 }
 
 export interface TaskForTags {

@@ -46,7 +46,10 @@ const StyledList: React.FC = () => {
       <div />
       {/* <Paper elevation={3} > */}
       <List className={classes.list}>
-        {mainPanel.data
+        {
+        mainPanel.data == null ?
+        <div></div> :
+        mainPanel.data
             .filter((task: SingleTaskItem) => {
               if (mainPanel.filterKeyword === '') {
                 return task;

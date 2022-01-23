@@ -8,4 +8,5 @@ export interface TaskContent {
   completed: boolean;
   due: string;
   label_id: number;
+  user_id: number;
 }

@@ -111,7 +111,9 @@ const LeftPanel: React.FC = () => {
               relationships: emptyRelationshipData,
             }} />
           <DividerForList/>
-          {leftPanel.allTags.map((tag: SingleTag) => (
+          {leftPanel.allTags == null ?
+          <div></div> :
+          leftPanel.allTags.map((tag: SingleTag) => (
             <TagItem key={tag.id} {...tag} />
           ))}
 

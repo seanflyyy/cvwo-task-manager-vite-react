@@ -6,8 +6,6 @@ import React from 'react';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import {createTheme, ThemeProvider} from '@mui/material';
 import {blue, orange} from '@mui/material/colors';
-import Home from './components/Home';
-import Dashboard from './components/Dashboard';
 import axios from 'axios';
 import {useAppDispatch, useAppSelector} from './app/hooks';
 import {handleLogout, handleLogin} from './features/auth/auth-slice';
@@ -45,9 +43,6 @@ const App: React.FC = () => {
             auth.loggedInStatus === 'LOGGED_IN') {
             dispatch(handleLogout());
             localStorage.removeItem('token');
-          } else {
-            localStorage.setItem('token', response.data.token);
-            dispatch(handleLogin(response.data.user));
           }
         })
         .catch((error) => {
@@ -63,10 +58,7 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/login" element={<LogIn/>}/>
             <Route path="/signup" element={<SignUp/>}/>
-            <Route path="/dashboard" element={<Dashboard/>}/>
-            // {/* <Route path="/styled" element={<StyledPage />} /> */}
-            // {/* <Route path="/" element={<StyledPage />} /> */}
-            // {/* <Route path="/" element={<Home />} /> */}
+            <Route path="/dashboard" element={<StyledPage/>}/>
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
