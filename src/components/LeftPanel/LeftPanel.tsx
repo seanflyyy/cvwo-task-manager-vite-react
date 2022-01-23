@@ -126,7 +126,8 @@ const LeftPanel: React.FC = () => {
 
         </List>
       </div>
-      <CreateOrEditTagButton {...{createOrEdit: 'Create', tagData: null}}/>
+      <CreateOrEditTagButton {...{createOrEdit: 'Create', tagData: null,
+        hideButtons: () => {}}}/>
     </Paper>
   );
 };

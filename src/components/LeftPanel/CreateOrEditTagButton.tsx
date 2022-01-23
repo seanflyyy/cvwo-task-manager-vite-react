@@ -1,21 +1,29 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
+import axios from 'axios';
+import {CompactPicker} from 'react-color';
+
+import {
+  Button,
+  Backdrop,
+  Modal,
+  Fade,
+  Typography,
+  TextField,
+  ListItem,
+  ListItemIcon,
+  Box,
+  IconButton,
+} from '@mui/material';
 import {makeStyles} from '@mui/styles';
-import Backdrop from '@mui/material/Backdrop';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import {SketchPicker} from 'react-color';
+
+
+import AddIcon from '@mui/icons-material/Add';
 import CircleIcon from '@mui/icons-material/Circle';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import {ListItem, ListItemIcon} from '@mui/material';
-import IconButton from '@mui/material/IconButton';
+
 import {MdEdit} from 'react-icons/Md';
+
 import {createTagOnDatabase, updateTag} from '../../misc/database';
-import axios from 'axios';
 import * as ContainerClass from '../../misc/constants';
 import {useAppDispatch, useAppSelector} from '../../app/hooks';
 import {setAllTags} from '../../features/leftPanel/left-panel-slice';
@@ -42,7 +50,7 @@ const useStyles = makeStyles(() => ({
     padding: 0,
   },
   editIcon: {
-    color: 'blue',
+    color: 'gray',
   },
 }));
 
@@ -60,6 +68,7 @@ const style = {
 };
 interface EditOrCreateTagInterface {
   createOrEdit: string,
+  hideButtons: Function,
   tagData: SingleTag | null,
 }
 
@@ -84,6 +93,32 @@ const CreateOrEditTagButton: React.FC<EditOrCreateTagInterface> = (props) => {
   const dispatch = useAppDispatch();
   const leftPanel = useAppSelector((state) => state.leftPanel);
   const auth = useAppSelector((state) => state.auth);
+  // define a state for the color prop
+
+  /**
+   * Creates tags and updates main panel task list.
+   * @param {string} textFieldText - text of the text field
+   * @param {string} selectedColor - Color that user selects tag
+   */
+  function manageTag(textFieldText: string, selectedColor: string) {
+    textFieldText = textFieldText.trim();
+    props.createOrEdit == 'Create' ?
+    createTagOnDatabase({
+      title: textFieldText,
+      color: selectedColor,
+      user_id: auth.user.id}) :
+    updateTag(props.tagData!.id, {
+      title: textFieldText,
+      color: selectedColor,
+      user_id: auth.user.id});
+    getAllTags();
+    handleChildClose();
+    handleClose();
+    if (props.createOrEdit == 'Edit') {
+      props!.hideButtons();
+    }
+  }
+
   /**
    * Gets all tags from database.
    */
@@ -130,30 +165,9 @@ const CreateOrEditTagButton: React.FC<EditOrCreateTagInterface> = (props) => {
     setText(event.target.value);
   }
 
-  /**
-   * Creates tags and updates main panel task list.
-   * @param {string} textFieldText - text of the text field
-   * @param {string} selectedColor - Color that user selects tag
-   */
-  function manageTag(textFieldText: string, selectedColor: string) {
-    textFieldText = textFieldText.trim();
-    props.createOrEdit == 'Create' ?
-    createTagOnDatabase({
-      title: textFieldText,
-      color: selectedColor,
-      user_id: auth.user.id}) :
-    updateTag(props.tagData!.id, {
-      title: textFieldText,
-      color: selectedColor,
-      user_id: auth.user.id});
-    getAllTags();
-    handleChildClose();
-    handleClose();
-  }
-
 
   const handleChangeComplete = (color: any) => {
-    handleChildClose();
+    // handleChildClose();
     setColor(color.hex);
   };
 
@@ -181,7 +195,12 @@ const CreateOrEditTagButton: React.FC<EditOrCreateTagInterface> = (props) => {
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         open={open}
-        onClose={handleClose}
+        onClose={() => {
+          handleClose();
+          if (props.createOrEdit == 'Edit') {
+          props!.hideButtons();
+          }
+        }}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
@@ -191,7 +210,7 @@ const CreateOrEditTagButton: React.FC<EditOrCreateTagInterface> = (props) => {
         <Fade in={open}>
           <Box sx={style}>
             <Typography variant="h4" sx={{paddingLeft: 3.5, paddingBottom: 1}}>
-              {props.createOrEdit == 'Create' ? 'CreateTask' : 'EditTask'}
+              {props.createOrEdit == 'Create' ? 'Create Task' : 'Edit Task'}
             </Typography>
             <ListItem>
               <ListItemIcon>
@@ -216,11 +235,11 @@ const CreateOrEditTagButton: React.FC<EditOrCreateTagInterface> = (props) => {
             </ListItem>
             {openChild &&
             <div className={classes.colorPicker}>
-              <SketchPicker
+              <CompactPicker
                 color={props.createOrEdit == 'Create' ?
                 selectedColor :
                 props.tagData?.attributes.color}
-                onChangeComplete={handleChangeComplete}
+                onChange={handleChangeComplete}
               />
             </div>}
           </Box>

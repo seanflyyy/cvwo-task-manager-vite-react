@@ -27,15 +27,20 @@ const useStyles = makeStyles(() => ({
   },
   trashCan: {
     //   paddingLeft: 30,
-    color: 'red',
+    color: '#F44E3B',
   },
   divTagButton: {
     paddingLeft: 0,
   },
 }));
 
+interface DeleteButtonInterface {
+  tagData: SingleTag,
+  hideButtons: Function,
+}
 
-const DeleteTagButton: React.FC<SingleTag> = (props) => {
+
+const DeleteTagButton: React.FC<DeleteButtonInterface> = (props) => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const mainPanel = useAppSelector((state) => state.mainPanel);
@@ -45,20 +50,25 @@ const DeleteTagButton: React.FC<SingleTag> = (props) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  console.log(props.relationships.tasks.data);
-
+  /**
+ * Close modal completely
+ */
+  const closeModal = () => {
+    props.hideButtons();
+    handleClose();
+  };
   /**
    * Deletes tasks under tag and the tag and updates the task list and tag list.
    */
   const handleDeleteTaskEvent = () => {
-    props.relationships.tasks.data.forEach((element: TaskForTags) => {
+    props.tagData.relationships.tasks.data.forEach((element: TaskForTags) => {
       deleteTask(+element.id);
     });
     getTasks();
-    deleteTag(props.id);
+    deleteTag(props.tagData.id);
+    closeModal();
     getTags();
   };
-
 
   /**
    * Retrieves all the tasks from the backend and recursively calls itself
@@ -138,7 +148,7 @@ const DeleteTagButton: React.FC<SingleTag> = (props) => {
       </div>
       <Modal
         open={open}
-        onClose={handleClose}
+        onClose={closeModal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -162,7 +172,7 @@ const DeleteTagButton: React.FC<SingleTag> = (props) => {
             alignItems="center"
             justifyContent="center">
             <Typography variant="h6" fontWeight="bold">
-              "{props.attributes.title}" and all the tasks under it
+              "{props.tagData.attributes.title}" and all the tasks under it
               will be deleted
             </Typography>
             <Typography id="modal-modal-description" sx={{mt: 2, mb: 2}}>
@@ -172,13 +182,13 @@ const DeleteTagButton: React.FC<SingleTag> = (props) => {
               <Button
                 variant="outlined"
                 color="error"
-                onClick={() => handleClose()}
+                onClick={closeModal}
               >
                 Cancel
               </Button>
               <Button
                 variant="outlined"
-                onClick={() => handleDeleteTaskEvent()}>
+                onClick={handleDeleteTaskEvent}>
                 Delete
               </Button>
             </Stack>

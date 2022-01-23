@@ -66,8 +66,10 @@ const TagItem: React.FC<SingleTag> = (props) => {
       <ListItemText primary={props['attributes']['title']} />
       {deleteButtonState && props.id != 0 && props.id != -1 && props.id != -2 &&
         <ListItemIcon>
-          <CreateOrEditTagButton {...{createOrEdit: 'Edit', tagData: props}}/>
-          <DeleteTagButton {...props}/>
+          <CreateOrEditTagButton {...{createOrEdit: 'Edit', tagData: props,
+            hideButtons: handleMouseLeave}}/>
+          <DeleteTagButton {...{tagData: props,
+            hideButtons: handleMouseLeave}}/>
         </ListItemIcon>
       }
       {/* </ListItem> */}
