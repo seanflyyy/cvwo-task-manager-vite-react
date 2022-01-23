@@ -11,6 +11,8 @@ import Dashboard from './components/Dashboard';
 import axios from 'axios';
 import {useAppDispatch, useAppSelector} from './app/hooks';
 import {handleLogout, handleLogin} from './features/auth/auth-slice';
+import LogIn from './components/auth/Login';
+import SignUp from './components/auth/Signup';
 
 const theme = createTheme({
   palette: {
@@ -41,8 +43,11 @@ const App: React.FC = () => {
             dispatch(handleLogin(response.data.user));
           } else if (!response.data.logged_in &&
             auth.loggedInStatus === 'LOGGED_IN') {
-            localStorage.setItem('token', '');
             dispatch(handleLogout());
+            localStorage.removeItem('token');
+          } else {
+            localStorage.setItem('token', response.data.token);
+            dispatch(handleLogin(response.data.user));
           }
         })
         .catch((error) => {
@@ -56,7 +61,8 @@ const App: React.FC = () => {
         <BrowserRouter>
 
           <Routes>
-            <Route path="/" element={<Home/>}/>
+            <Route path="/login" element={<LogIn/>}/>
+            <Route path="/signup" element={<SignUp/>}/>
             <Route path="/dashboard" element={<Dashboard/>}/>
             // {/* <Route path="/styled" element={<StyledPage />} /> */}
             // {/* <Route path="/" element={<StyledPage />} /> */}

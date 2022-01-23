@@ -1,22 +1,30 @@
-/* eslint-disable require-jsdoc */
-
-import React from 'react';
-import axios from 'axios';
+import * as React from 'react'; ;
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {useAppDispatch} from '../../app/hooks';
+import {useNavigate} from 'react-router-dom';
 import {
   handleLogin,
 } from '../../features/auth/auth-slice';
-import {useNavigate} from 'react-router-dom';
+import axios from 'axios';
 
-const Login: React.FC = () => {
+const theme = createTheme();
+
+const LogIn: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [formValues, setFormValues] = React.useState({
     email: '',
     password: '',
     loginErrors: '',
   });
 
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   /**
    * Handles form handle submit
    * @param {any} event - Form submit event
@@ -51,27 +59,60 @@ const Login: React.FC = () => {
     setFormValues({...formValues, [event.target.name]: event.target.value});
   }
 
-  // eslint-disable-next-line require-jsdoc
-  return <div>
-    <h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email" name="email"
-          placeholder="Email"
-          value={formValues.email}
-          onChange={handleChange}
-          required/>
-        <input
-          type="password" name="password"
-          placeholder="Password"
-          value={formValues.password}
-          onChange={handleChange}
-          required/>
-
-        <button type="submit">Login</button>
-      </form>
-    </h1>
-  </div>;
+  return (
+    <ThemeProvider theme={theme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Typography component="h1" variant="h5">
+            Login
+          </Typography>
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              onChange={handleChange}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={handleChange}
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{mt: 3, mb: 2}}
+            >
+              Login
+            </Button>
+            <Link href="/signup" variant="body2">
+              {'Don\'t have an account? Sign Up'}
+            </Link>
+          </Box>
+        </Box>
+      </Container>
+    </ThemeProvider>
+  );
 };
 
-export default Login;
+export default LogIn;

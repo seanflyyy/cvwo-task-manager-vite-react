@@ -1,6 +1,6 @@
 import React from 'react';
 import {useAppSelector, useAppDispatch} from '../app/hooks';
-import Login from './auth/Login';
+import Login from './auth/LoginV1';
 import Registration from './auth/Registration';
 import {handleLogout} from '../features/auth/auth-slice';
 import axios from 'axios';
