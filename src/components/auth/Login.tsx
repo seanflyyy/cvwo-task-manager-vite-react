@@ -19,6 +19,7 @@ const theme = createTheme();
 const LogIn: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [logInError, setError] = React.useState('');
   const [formValues, setFormValues] = React.useState({
     email: '',
     password: '',
@@ -40,10 +41,13 @@ const LogIn: React.FC = () => {
       if (response.data.logged_in) {
         console.log('res from login', response);
         localStorage.setItem('token', response.data.token);
-
+        setError('');
         dispatch(handleLogin(response.data.user));
         navigate('/dashboard');
+      } else if (response.data.status === 400) {
+        setError('Invalid email or password provided');
       }
+      console.log(response);
     })
         .catch((error) => {
           console.log('login error', error);
@@ -80,6 +84,8 @@ const LogIn: React.FC = () => {
               required
               fullWidth
               id="email"
+              error={logInError !== ''}
+              helperText={logInError}
               label="Email Address"
               name="email"
               autoComplete="email"
@@ -94,6 +100,8 @@ const LogIn: React.FC = () => {
               label="Password"
               type="password"
               id="password"
+              error={logInError !== ''}
+              helperText={logInError}
               autoComplete="current-password"
               onChange={handleChange}
             />
