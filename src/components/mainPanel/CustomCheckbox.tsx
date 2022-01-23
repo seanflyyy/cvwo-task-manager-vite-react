@@ -27,6 +27,7 @@ const CustomCheckbox: React.FC<SingleTaskItem> = (props) => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const mainPanel = useAppSelector((state) => state.mainPanel);
+  const auth = useAppSelector((state) => state.auth);
   const selectedTask: SingleTaskItem = useAppSelector((state) => state.task);
 
   /**
@@ -38,7 +39,11 @@ const CustomCheckbox: React.FC<SingleTaskItem> = (props) => {
     // reloads the task list in the main section
     (async () => {
       await axios
-          .get(`${ContainerClass.databaseLink}/labels`)
+          .get(`${ContainerClass.databaseLink}/labels`, {
+            headers: {
+              'Authorization': `token ${localStorage.getItem('token')}`,
+            },
+          })
           .then((resp) => {
             const tasks = resp.data['included'];
             // eslint-disable-next-line eqeqeq
@@ -75,6 +80,7 @@ const CustomCheckbox: React.FC<SingleTaskItem> = (props) => {
           completed: !props.attributes.completed,
           due: props.attributes.due,
           label_id: props.attributes.label_id,
+          user_id: auth.user.id,
         });
         getTasks(props.id);
       }}

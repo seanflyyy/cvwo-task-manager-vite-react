@@ -142,7 +142,7 @@ const CreateTaskField: React.FC = () => {
       alert(
           validityCheckOutput +
           '\n\n' +
-          'Please ensure that your input is of the appropriate format.' +
+          'Please also ensure that your input is of the appropriate format.' +
           '\n\n' +
           'Example formats are: ' +
           '\n' +
@@ -212,11 +212,14 @@ const CreateTaskField: React.FC = () => {
       dueDate: string,
       assignedTag: string,
   ) {
+    console.log(dueDate);
+    console.log(typeof dueDate);
+
     if (taskName == '') {
       console.log(taskName);
       return 'An invalid task name provided.' +
       'Please ensure that you have provided a valid task name.';
-    } else if (!isNaN(Date.parse(dueDate))) {
+    } else if (dueDate.includes('undefined') || !isNaN(Date.parse(dueDate)) ) {
       const errorMessage =
         'An invalid date and time has been provided.\r\nPlease ' +
         'ensure that you have provided a valid date and time.';
@@ -226,8 +229,9 @@ const CreateTaskField: React.FC = () => {
           (x) => x.attributes.title.toLowerCase() == assignedTag.toLowerCase(),
       ) == null
     ) {
-      return 'An invalid tag has been provided. Please ensure that a' +
-      'tag has been created.';
+      console.log(assignedTag);
+      return 'An invalid tag has been provided. Please ensure that the ' +
+      'tag you wish to assign this task to has been created.';
     } else {
       return 'Valid';
     }

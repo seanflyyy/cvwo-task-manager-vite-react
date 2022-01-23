@@ -38,6 +38,7 @@ const taskSlice = createSlice({
       state.attributes.due = action.payload.attributes.due;
       state.attributes.label_id = action.payload.attributes.label_id;
       state.attributes.title = action.payload.attributes.title;
+      state.attributes.user_id = action.payload.attributes.user_id;
       state.id = action.payload.id;
     },
     updateTitle(state, action: PayloadAction<string>) {

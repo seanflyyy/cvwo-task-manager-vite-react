@@ -31,7 +31,11 @@ const DeleteTaskButton: React.FC<SingleTaskItem> = (props) => {
     // reloads the task list in the main section
     (async () => {
       await axios
-          .get(`${ContainerClass.databaseLink}/labels`)
+          .get(`${ContainerClass.databaseLink}/labels`, {
+            headers: {
+              'Authorization': `token ${localStorage.getItem('token')}`,
+            },
+          })
           .then((resp) => {
             const tasks = resp.data['included'];
             if (tasks.length === mainPanel.data.length) {
