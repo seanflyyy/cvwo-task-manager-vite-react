@@ -1,18 +1,18 @@
-import DateTimeWidget from './components/DateTimePicker';
-import TaskNameField from './components/TaskNameField';
-import SelectTag from './components/SelectTag';
-import DeleteTaskButton from './components/DeleteTaskButton';
-import SubmitButton from './components/SubmitButton';
-import ClosePanelButton from './components/ClosePanelButton';
+import DateTimeWidget from '../components/rightPanel/DateTimePicker';
+import TaskNameField from '../components/rightPanel/TaskNameField';
+import SelectTag from '../components/rightPanel/SelectTag';
+import DeleteTaskButton from '../components/rightPanel/DeleteTaskButton';
+import SubmitButton from '../components/rightPanel/SubmitButton';
+import ClosePanelButton from '../components/rightPanel/ClosePanelButton';
 
-import {SingleTag} from '../../model/tag';
-import {useAppSelector} from '../../app/hooks';
+import {SingleTag} from '../model/tag';
+import {useAppSelector} from '../app/hooks';
 
 import React from 'react';
 
 import {makeStyles} from '@mui/styles';
 import {Paper, List, ListItem} from '@mui/material';
-import {SingleTaskItem} from '../../model/task';
+import {SingleTaskItem} from '../model/task';
 
 const useStyles = makeStyles(() => ({
   grid: {

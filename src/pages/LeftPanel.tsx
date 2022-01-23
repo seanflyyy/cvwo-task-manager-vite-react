@@ -1,10 +1,10 @@
-import TagItem from './TagItem';
-import SearchField from './SearchField';
+import TagItem from '../components/leftPanel/TagItem';
+import SearchField from '../components/leftPanel/SearchField';
 
-import * as ContainerClass from '../../misc/constants';
-import {setAllTags} from '../../features/leftPanel/left-panel-slice';
-import {SingleTag} from '../../model/tag';
-import {useAppDispatch, useAppSelector} from '../../app/hooks';
+import * as ContainerClass from '../misc/constants';
+import {setAllTags} from '../features/leftPanel/left-panel-slice';
+import {SingleTag} from '../model/tag';
+import {useAppDispatch, useAppSelector} from '../app/hooks';
 
 import React, {useEffect} from 'react';
 import axios from 'axios';
@@ -12,8 +12,9 @@ import axios from 'axios';
 import Paper from '@mui/material/Paper';
 import List from '@mui/material/List';
 import {makeStyles} from '@mui/styles';
-import CreateOrEditTagButton from './CreateOrEditTagButton';
-import DividerForList from './DividerForList';
+import CreateOrEditTagButton
+  from '../components/leftPanel/CreateOrEditTagButton';
+import DividerForList from '../components/leftPanel/DividerForList';
 
 const useStyles = makeStyles(() => ({
   grid: {

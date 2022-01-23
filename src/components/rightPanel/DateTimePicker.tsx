@@ -1,6 +1,6 @@
-import {useAppDispatch} from '../../../app/hooks';
-import {SingleTaskItem} from '../../../model/task';
-import {updateDate} from '../../../features/selectedTask/selected-task-slice';
+import {useAppDispatch} from '../../app/hooks';
+import {SingleTaskItem} from '../../model/task';
+import {updateDate} from '../../features/selectedTask/selected-task-slice';
 
 import React from 'react';
 

@@ -1,16 +1,16 @@
 import './App.css';
-import StyledPage from './pages/StyledPage';
 
-import React from 'react';
+import React, {useEffect} from 'react';
 
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
 import {createTheme, ThemeProvider} from '@mui/material';
 import {blue, orange} from '@mui/material/colors';
 import axios from 'axios';
 import {useAppDispatch, useAppSelector} from './app/hooks';
 import {handleLogout, handleLogin} from './features/auth/auth-slice';
-import LogIn from './components/auth/Login';
-import SignUp from './components/auth/Signup';
+import LogIn from './components/authentication/Login';
+import SignUp from './components/authentication/Signup';
+import Home from './pages/Home';
 
 const theme = createTheme({
   palette: {
@@ -20,14 +20,14 @@ const theme = createTheme({
 });
 
 const App: React.FC = () => {
-  const [counter, setCounter] = React.useState(0);
   const auth = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+  const [isUserLogin, confirmLogin] = React.useState(false);
 
-  if (counter == 0) {
+  console.log(isUserLogin);
+  useEffect(() => {
     checkLoginStatus();
-    setCounter(1);
-  }
+  }, []);
 
   /**
    * Checks login status by making a call to log in route.
@@ -41,9 +41,13 @@ const App: React.FC = () => {
             dispatch(handleLogin(response.data.user));
           } else if (!response.data.logged_in &&
             auth.loggedInStatus === 'LOGGED_IN') {
-            // dispatch(handleLogout());
+            dispatch(handleLogout());
             localStorage.removeItem('token');
+          } else if (response.data.logged_in &&
+            auth.loggedInStatus === 'LOGGED_IN') {
+            confirmLogin(true);
           }
+          console.log(response.data.logged_in);
         })
         .catch((error) => {
           console.log('check login error', error);
@@ -56,9 +60,10 @@ const App: React.FC = () => {
         <BrowserRouter>
 
           <Routes>
+            <Route path= "*" element={<Navigate to="/login"/>}/>
             <Route path="/login" element={<LogIn/>}/>
             <Route path="/signup" element={<SignUp/>}/>
-            <Route path="/dashboard" element={<StyledPage/>}/>
+            <Route path="/home" element={<Home/>}/>
           </Routes>
         </BrowserRouter>
       </ThemeProvider>

@@ -1,5 +1,5 @@
-import {useAppDispatch} from '../../../app/hooks';
-import {closeRightPanel} from '../../../features/rightPanel/right-panel-slice';
+import {useAppDispatch} from '../../app/hooks';
+import {closeRightPanel} from '../../features/rightPanel/right-panel-slice';
 
 import {IoMdClose} from 'react-icons/Io';
 

@@ -1,11 +1,11 @@
 /* eslint-disable eqeqeq */
-import NewListItem from './ListItem';
-import CreateTaskField from './CreateNewTaskField';
+import NewListItem from '../components/mainPanel/ListItem';
+import CreateTaskField from '../components/mainPanel/CreateNewTaskField';
 
-import * as ContainerClass from '../../misc/constants';
-import {SingleTaskItem} from '../../model/task';
-import {setTaskList} from '../../features/mainPanel/main-panel-slice';
-import {useAppSelector, useAppDispatch} from '../../app/hooks';
+import * as ContainerClass from '../misc/constants';
+import {SingleTaskItem} from '../model/task';
+import {setTaskList} from '../features/mainPanel/main-panel-slice';
+import {useAppSelector, useAppDispatch} from '../app/hooks';
 
 import React, {useEffect} from 'react';
 import axios from 'axios';
@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const StyledList: React.FC = () => {
+const MiddlePanel: React.FC = () => {
   const classes = useStyles();
   const mainPanel = useAppSelector((state) => state.mainPanel);
   const dispatch = useAppDispatch();
@@ -91,4 +91,4 @@ const StyledList: React.FC = () => {
   );
 };
 
-export default StyledList;
+export default MiddlePanel;

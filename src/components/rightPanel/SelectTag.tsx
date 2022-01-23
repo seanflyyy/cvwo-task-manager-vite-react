@@ -1,6 +1,6 @@
-import {SingleTaskItem} from '../../../model/task';
-import {useAppDispatch} from '../../../app/hooks';
-import {updateTag} from '../../../features/selectedTask/selected-task-slice';
+import {SingleTaskItem} from '../../model/task';
+import {useAppDispatch} from '../../app/hooks';
+import {updateTag} from '../../features/selectedTask/selected-task-slice';
 
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';

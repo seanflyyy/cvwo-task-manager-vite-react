@@ -1,4 +1,4 @@
-import * as React from 'react'; ;
+import React, {useState, useEffect} from 'react'; ;
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -7,25 +7,57 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-import {useAppDispatch} from '../../app/hooks';
+import {useAppDispatch, useAppSelector} from '../../app/hooks';
 import {useNavigate} from 'react-router-dom';
 import {
-  handleLogin,
+  handleLogin, handleLogout,
 } from '../../features/auth/auth-slice';
 import axios from 'axios';
 
 const theme = createTheme();
 
 const LogIn: React.FC = () => {
+  const auth = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [logInError, setError] = React.useState('');
-  const [formValues, setFormValues] = React.useState({
+  const [logInError, setError] = useState('');
+  const [formValues, setFormValues] = useState({
     email: '',
     password: '',
     loginErrors: '',
   });
 
+  useEffect(() => {
+    checkLoginStatus();
+  });
+
+
+  /**
+   * Checks login status by making a call to log in route.
+   */
+  function checkLoginStatus() {
+    axios.get('http://localhost:3000/logged_in', {withCredentials: true})
+        .then((response) => {
+          console.log(response.data.logged_in);
+          console.log(auth.loggedInStatus);
+          if (response.data.logged_in &&
+            auth.loggedInStatus === 'NOT_LOGGED_IN') {
+            localStorage.setItem('token', response.data.token);
+            dispatch(handleLogin(response.data.user));
+            navigate('/home');
+          } else if (!response.data.logged_in &&
+            auth.loggedInStatus === 'LOGGED_IN') {
+            dispatch(handleLogout());
+            localStorage.removeItem('token');
+          } else if (response.data.logged_in &&
+             auth.loggedInStatus === 'LOGGED_IN') {
+            navigate('/home');
+          }
+        })
+        .catch((error) => {
+          console.log('check login error', error);
+        });
+  }
   /**
    * Handles form handle submit
    * @param {any} event - Form submit event

@@ -1,8 +1,8 @@
-import {useAppDispatch} from '../../../app/hooks';
-import {closeRightPanel} from '../../../features/rightPanel/right-panel-slice';
-import {setTaskData} from '../../../features/mainPanel/main-panel-slice';
-import {SingleTaskItem} from '../../../model/task';
-import {updateTask} from '../../../misc/database';
+import {useAppDispatch} from '../../app/hooks';
+import {closeRightPanel} from '../../features/rightPanel/right-panel-slice';
+import {setTaskData} from '../../features/mainPanel/main-panel-slice';
+import {SingleTaskItem} from '../../model/task';
+import {updateTask} from '../../misc/database';
 import React from 'react';
 import Button from '@mui/material/Button';
 

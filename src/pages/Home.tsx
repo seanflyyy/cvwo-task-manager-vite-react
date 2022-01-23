@@ -1,6 +1,5 @@
-import StyledList from '../components/mainPanel/StyledList';
-import RightPanel from '../components/rightPanel/RightPanel';
-import LeftPanel from '../components/leftPanel/LeftPanel';
+import RightPanel from './RightPanel';
+import LeftPanel from './LeftPanel';
 import {useAppDispatch, useAppSelector} from '../app/hooks';
 import {handleLogin, handleLogout} from '../features/auth/auth-slice';
 import React, {useEffect} from 'react';
@@ -10,8 +9,9 @@ import {useNavigate} from 'react-router-dom';
 import {Typography, Grid} from '@mui/material';
 
 import axios from 'axios';
+import MiddlePanel from './MiddlePanel';
 
-const StyledPage: React.FC = () => {
+const Home: React.FC = () => {
   const rightPanelOpen = useAppSelector((state) => state.rightPanel);
   const auth = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
@@ -68,12 +68,9 @@ const StyledPage: React.FC = () => {
 
   return (
     <Grid container direction="column">
-      <div>
-        {auth.loggedInStatus}
-      </div>
       <LeftPanel />
       <button onClick={handleLogoutClick}>Logout</button>
-      <Typography variant="h5" component="div" gutterBottom>
+      {/* <Typography variant="h5" component="div" gutterBottom>
         <Typewriter
           options={{
             cursor: '',
@@ -85,13 +82,13 @@ const StyledPage: React.FC = () => {
                 .start();
           }}
         />
-      </Typography>
+      </Typography> */}
       <br />
-      <StyledList />
+      <MiddlePanel />
 
       {rightPanelOpen.rightPanel && <RightPanel />}
     </Grid>
   );
 };
 
-export default StyledPage;
+export default Home;

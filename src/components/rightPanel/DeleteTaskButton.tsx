@@ -1,9 +1,9 @@
-import {useAppDispatch, useAppSelector} from '../../../app/hooks';
-import {SingleTaskItem} from '../../../model/task';
-import * as ContainerClass from '../../../misc/constants';
-import {closeRightPanel} from '../../../features/rightPanel/right-panel-slice';
-import {setTaskList} from '../../../features/mainPanel/main-panel-slice';
-import {deleteTask} from '../../../misc/database';
+import {useAppDispatch, useAppSelector} from '../../app/hooks';
+import {SingleTaskItem} from '../../model/task';
+import * as ContainerClass from '../../misc/constants';
+import {closeRightPanel} from '../../features/rightPanel/right-panel-slice';
+import {setTaskList} from '../../features/mainPanel/main-panel-slice';
+import {deleteTask} from '../../misc/database';
 
 import axios from 'axios';
 import {FiTrash} from 'react-icons/Fi';
