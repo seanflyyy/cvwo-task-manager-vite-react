@@ -4,7 +4,7 @@ import {SingleTaskItem} from '../../model/task';
 
 import {Stack, TextField} from '@mui/material';
 import {makeStyles} from '@mui/styles';
-import CustomCheckbox from '../mainPanel/CustomCheckbox';
+import CustomCheckbox from '../middlePanel/CustomCheckbox';
 import React from 'react';
 
 const useStyles = makeStyles(() => ({

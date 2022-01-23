@@ -3,13 +3,12 @@ import LeftPanel from './LeftPanel';
 import {useAppDispatch, useAppSelector} from '../app/hooks';
 import {handleLogin, handleLogout} from '../features/auth/auth-slice';
 import React, {useEffect} from 'react';
-import Typewriter from 'typewriter-effect';
 import {useNavigate} from 'react-router-dom';
-
-import {Typography, Grid} from '@mui/material';
 
 import axios from 'axios';
 import MiddlePanel from './MiddlePanel';
+import AvatarWidget from '../components/middlePanel/AvatarWidget';
+import {Grid} from '@mui/material';
 
 const Home: React.FC = () => {
   const rightPanelOpen = useAppSelector((state) => state.rightPanel);
@@ -48,42 +47,11 @@ const Home: React.FC = () => {
   }
 
 
-  /**
-   * Handles the logout button click
-   */
-  function handleLogoutClick() {
-    axios.delete('http://localhost:3000/logout', {
-      withCredentials: true,
-      headers: {
-        'Authorization': `token ${localStorage.getItem('token')}`,
-      },
-    })
-        .then((response) => {
-          dispatch(handleLogout());
-          navigate('/login');
-        }).catch((error) => {
-          console.log(error);
-        });
-  }
-
   return (
     <Grid container direction="column">
       <LeftPanel />
-      <button onClick={handleLogoutClick}>Logout</button>
-      {/* <Typography variant="h5" component="div" gutterBottom>
-        <Typewriter
-          options={{
-            cursor: '',
-          }}
-          onInit={(typewriter) => {
-            typewriter
-                .changeDelay(80)
-                .typeString('Welcome to your Task Manager!')
-                .start();
-          }}
-        />
-      </Typography> */}
-      <br />
+
+      <AvatarWidget />
       <MiddlePanel />
 
       {rightPanelOpen.rightPanel && <RightPanel />}

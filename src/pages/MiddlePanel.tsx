@@ -1,6 +1,6 @@
 /* eslint-disable eqeqeq */
-import NewListItem from '../components/mainPanel/ListItem';
-import CreateTaskField from '../components/mainPanel/CreateNewTaskField';
+import NewListItem from '../components/middlePanel/ListItem';
+import CreateTaskField from '../components/middlePanel/CreateNewTaskField';
 
 import * as ContainerClass from '../misc/constants';
 import {SingleTaskItem} from '../model/task';

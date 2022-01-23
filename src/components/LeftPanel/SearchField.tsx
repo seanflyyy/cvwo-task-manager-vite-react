@@ -18,7 +18,7 @@ const Search = styled('div')(({theme}) => ({
   },
   justifyContent: 'flex-start',
   marginLeft: 0,
-  width: '100%',
+  width: '22%%',
   [theme.breakpoints.up('sm')]: {
     width: ContainerClass.centerContainerWidth,
   },
@@ -40,6 +40,7 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
   width: '100%',
   color: 'inherit',
   paddingLeft: '60px',
+  paddingRight: 'px',
   margin: theme.spacing(0.5, 0, 0.5, 0),
 }));
 
