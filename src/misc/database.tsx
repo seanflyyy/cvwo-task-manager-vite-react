@@ -9,7 +9,11 @@ export const getLabel = (tagID: number) => {
 
   (async () => {
     const result = await axios.get(
-        `${ContainerClass.databaseLink}/labels/${tagID}`,
+        `${ContainerClass.databaseLink}/labels/${tagID}`, {
+          headers: {
+            'Authorization': `token ${localStorage.getItem('token')}`,
+          },
+        },
     );
     const tasks = result.data['data'];
     setData(tasks);
@@ -24,7 +28,11 @@ export const getSpecificTask = (id: number) => {
 
   (async () => {
     const result = await axios.get(
-        `${ContainerClass.databaseLink}/tasks/${id}`,
+        `${ContainerClass.databaseLink}/tasks/${id}`, {
+          headers: {
+            'Authorization': `token ${localStorage.getItem('token')}`,
+          },
+        },
     );
     const task = result.data['data'];
     setData(task);
@@ -36,7 +44,11 @@ export const getSpecificTask = (id: number) => {
 export const updateTask = (id: number, taskContent: TaskContent) => {
   (async () => {
     await axios
-        .patch(`${ContainerClass.databaseLink}/tasks/${id}`, taskContent)
+        .patch(`${ContainerClass.databaseLink}/tasks/${id}`, taskContent, {
+          headers: {
+            'Authorization': `token ${localStorage.getItem('token')}`,
+          },
+        })
         .then((resp) => console.log(resp.status));
   })();
 };
@@ -44,15 +56,24 @@ export const updateTask = (id: number, taskContent: TaskContent) => {
 export const updateTag = (id: number, tagContent: CreateTagContent) => {
   (async () => {
     await axios
-        .patch(`${ContainerClass.databaseLink}/labels/${id}`, tagContent)
+        .patch(`${ContainerClass.databaseLink}/labels/${id}`, tagContent, {
+          headers: {
+            'Authorization': `token ${localStorage.getItem('token')}`,
+          },
+        })
         .then((resp) => console.log(resp.status));
   })();
 };
 
 
 export const createTaskOnDatabase = async (taskContent: TaskContent) => {
+  console.log(localStorage.getItem('token'));
   await axios
-      .post(`${ContainerClass.databaseLink}/tasks`, taskContent)
+      .post(`${ContainerClass.databaseLink}/tasks`, taskContent, {
+        headers: {
+          'Authorization': `token ${localStorage.getItem('token')}`,
+        },
+      })
       .then((resp) => {
         console.log(resp.status);
       })
@@ -63,10 +84,55 @@ export const createTaskOnDatabase = async (taskContent: TaskContent) => {
 // eslint-disable-next-line max-len
 export const createTagOnDatabase = async (createTagContent: CreateTagContent) => {
   await axios
-      .post(`${ContainerClass.databaseLink}/labels`, createTagContent)
+      .post(`${ContainerClass.databaseLink}/labels`, createTagContent, {
+        headers: {
+          'Authorization': `token ${localStorage.getItem('token')}`,
+        },
+      })
       .then((resp) => {
         console.log(resp.status);
       })
       .catch((err) => console.log(err));
 };
 
+/**
+   * Deletes tag on the backend.
+   * @param {number} tagID - The ID of the tag to be deleted.
+   */
+export const deleteTag = (tagID: number) => {
+  (async () => {
+    await axios
+        .delete(`${ContainerClass.databaseLink}/labels/${tagID}`, {
+          headers: {
+            'Authorization': `token ${localStorage.getItem('token')}`,
+          },
+        })
+        .then((resp) => {
+          console.log(resp.status);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+  })();
+};
+
+/**
+   * Deletes task on the backend.
+   * @param {number} taskID - The ID of the task to be deleted.
+   */
+export const deleteTask = (taskID: number) => {
+  (async () => {
+    await axios
+        .delete(`${ContainerClass.databaseLink}/tasks/${taskID}`, {
+          headers: {
+            'Authorization': `token ${localStorage.getItem('token')}`,
+          },
+        })
+        .then((resp) => {
+          console.log(resp.status);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+  })();
+};

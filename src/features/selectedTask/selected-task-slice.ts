@@ -10,6 +10,7 @@ interface SelectedTaskState {
     completed: boolean;
     due: string;
     label_id: number;
+    user_id: number,
   };
   id: number;
   // value: number;
@@ -22,6 +23,7 @@ const initialState: SelectedTaskState = {
     completed: false,
     due: 'not specified',
     label_id: 0,
+    user_id: -1,
   },
   id: 0,
 };

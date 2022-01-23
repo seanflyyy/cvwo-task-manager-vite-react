@@ -3,6 +3,7 @@ import {SingleTaskItem} from '../../../model/task';
 import * as ContainerClass from '../../../misc/constants';
 import {closeRightPanel} from '../../../features/rightPanel/right-panel-slice';
 import {setTaskList} from '../../../features/mainPanel/main-panel-slice';
+import {deleteTask} from '../../../misc/database';
 
 import axios from 'axios';
 import {FiTrash} from 'react-icons/Fi';
@@ -25,20 +26,6 @@ const DeleteTaskButton: React.FC<SingleTaskItem> = (props) => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const mainPanel = useAppSelector((state) => state.mainPanel);
-
-  const deleteTask = (taskID: number) => {
-    console.log(taskID);
-    (async () => {
-      await axios
-          .delete(`${ContainerClass.databaseLink}/tasks/${taskID}`)
-          .then((resp) => {
-            console.log(resp.status);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-    })();
-  };
 
   const getTasks = () => {
     // reloads the task list in the main section

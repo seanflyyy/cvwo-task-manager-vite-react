@@ -55,12 +55,16 @@ const LeftPanel: React.FC = () => {
   const classes = useStyles();
   const leftPanel = useAppSelector((state) => state.leftPanel);
   const dispatch = useAppDispatch();
-
+  const auth = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     (async () => {
       await axios
-          .get(`${ContainerClass.databaseLink}/labels`)
+          .get(`${ContainerClass.databaseLink}/labels`, {
+            headers: {
+              'Authorization': `token ${localStorage.getItem('token')}`,
+            },
+          })
           .then((resp) => {
             const tags = resp.data['data'];
             dispatch(setAllTags(tags));
@@ -84,6 +88,7 @@ const LeftPanel: React.FC = () => {
                 title: 'All Tasks',
                 color: 'black',
                 slug: 'all-tasks',
+                user_id: auth.user.id,
               },
               relationships: emptyRelationshipData,
             }}
@@ -96,6 +101,7 @@ const LeftPanel: React.FC = () => {
                 title: 'Incomplete',
                 color: 'black',
                 slug: 'completed',
+                user_id: auth.user.id,
               },
               relationships: emptyRelationshipData,
             }} />
@@ -107,13 +113,14 @@ const LeftPanel: React.FC = () => {
                 title: 'Complete',
                 color: 'black',
                 slug: 'completed',
+                user_id: auth.user.id,
               },
               relationships: emptyRelationshipData,
             }} />
           <DividerForList/>
-          {leftPanel.allTags == null ?
-          <div></div> :
-          leftPanel.allTags.map((tag: SingleTag) => (
+          {/* {leftPanel.allTags == null ?
+          <div></div> : */}
+          {leftPanel.allTags.map((tag: SingleTag) => (
             <TagItem key={tag.id} {...tag} />
           ))}
 

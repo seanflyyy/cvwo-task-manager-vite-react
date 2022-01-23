@@ -52,7 +52,9 @@ const CreateTaskField: React.FC = () => {
   const [task, setFieldState] = useState('');
   const listOfTags = useAppSelector((state) => state.leftPanel.allTags);
   const mainPanel = useAppSelector((state) => state.mainPanel);
+  const auth = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+
 
   /**
    * Handles the change in text in the textfield.
@@ -78,11 +80,14 @@ const CreateTaskField: React.FC = () => {
     // reloads the task list in the main section
     (async () => {
       await axios
-          .get(`${ContainerClass.databaseLink}/labels`)
+          .get(`${ContainerClass.databaseLink}/labels`, {
+            headers: {
+              'Authorization': `token ${localStorage.getItem('token')}`,
+            },
+          })
           .then((resp) => {
             const tasks = resp.data['included'];
             if (tasks.length == mainPanel.data.length) {
-            // recursively call database until the currentList has been updated
               getTasks();
             } else {
               dispatch(setTaskList(tasks));
@@ -126,6 +131,7 @@ const CreateTaskField: React.FC = () => {
         completed: false,
         due: adjustedDay + ContainerClass.timezoneOffset,
         label_id: tagID,
+        user_id: auth.user.id,
       };
 
       setFieldState('');

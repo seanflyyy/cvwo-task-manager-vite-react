@@ -39,15 +39,14 @@ const LogIn: React.FC = () => {
     }, {withCredentials: true},
     ).then((response) => {
       if (response.data.logged_in) {
-        console.log('res from login', response);
-        localStorage.setItem('token', response.data.token);
+        console.log(response);
         setError('');
+        localStorage.setItem('token', response.data.token);
         dispatch(handleLogin(response.data.user));
         navigate('/dashboard');
       } else if (response.data.status === 400) {
         setError('Invalid email or password provided');
       }
-      console.log(response);
     })
         .catch((error) => {
           console.log('login error', error);

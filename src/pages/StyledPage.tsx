@@ -16,12 +16,10 @@ const StyledPage: React.FC = () => {
   const auth = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [counter, setCounter] = React.useState(0);
 
-  if (counter == 0) {
+  useEffect(() => {
     checkLoginStatus();
-    setCounter(1);
-  }
+  }, []);
 
   /**
    * Checks login status by making a call to log in route.
@@ -54,7 +52,12 @@ const StyledPage: React.FC = () => {
    * Handles the logout button click
    */
   function handleLogoutClick() {
-    axios.delete('http://localhost:3000/logout', {withCredentials: true})
+    axios.delete('http://localhost:3000/logout', {
+      withCredentials: true,
+      headers: {
+        'Authorization': `token ${localStorage.getItem('token')}`,
+      },
+    })
         .then((response) => {
           dispatch(handleLogout());
           navigate('/login');
@@ -65,6 +68,9 @@ const StyledPage: React.FC = () => {
 
   return (
     <Grid container direction="column">
+      <div>
+        {auth.loggedInStatus}
+      </div>
       <LeftPanel />
       <button onClick={handleLogoutClick}>Logout</button>
       <Typography variant="h5" component="div" gutterBottom>

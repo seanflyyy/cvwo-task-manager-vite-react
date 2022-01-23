@@ -28,7 +28,11 @@ const StyledList: React.FC = () => {
   useEffect(() => {
     (async () => {
       await axios
-          .get(`${ContainerClass.databaseLink}/labels`)
+          .get(`${ContainerClass.databaseLink}/labels`, {
+            headers: {
+              'Authorization': `token ${localStorage.getItem('token')}`,
+            },
+          })
           .then((resp) => {
             const tasks = resp.data['included'];
             dispatch(setTaskList(tasks));

@@ -24,4 +24,5 @@ export interface TaskForTags {
 export interface CreateTagContent {
   title: string;
   color: string;
+  user_id: number;
 }

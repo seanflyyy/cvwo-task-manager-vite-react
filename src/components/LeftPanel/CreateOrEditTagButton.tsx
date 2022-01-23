@@ -43,7 +43,7 @@ const useStyles = makeStyles(() => ({
   },
   editIcon: {
     color: 'blue',
-  }
+  },
 }));
 
 const style = {
@@ -65,12 +65,14 @@ interface EditOrCreateTagInterface {
 
 
 const CreateOrEditTagButton: React.FC<EditOrCreateTagInterface> = (props) => {
-  const initialColor = props.createOrEdit == 'Create' ? '#ff5722' : props.tagData?.attributes.color;
-  const initialText = props.createOrEdit == 'Create' ? '' : props.tagData?.attributes.title;
-  
+  const initialColor = props.createOrEdit == 'Create' ?
+   '#ff5722' : props.tagData?.attributes.color;
+  const initialText = props.createOrEdit == 'Create' ?
+  '' : props.tagData?.attributes.title;
+
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [openChild, setOpenChild] = React.useState(false);    
+  const [openChild, setOpenChild] = React.useState(false);
   const [selectedColor, setColor] = React.useState(initialColor);
   const [textFieldText, setText] = React.useState(initialText);
 
@@ -81,29 +83,38 @@ const CreateOrEditTagButton: React.FC<EditOrCreateTagInterface> = (props) => {
 
   const dispatch = useAppDispatch();
   const leftPanel = useAppSelector((state) => state.leftPanel);
-
+  const auth = useAppSelector((state) => state.auth);
   /**
    * Gets all tags from database.
    */
   function getAllTags() {
     (async () => {
       await axios
-          .get(`${ContainerClass.databaseLink}/labels`)
+          .get(`${ContainerClass.databaseLink}/labels`, {
+            headers: {
+              'Authorization': `token ${localStorage.getItem('token')}`,
+            },
+          })
           .then((resp) => {
             const tags = resp.data['data'];
-            
+
             if (props.createOrEdit == 'Create') {
-              if (tags.length == leftPanel.allTags.length) {
+              if (tags.length === leftPanel.allTags.length) {
                 getAllTags();
               } else {
                 dispatch(setAllTags(tags));
                 console.log('Created tag');
               }
-            } else {
-              getAllTags();
-              dispatch(setAllTags(tags));
+            } else if (props.createOrEdit == 'Edit') {
+              const tagOnBackend = tags.find((tag: SingleTag ) =>
+                tag.id === props.tagData!.id).attributes;
+              if (selectedColor !== tagOnBackend?.color ||
+                textFieldText !== tagOnBackend?.title ) {
+                getAllTags();
+              } else {
+                dispatch(setAllTags(tags));
+              }
             }
-            
           })
           .catch((err) => {
             console.log(err);
@@ -121,17 +132,23 @@ const CreateOrEditTagButton: React.FC<EditOrCreateTagInterface> = (props) => {
 
   /**
    * Creates tags and updates main panel task list.
-   * @param {React.ChangeEventHandler<HTMLInputElement>} event - Event Handler
+   * @param {string} textFieldText - text of the text field
+   * @param {string} selectedColor - Color that user selects tag
    */
   function manageTag(textFieldText: string, selectedColor: string) {
     textFieldText = textFieldText.trim();
-    props.createOrEdit == 'Create' 
-    ? createTagOnDatabase({title: textFieldText, color: selectedColor})
-    : updateTag(props.tagData!.id, {title: textFieldText, color: selectedColor});
+    props.createOrEdit == 'Create' ?
+    createTagOnDatabase({
+      title: textFieldText,
+      color: selectedColor,
+      user_id: auth.user.id}) :
+    updateTag(props.tagData!.id, {
+      title: textFieldText,
+      color: selectedColor,
+      user_id: auth.user.id});
     getAllTags();
     handleChildClose();
     handleClose();
-    setText('');
   }
 
 
@@ -192,7 +209,8 @@ const CreateOrEditTagButton: React.FC<EditOrCreateTagInterface> = (props) => {
                   onChange={handleTextFieldChange}
                 />
               </div>
-              <Button onClick={() => manageTag(textFieldText!, selectedColor!)} variant="contained">
+              <Button onClick={() =>
+                manageTag(textFieldText!, selectedColor!)} variant="contained">
                 <CheckCircleIcon sx={{fontSize: 30}}/>
               </Button>
             </ListItem>

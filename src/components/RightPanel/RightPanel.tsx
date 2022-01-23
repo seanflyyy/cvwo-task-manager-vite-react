@@ -47,12 +47,14 @@ const useStyles = makeStyles(() => ({
 const RightPanel: React.FC = () => {
   const classes = useStyles();
   const selectedTask: SingleTaskItem = useAppSelector((state) => state.task);
+  const auth = useAppSelector((state) => state.auth);
   const tags = useAppSelector((state) => state.leftPanel.allTags).map(
       (tag: SingleTag) => ({
         title: tag.attributes.title,
         color: tag.attributes.color,
         id: tag.id,
         slug: tag.attributes.slug,
+        user_id: auth.user.id,
       }),
   );
   const initialValueTag = tags.find(
