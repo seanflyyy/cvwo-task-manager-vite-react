@@ -67,7 +67,6 @@ export const updateTag = (id: number, tagContent: CreateTagContent) => {
 
 
 export const createTaskOnDatabase = async (taskContent: TaskContent) => {
-  console.log(localStorage.getItem('token'));
   await axios
       .post(`${ContainerClass.databaseLink}/tasks`, taskContent, {
         headers: {

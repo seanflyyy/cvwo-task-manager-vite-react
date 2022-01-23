@@ -138,7 +138,6 @@ const CreateOrEditTagButton: React.FC<EditOrCreateTagInterface> = (props) => {
                 getAllTags();
               } else {
                 dispatch(setAllTags(tags));
-                console.log('Created tag');
               }
             } else if (props.createOrEdit == 'Edit') {
               const tagOnBackend = tags.find((tag: SingleTag ) =>
@@ -210,7 +209,7 @@ const CreateOrEditTagButton: React.FC<EditOrCreateTagInterface> = (props) => {
         <Fade in={open}>
           <Box sx={style}>
             <Typography variant="h4" sx={{paddingLeft: 3.5, paddingBottom: 1}}>
-              {props.createOrEdit == 'Create' ? 'Create Task' : 'Edit Task'}
+              {props.createOrEdit == 'Create' ? 'Create Tag' : 'Edit Tag'}
             </Typography>
             <ListItem>
               <ListItemIcon>

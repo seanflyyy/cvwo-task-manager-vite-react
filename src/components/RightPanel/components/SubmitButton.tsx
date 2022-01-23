@@ -9,8 +9,6 @@ import Button from '@mui/material/Button';
 const SubmitButton: React.FC<SingleTaskItem> = (props) => {
   const dispatch = useAppDispatch();
 
-  console.log(props.attributes);
-
   return (
     <Button
       variant="contained"

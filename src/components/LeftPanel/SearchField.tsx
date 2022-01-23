@@ -1,3 +1,4 @@
+/* eslint-disable quote-props */
 import * as ContainerClass from '../../misc/constants';
 import {useAppDispatch} from '../../app/hooks';
 import {setFilterKeyword} from '../../features/mainPanel/main-panel-slice';

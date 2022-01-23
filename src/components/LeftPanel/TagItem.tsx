@@ -17,16 +17,14 @@ const TagItem: React.FC<SingleTag> = (props) => {
   const dispatch = useAppDispatch();
   const tag = useAppSelector((state) => state.leftPanel);
   const [deleteButtonState, toggleDeleteButton] = useState(false);
-  const [delayHandler, setDelayHandler] = useState(0);
+  // const [delayHandler, setDelayHandler] = useState(0);
 
   /**
    * Handles the mouse hovering over the tag.
    * @param {any} event - The mouse enter event.
    */
   function handleMouseEnter(event: any) {
-    setDelayHandler(setTimeout(() => {
-      toggleDeleteButton(true);
-    }, 500));
+    toggleDeleteButton(true);
   }
 
   /**
@@ -34,7 +32,6 @@ const TagItem: React.FC<SingleTag> = (props) => {
    */
   function handleMouseLeave() {
     toggleDeleteButton(false);
-    clearTimeout(delayHandler);
   }
 
   /**

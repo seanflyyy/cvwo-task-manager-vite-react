@@ -18,9 +18,6 @@ import DividerForList from './DividerForList';
 const useStyles = makeStyles(() => ({
   grid: {
     height: '100%',
-    // paddingTop: '10vh',
-    // paddingBottom: '10vh',
-    // display: 'block',code
   },
   leftPanel: {
     height: '100%',
@@ -29,10 +26,7 @@ const useStyles = makeStyles(() => ({
     // zIndex: 1,
     top: 0,
     left: 0,
-    // backgroundColor: '#232323',
-    // display: 'flex',
     flexDirection: 'column',
-    // padding: '20px',
   },
   list: {
     maxHeight: '88%',

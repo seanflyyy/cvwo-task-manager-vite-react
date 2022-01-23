@@ -91,7 +91,6 @@ const CreateTaskField: React.FC = () => {
               getTasks();
             } else {
               dispatch(setTaskList(tasks));
-              console.log('Created task');
             }
           })
           .catch((err) => {
@@ -212,11 +211,7 @@ const CreateTaskField: React.FC = () => {
       dueDate: string,
       assignedTag: string,
   ) {
-    console.log(dueDate);
-    console.log(typeof dueDate);
-
     if (taskName == '') {
-      console.log(taskName);
       return 'An invalid task name provided.' +
       'Please ensure that you have provided a valid task name.';
     } else if (dueDate.includes('undefined') || !isNaN(Date.parse(dueDate)) ) {
@@ -229,7 +224,6 @@ const CreateTaskField: React.FC = () => {
           (x) => x.attributes.title.toLowerCase() == assignedTag.toLowerCase(),
       ) == null
     ) {
-      console.log(assignedTag);
       return 'An invalid tag has been provided. Please ensure that the ' +
       'tag you wish to assign this task to has been created.';
     } else {
