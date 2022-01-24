@@ -1,5 +1,4 @@
 import * as React from 'react';
-import * as ContainerClass from '../../misc/constants';
 
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
@@ -63,6 +62,8 @@ const AvatarWidget: React.FC = () => {
 
   return (
     <Box className={classes.avatar} sx={{flexGrow: 0}}>
+      <br />
+      <br />
       <Tooltip title="Open settings">
         <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
           <Avatar/>

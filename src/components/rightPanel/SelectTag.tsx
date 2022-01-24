@@ -7,7 +7,7 @@ import TextField from '@mui/material/TextField';
 import CircleIcon from '@mui/icons-material/Circle';
 import Box from '@mui/material/Box';
 import {ListItemIcon, ListItemText} from '@mui/material';
-import React from 'react';
+import React, {useEffect} from 'react';
 
 
 interface ComboTag {
@@ -28,45 +28,47 @@ const SelectTag: React.FC<ListProps> = (props) => {
   const setTag = (tagID: number) => {
     dispatch(updateTag(tagID));
   };
+  const [inputValue, setInputValue] = React.useState('');
 
   return (
-    <div>
-      <div>
-        {'Tag is'} {props.initialValue?.title}
-      </div>
-      <Autocomplete
-        disablePortal
-        id="controllable-states-demo"
-        onChange={(
-            e: React.SyntheticEvent<Element, Event>,
-            newValue: ComboTag | null,
-        ) => {
-          // eslint-disable-next-line eqeqeq
-          if (newValue != null) {
-            setTag(newValue.id);
-          }
-        }}
-        options={props.listData}
-        isOptionEqualToValue={(option, value) => option.id === value.id}
-        sx={{width: 192}}
-        getOptionLabel={(option) => option.title}
-        renderOption={(props, option) => (
-          <Box
-            component="li"
-            sx={{'& > img': {mr: 2, flexShrink: 0}}}
-            {...props}
-          >
-            {/* <ListItem> */}
-            <ListItemIcon>
-              <CircleIcon sx={{color: option.color}} />
-            </ListItemIcon>
-            <ListItemText primary={option.title} />
-            {/* </ListItem> */}
-          </Box>
-        )}
-        renderInput={(params) => <TextField {...params} label="Assign" />}
-      />
-    </div>
+    <Autocomplete
+      disablePortal
+      id="controllable-states-demo"
+      value={props.initialValue}
+      onChange={(
+          e: React.SyntheticEvent<Element, Event>,
+          newValue: ComboTag | null,
+      ) => {
+        // eslint-disable-next-line eqeqeq
+        if (newValue != null) {
+          setTag(newValue.id);
+        }
+      }}
+      inputValue={inputValue}
+      onInputChange={(event, newInputValue) => {
+        setInputValue(newInputValue);
+      }}
+
+      options={props.listData}
+      isOptionEqualToValue={(option, value) => option.id === value.id}
+      sx={{width: 230}}
+      getOptionLabel={(option) => option.title}
+      renderOption={(props, option) => (
+        <Box
+          component="li"
+          sx={{'& > img': {mr: 2, flexShrink: 0}}}
+          {...props}
+        >
+          {/* <ListItem> */}
+          <ListItemIcon>
+            <CircleIcon sx={{color: option.color}} />
+          </ListItemIcon>
+          <ListItemText primary={option.title} />
+          {/* </ListItem> */}
+        </Box>
+      )}
+      renderInput={(params) => <TextField {...params} label="Tag" />}
+    />
   );
 };
 

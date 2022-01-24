@@ -40,3 +40,11 @@
 button {
   font-size: calc(10px + 2vmin);
 }
+
+.rdtPicker {
+  width: 400px;
+}
+
+.rdtPicker tr {
+  height: 200px;
+}

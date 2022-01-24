@@ -9,18 +9,15 @@ import React from 'react';
 
 const useStyles = makeStyles(() => ({
   textField: {
-    paddingLeft: 15,
-    width: '70%',
+    paddingLeft: 10,
+    width: 190,
     overflowWrap: 'break-word',
-  },
-  text: {
-    fontWeight: 'bolder',
   },
   firstElement: {
     paddingLeft: 0,
     paddingTop: 20,
     paddingRight: 10,
-    paddingBottom: 10,
+    // paddingBottom: 10,
   },
 }));
 
@@ -37,20 +34,15 @@ const TaskNameField: React.FC<SingleTaskItem> = (props) => {
   }
 
   return (
-    <Stack spacing={0.5} direction="row">
+    <Stack spacing={0} direction="row">
       {/* <Checkbox chcked={props.attributes.completed} /> */}
       <CustomCheckbox {...props} />
       <TextField
+        variant="standard"
         className={classes.textField}
-        id="outlined-multiline-flexible"
         multiline
         value={props.attributes.title}
         onChange={handleChange}
-        InputProps={{
-          className: classes.text,
-        }}
-        // onKeyDown={keyPress}
-        variant="standard"
       />
     </Stack>
   );

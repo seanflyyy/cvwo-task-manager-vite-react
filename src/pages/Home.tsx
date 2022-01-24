@@ -50,10 +50,8 @@ const Home: React.FC = () => {
   return (
     <Grid container direction="column">
       <LeftPanel />
-
       <AvatarWidget />
       <MiddlePanel />
-
       {rightPanelOpen.rightPanel && <RightPanel />}
     </Grid>
   );

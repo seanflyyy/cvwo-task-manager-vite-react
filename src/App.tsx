@@ -22,9 +22,7 @@ const theme = createTheme({
 const App: React.FC = () => {
   const auth = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-  const [isUserLogin, confirmLogin] = React.useState(false);
 
-  console.log(isUserLogin);
   useEffect(() => {
     checkLoginStatus();
   }, []);
@@ -45,7 +43,6 @@ const App: React.FC = () => {
             localStorage.removeItem('token');
           } else if (response.data.logged_in &&
             auth.loggedInStatus === 'LOGGED_IN') {
-            confirmLogin(true);
           }
           console.log(response.data.logged_in);
         })
@@ -58,7 +55,6 @@ const App: React.FC = () => {
     <div className="App">
       <ThemeProvider theme={theme}>
         <BrowserRouter>
-
           <Routes>
             <Route path= "*" element={<Navigate to="/login"/>}/>
             <Route path="/login" element={<LogIn/>}/>

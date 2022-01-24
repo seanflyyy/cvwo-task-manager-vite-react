@@ -11,7 +11,7 @@ import {useAppSelector} from '../app/hooks';
 import React from 'react';
 
 import {makeStyles} from '@mui/styles';
-import {Paper, List, ListItem} from '@mui/material';
+import {Paper, List, ListItem, Stack} from '@mui/material';
 import {SingleTaskItem} from '../model/task';
 
 const useStyles = makeStyles(() => ({
@@ -42,6 +42,17 @@ const useStyles = makeStyles(() => ({
     paddingRight: 10,
     paddingBottom: 10,
   },
+  listItem: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  buttonArea: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  positionTrashCan: {
+    paddingLeft: 20,
+  },
 }));
 
 const RightPanel: React.FC = () => {
@@ -68,13 +79,16 @@ const RightPanel: React.FC = () => {
         <ListItem>
           <ClosePanelButton />
         </ListItem>
-        <ListItem>
+        <br/>
+        <ListItem className={classes.listItem} >
           <TaskNameField {...selectedTask} />
         </ListItem>
-        <ListItem>
+        <br/>
+        <ListItem className={classes.listItem}>
           <DateTimeWidget {...selectedTask} />
         </ListItem>
-        <ListItem>
+        <br />
+        <ListItem className={classes.listItem}>
           <SelectTag
             {...{
               initialValue: initialValueTag,
@@ -83,9 +97,15 @@ const RightPanel: React.FC = () => {
             }}
           />
         </ListItem>
-        <SubmitButton {...selectedTask} />
+        <br/>
+        <ListItem className={classes.buttonArea}>
+          <Stack direction="row" spacing={1.5}>
+            <SubmitButton {...selectedTask} />
+            <DeleteTaskButton {...selectedTask} />
+          </Stack>
+
+        </ListItem>
         {/* <ListItem> */}
-        <DeleteTaskButton {...selectedTask} />
       </List>
     </Paper>
   );

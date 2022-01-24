@@ -6,24 +6,14 @@ import {setTaskList} from '../../features/mainPanel/main-panel-slice';
 import {deleteTask} from '../../misc/database';
 
 import axios from 'axios';
-import {FiTrash} from 'react-icons/Fi';
 
-import {makeStyles} from '@mui/styles';
-import {IconButton} from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 import React from 'react';
+import {Button} from '@mui/material';
 
-const useStyles = makeStyles(() => ({
-  deleteTaskButton: {
-    position: 'absolute',
-    right: '5%',
-  },
-  trashCan: {
-    color: 'red',
-  },
-}));
 
 const DeleteTaskButton: React.FC<SingleTaskItem> = (props) => {
-  const classes = useStyles();
   const dispatch = useAppDispatch();
   const mainPanel = useAppSelector((state) => state.mainPanel);
 
@@ -52,16 +42,18 @@ const DeleteTaskButton: React.FC<SingleTaskItem> = (props) => {
     })();
   };
   return (
-    <IconButton
-      className={classes.deleteTaskButton}
+    <Button variant="outlined"
+      color="error"
+      sx={{fontSize: '13px'}}
+      endIcon={<DeleteIcon />}
       onClick={() => {
         dispatch(closeRightPanel());
         deleteTask(props.id);
         getTasks();
       }}
     >
-      <FiTrash className={classes.trashCan} />
-    </IconButton>
+        Delete
+    </Button>
   );
 };
 

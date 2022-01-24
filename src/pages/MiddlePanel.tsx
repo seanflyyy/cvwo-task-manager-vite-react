@@ -44,13 +44,17 @@ const MiddlePanel: React.FC = () => {
   }, []);
 
   return (
-    <Grid container direction="column" alignItems="center">
-      {/* <SearchField onChange={handleChange} /> */}
-      <CreateTaskField />
-      <div />
-      {/* <Paper elevation={3} > */}
-      <List className={classes.list}>
-        {
+    <div>
+      <br/>
+      <br/>
+
+      <Grid container direction="column" alignItems="center">
+        {/* <SearchField onChange={handleChange} /> */}
+        <CreateTaskField />
+        <div />
+        {/* <Paper elevation={3} > */}
+        <List className={classes.list}>
+          {
         mainPanel.data == null ?
         <div></div> :
         mainPanel.data
@@ -83,11 +87,13 @@ const MiddlePanel: React.FC = () => {
             .map((task: SingleTaskItem) => (
               <NewListItem key={task.id} {...task} />
             ))}
-      </List>
-      {/* </Paper> */}
+        </List>
+        {/* </Paper> */}
 
-      <br />
-    </Grid>
+        <br />
+      </Grid>
+    </div>
+
   );
 };
 

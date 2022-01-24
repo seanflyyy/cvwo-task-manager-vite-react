@@ -1,5 +1,4 @@
 /* eslint-disable quote-props */
-import * as ContainerClass from '../../misc/constants';
 import {useAppDispatch} from '../../app/hooks';
 import {setFilterKeyword} from '../../features/mainPanel/main-panel-slice';
 
@@ -16,11 +15,10 @@ const Search = styled('div')(({theme}) => ({
   '&:hover': {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
-  justifyContent: 'flex-start',
-  marginLeft: 0,
-  width: '22%%',
+  justifyContent: '',
+  width: '100%%',
   [theme.breakpoints.up('sm')]: {
-    width: ContainerClass.centerContainerWidth,
+    width: '100%',
   },
 }));
 
@@ -36,11 +34,11 @@ const SearchIconWrapper = styled('div')(({theme}) => ({
 }));
 
 const StyledInputBase = styled(InputBase)(({theme}) => ({
+  position: 'relative',
   boxSizing: 'border-box',
+  paddingLeft: 55,
   width: '100%',
   color: 'inherit',
-  paddingLeft: '60px',
-  paddingRight: 'px',
   margin: theme.spacing(0.5, 0, 0.5, 0),
 }));
 

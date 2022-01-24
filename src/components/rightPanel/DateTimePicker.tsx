@@ -1,3 +1,4 @@
+import '../../App.css';
 import {useAppDispatch} from '../../app/hooks';
 import {SingleTaskItem} from '../../model/task';
 import {updateDate} from '../../features/selectedTask/selected-task-slice';
@@ -9,9 +10,9 @@ import {LocalizationProvider, DateTimePicker} from '@mui/lab';
 import TextField from '@mui/material/TextField';
 import {makeStyles} from '@mui/styles';
 
+
 const useStyles = makeStyles(() => ({
   div: {
-    width: '100%',
   },
 }));
 
@@ -25,7 +26,6 @@ const DateTimeWidget: React.FC<SingleTaskItem> = (props) => {
   };
 
   return (
-    // <Stack spacing={5} direction="row">
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DateTimePicker
         className={classes.div}
@@ -39,7 +39,6 @@ const DateTimeWidget: React.FC<SingleTaskItem> = (props) => {
         }}
       />
     </LocalizationProvider>
-    // </Stack>
   );
 };
 
