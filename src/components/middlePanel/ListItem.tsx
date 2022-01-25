@@ -34,11 +34,8 @@ const NewListItem: React.FC<SingleTaskItem> = (props) => {
    * @return {string}
    */
   function convertDateToString(dateTime: string) {
-    // console.log(props.attributes.title);
-
     const date: Date = new Date(dateTime);
     const dateString = date.toString();
-    // console.log(dateString);
 
     const listDate: Array<string> = dateString.split(' ');
     const [dayOfWeek, month, dayOfMonth, year, time] = listDate;
@@ -83,7 +80,10 @@ const NewListItem: React.FC<SingleTaskItem> = (props) => {
       <ListItem button divider onClick={handleTaskBodyClick}>
         <ListItemText
           primary={props.attributes.title}
-          secondary={convertDateToString(props.attributes.due)}
+          secondary={props.attributes.due ===
+            '1970-01-01T00:00:00.000Z' ?
+          ' ' :
+          convertDateToString(props.attributes.due)}
         />
         <CircleIcon sx={{color: tagData?.attributes.color}} />
       </ListItem>

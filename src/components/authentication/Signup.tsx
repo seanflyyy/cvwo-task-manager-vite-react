@@ -48,13 +48,10 @@ const SignUp: React.FC = () => {
       ).then((response) => {
         if (response.data.status === 'created') {
           localStorage.setItem('token', response.data.token);
-          console.log('registration res', response);
-
           dispatch(handleLogin(response.data.user));
           navigate('/dashboard');
         } else if (response.data.status == 422) {
           setPasswordError(response.data.error.split(': ')[1]);
-          // alert(response.data.error);
         }
       })
           .catch((error) => {

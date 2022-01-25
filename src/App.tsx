@@ -44,7 +44,6 @@ const App: React.FC = () => {
           } else if (response.data.logged_in &&
             auth.loggedInStatus === 'LOGGED_IN') {
           }
-          console.log(response.data.logged_in);
         })
         .catch((error) => {
           console.log('check login error', error);

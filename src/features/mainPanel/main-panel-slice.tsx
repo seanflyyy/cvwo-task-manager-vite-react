@@ -40,10 +40,8 @@ const mainPanelSlice = createSlice({
       state.data[index] = action.payload;
     },
     addToMainPanelTaskList(state, action: PayloadAction<SingleTaskItem>) {
-      console.log(state.data);
       const listOfTags = state.data;
       listOfTags.push(action.payload);
-      console.log(listOfTags);
     },
     setMainPanelCounter(state, action: PayloadAction<number>) {
       state.counter = state.counter + action.payload;

@@ -38,8 +38,6 @@ const LogIn: React.FC = () => {
   function checkLoginStatus() {
     axios.get('http://localhost:3000/logged_in', {withCredentials: true})
         .then((response) => {
-          console.log(response.data.logged_in);
-          console.log(auth.loggedInStatus);
           if (response.data.logged_in &&
             auth.loggedInStatus === 'NOT_LOGGED_IN') {
             localStorage.setItem('token', response.data.token);
@@ -71,7 +69,6 @@ const LogIn: React.FC = () => {
     }, {withCredentials: true},
     ).then((response) => {
       if (response.data.logged_in) {
-        console.log(response);
         setError('');
         localStorage.setItem('token', response.data.token);
         dispatch(handleLogin(response.data.user));

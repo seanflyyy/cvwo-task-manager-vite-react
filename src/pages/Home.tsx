@@ -26,8 +26,6 @@ const Home: React.FC = () => {
   function checkLoginStatus() {
     axios.get('http://localhost:3000/logged_in', {withCredentials: true})
         .then((response) => {
-          console.log(response.data.logged_in);
-          console.log(auth.loggedInStatus);
           if (response.data.logged_in &&
             auth.loggedInStatus === 'NOT_LOGGED_IN') {
             localStorage.setItem('token', response.data.token);

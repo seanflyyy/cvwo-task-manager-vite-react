@@ -89,7 +89,6 @@ const DeleteTagButton: React.FC<DeleteButtonInterface> = (props) => {
               getTasks();
             } else {
               dispatch(setTaskList(tasks));
-              console.log('dispatched');
             }
           })
           .catch((err) => {
@@ -120,7 +119,6 @@ const DeleteTagButton: React.FC<DeleteButtonInterface> = (props) => {
               getTags();
             } else {
               dispatch(setAllTags(tags));
-              console.log('set all tags');
             }
           })
           .catch((err) => {

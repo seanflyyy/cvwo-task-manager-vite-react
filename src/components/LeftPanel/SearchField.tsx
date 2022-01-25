@@ -47,7 +47,6 @@ const SearchField: React.FC = () => {
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // do the rest here
-    console.log(e.nativeEvent.target);
     dispatch(setFilterKeyword(e.target.value));
   };
 

@@ -53,11 +53,9 @@ const CustomCheckbox: React.FC<SingleTaskItem> = (props) => {
             const taskOnFrontend = mainPanel.data.find((task: SingleTaskItem) =>
               task.id === taskID)?.attributes.completed;
             if (taskOnBackend === taskOnFrontend) {
-              console.log('getting tasks again');
               getTasks(taskID);
             } else {
               dispatch(setTaskList(tasks));
-              console.log('dispatched');
             }
           })
           .catch((err) => {
@@ -71,7 +69,6 @@ const CustomCheckbox: React.FC<SingleTaskItem> = (props) => {
       icon={<RadioButtonUncheckedIcon/>}
       checkedIcon={<CheckCircleIcon/>}
       onChange={() => {
-        // setChecked(!checked);
         if (props.id === selectedTask.id) {
           dispatch(updateCompletedState());
         }

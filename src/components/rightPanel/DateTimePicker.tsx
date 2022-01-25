@@ -30,7 +30,8 @@ const DateTimeWidget: React.FC<SingleTaskItem> = (props) => {
       <DateTimePicker
         className={classes.div}
         renderInput={(props) => <TextField {...props} />}
-        value={props.attributes.due}
+        value={props.attributes.due === '1970-01-01T00:00:00.000Z' ?
+      null : props.attributes.due}
         onChange={(newValue) => {
           // eslint-disable-next-line eqeqeq
           if (newValue != null) {

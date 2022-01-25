@@ -104,15 +104,17 @@ const CreateTaskField: React.FC = () => {
    * @param {string} task - Name of the task
    */
   function createTask(task: string) {
-    const [taskName = '', dueDateAndTag = ''] = task
-        .split(' on ')
-        .map((x) => x.trim());
-    const [dueDate = '', assignedTag = ''] = dueDateAndTag
+    const [taskNameAndDate = '', assignedTag = ''] = task
         .split(' assign ')
         .map((x) => x.trim());
+    const [taskName = '', dueDate = ''] = taskNameAndDate
+        .split(' on ')
+        .map((x) => x.trim());
 
-    const adjustedDay =
-      convertDayToDate(dueDate.split(' at ')[0]) + dueDate.split(' at ')[1];
+    const adjustedDay = dueDate === '' ? 'January 1st, 1970 at 00:00:00 UTC':
+    convertDayToDate(dueDate.split(' at ')[0]) + dueDate.split(' at ')[1] +
+    ContainerClass.timezoneOffset;
+
     const validityCheckOutput = isInputValid(
         taskName,
         adjustedDay,
@@ -128,11 +130,10 @@ const CreateTaskField: React.FC = () => {
       const taskContent: TaskContent = {
         title: taskName,
         completed: false,
-        due: adjustedDay + ContainerClass.timezoneOffset,
+        due: adjustedDay,
         label_id: tagID,
         user_id: auth.user.id,
       };
-
       setFieldState('');
       createTaskOnDatabase(taskContent);
       getTasks();
@@ -144,6 +145,8 @@ const CreateTaskField: React.FC = () => {
           'Please also ensure that your input is of the appropriate format.' +
           '\n\n' +
           'Example formats are: ' +
+          '\n' +
+          '-Event assign General' +
           '\n' +
           '-Event on 1 January at 8am assign General' +
           '\n' +
@@ -195,8 +198,8 @@ const CreateTaskField: React.FC = () => {
     );
 
     return typeof dateDesired == 'undefined' ?
-      date :
-      Object.values(dateDesired)[0];
+        date :
+        Object.values(dateDesired)[0];
   }
 
   /**
@@ -214,7 +217,8 @@ const CreateTaskField: React.FC = () => {
     if (taskName == '') {
       return 'An invalid task name provided.' +
       'Please ensure that you have provided a valid task name.';
-    } else if (dueDate.includes('undefined') || !isNaN(Date.parse(dueDate)) ) {
+    } else if (dueDate !== 'undefined' &&
+    (dueDate.includes('undefined') || !isNaN(Date.parse(dueDate)) )) {
       const errorMessage =
         'An invalid date and time has been provided.\r\nPlease ' +
         'ensure that you have provided a valid date and time.';

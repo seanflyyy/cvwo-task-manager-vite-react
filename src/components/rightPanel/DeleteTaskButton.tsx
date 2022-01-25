@@ -33,7 +33,6 @@ const DeleteTaskButton: React.FC<SingleTaskItem> = (props) => {
               getTasks();
             } else {
               dispatch(setTaskList(tasks));
-              console.log('dispatched');
             }
           })
           .catch((err) => {
