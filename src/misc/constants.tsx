@@ -1,6 +1,5 @@
 export const centerContainerWidth = window.innerWidth / 2.5;
-// export const databaseLink = 'https://infinite-thicket-64150.herokuapp.com';
-export const databaseLink = 'http://localhost:3000';
+export const databaseLink = 'https://infinite-thicket-64150.herokuapp.com';
 
 const offsetUTC: number = new Date().getTimezoneOffset() / 60;
 export const timezoneOffset: string =
