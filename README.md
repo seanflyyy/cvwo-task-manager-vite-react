@@ -1,6 +1,3 @@
-## To create new project 
-- npm init @vitejs/app redux-toolkit 
-
 ## To run application locally
 
 `git clone`
