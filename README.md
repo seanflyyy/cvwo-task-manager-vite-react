@@ -1,11 +1,15 @@
 ## To create new project 
 - npm init @vitejs/app redux-toolkit 
 
-## To start application
+## To run application locally
 
-```npm install```
+`git clone`
 
-```npm run dev```
+`npm install`
+
+Change misc/constants.tsx file, database `const` to the url of the rail server
+
+`npm run dev`
 
 
 
