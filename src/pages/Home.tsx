@@ -25,7 +25,7 @@ const Home: React.FC = () => {
    * Checks login status by making a call to log in route.
    */
   function checkLoginStatus() {
-    axios.get(`${ContainerClass.databaseLink}/registrations`,
+    axios.get(`${ContainerClass.databaseLink}/logged_in`,
         {withCredentials: true})
         .then((response) => {
           if (response.data.logged_in &&
