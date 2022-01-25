@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && cp_redirects build/_redirects",
     "preview": "vite preview"
   },
   "dependencies": {
