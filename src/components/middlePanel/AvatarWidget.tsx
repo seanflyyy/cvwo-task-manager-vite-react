@@ -1,5 +1,5 @@
 import * as React from 'react';
-
+import * as ContainerClass from '../../misc/constants';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -46,7 +46,7 @@ const AvatarWidget: React.FC = () => {
    * Handles the logout button click
    */
   function handleLogoutClick() {
-    axios.delete('http://localhost:3000/logout', {
+    axios.delete(`${ContainerClass.databaseLink}/logout`, {
       withCredentials: true,
       headers: {
         'Authorization': `token ${localStorage.getItem('token')}`,

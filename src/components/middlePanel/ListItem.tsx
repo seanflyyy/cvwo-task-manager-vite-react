@@ -82,7 +82,7 @@ const NewListItem: React.FC<SingleTaskItem> = (props) => {
           primary={props.attributes.title}
           secondary={props.attributes.due ===
             '1970-01-01T00:00:00.000Z' ?
-          ' ' :
+          'No Due Date' :
           convertDateToString(props.attributes.due)}
         />
         <CircleIcon sx={{color: tagData?.attributes.color}} />

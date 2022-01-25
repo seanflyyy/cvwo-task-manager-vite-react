@@ -1,4 +1,5 @@
-import React, {useState, useEffect} from 'react'; ;
+import React, {useState} from 'react'; ;
+import * as ContainerClass from '../../misc/constants';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -7,17 +8,17 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
-import {useAppDispatch, useAppSelector} from '../../app/hooks';
+import {useAppDispatch} from '../../app/hooks';
 import {useNavigate} from 'react-router-dom';
 import {
-  handleLogin, handleLogout,
+  handleLogin,
 } from '../../features/auth/auth-slice';
 import axios from 'axios';
 
 const theme = createTheme();
 
 const LogIn: React.FC = () => {
-  const auth = useAppSelector((state) => state.auth);
+  // const auth = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [logInError, setError] = useState('');
@@ -27,41 +28,12 @@ const LogIn: React.FC = () => {
     loginErrors: '',
   });
 
-  useEffect(() => {
-    checkLoginStatus();
-  });
-
-
-  /**
-   * Checks login status by making a call to log in route.
-   */
-  function checkLoginStatus() {
-    axios.get('http://localhost:3000/logged_in', {withCredentials: true})
-        .then((response) => {
-          if (response.data.logged_in &&
-            auth.loggedInStatus === 'NOT_LOGGED_IN') {
-            localStorage.setItem('token', response.data.token);
-            dispatch(handleLogin(response.data.user));
-            navigate('/home');
-          } else if (!response.data.logged_in &&
-            auth.loggedInStatus === 'LOGGED_IN') {
-            dispatch(handleLogout());
-            localStorage.removeItem('token');
-          } else if (response.data.logged_in &&
-             auth.loggedInStatus === 'LOGGED_IN') {
-            navigate('/home');
-          }
-        })
-        .catch((error) => {
-          console.log('check login error', error);
-        });
-  }
   /**
    * Handles form handle submit
    * @param {any} event - Form submit event
    */
   function handleSubmit(event: any) {
-    axios.post('http://localhost:3000/sessions', {
+    axios.post(`${ContainerClass.databaseLink}/sessions`, {
       user: {
         email: formValues.email,
         password: formValues.password,
@@ -72,7 +44,7 @@ const LogIn: React.FC = () => {
         setError('');
         localStorage.setItem('token', response.data.token);
         dispatch(handleLogin(response.data.user));
-        navigate('/dashboard');
+        navigate('/home');
       } else if (response.data.status === 400) {
         setError('Invalid email or password provided');
       }

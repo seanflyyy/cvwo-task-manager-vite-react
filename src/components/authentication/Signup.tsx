@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as ContainerClass from '../../misc/constants';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -38,7 +39,7 @@ const SignUp: React.FC = () => {
     if (isEmailValid()) {
       event.preventDefault();
     } else {
-      axios.post('http://localhost:3000/registrations', {
+      axios.post(`${ContainerClass.databaseLink}/registrations`, {
         user: {
           email: formValues.email,
           password: formValues.password,
@@ -49,7 +50,7 @@ const SignUp: React.FC = () => {
         if (response.data.status === 'created') {
           localStorage.setItem('token', response.data.token);
           dispatch(handleLogin(response.data.user));
-          navigate('/dashboard');
+          navigate('/home');
         } else if (response.data.status == 422) {
           setPasswordError(response.data.error.split(': ')[1]);
         }

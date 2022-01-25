@@ -4,6 +4,7 @@ import {useAppDispatch, useAppSelector} from '../app/hooks';
 import {handleLogin, handleLogout} from '../features/auth/auth-slice';
 import React, {useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
+import * as ContainerClass from '../misc/constants';
 
 import axios from 'axios';
 import MiddlePanel from './MiddlePanel';
@@ -24,7 +25,8 @@ const Home: React.FC = () => {
    * Checks login status by making a call to log in route.
    */
   function checkLoginStatus() {
-    axios.get('http://localhost:3000/logged_in', {withCredentials: true})
+    axios.get(`${ContainerClass.databaseLink}/registrations`,
+        {withCredentials: true})
         .then((response) => {
           if (response.data.logged_in &&
             auth.loggedInStatus === 'NOT_LOGGED_IN') {
