@@ -1,6 +1,6 @@
 import * as React from 'react';
 import axios from 'axios';
-import {CompactPicker} from 'react-color';
+import {CirclePicker} from 'react-color';
 
 import {
   Button,
@@ -41,6 +41,7 @@ const useStyles = makeStyles(() => ({
   },
   colorPicker: {
     paddingLeft: 27,
+    paddingTop: 10,
     paddingBottom: 10,
   },
   textField: {
@@ -166,7 +167,7 @@ const CreateOrEditTagButton: React.FC<EditOrCreateTagInterface> = (props) => {
 
 
   const handleChangeComplete = (color: any) => {
-    // handleChildClose();
+    handleChildClose();
     setColor(color.hex);
   };
 
@@ -234,11 +235,11 @@ const CreateOrEditTagButton: React.FC<EditOrCreateTagInterface> = (props) => {
             </ListItem>
             {openChild &&
             <div className={classes.colorPicker}>
-              <CompactPicker
+              <CirclePicker
                 color={props.createOrEdit == 'Create' ?
                 selectedColor :
                 props.tagData?.attributes.color}
-                onChange={handleChangeComplete}
+                onChangeComplete={handleChangeComplete}
               />
             </div>}
           </Box>

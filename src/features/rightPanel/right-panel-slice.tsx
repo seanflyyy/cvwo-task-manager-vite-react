@@ -31,5 +31,3 @@ const panelSlice = createSlice({
 
 export const {closeRightPanel, openRightPanel} = panelSlice.actions;
 export default panelSlice.reducer;
-
-1;

@@ -5,13 +5,26 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {SingleTag} from '../../model/tag';
 
 interface leftPanelState {
-  selectedTag: number;
+  selectedTag: SingleTag;
   allTags: SingleTag[];
 }
 
 // initial value
 const initialState: leftPanelState = {
-  selectedTag: 0,
+  selectedTag: {
+    id: 0,
+    attributes: {
+      title: 'string',
+      color: '',
+      slug: '',
+      user_id: 0,
+    },
+    relationships: {
+      tasks: {
+        data: [],
+      },
+    },
+  },
   allTags: [],
 };
 
@@ -20,7 +33,7 @@ const leftPanelSlice = createSlice({
   name: 'taskList',
   initialState,
   reducers: {
-    setSelectedTag(state, action: PayloadAction<number>) {
+    setSelectedTag(state, action: PayloadAction<SingleTag>) {
       state.selectedTag = action.payload;
     },
     setAllTags(state, action: PayloadAction<SingleTag[]>) {

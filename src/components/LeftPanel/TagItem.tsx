@@ -15,7 +15,7 @@ import CreateOrEditTagButton from './CreateOrEditTagButton';
 
 const TagItem: React.FC<SingleTag> = (props) => {
   const dispatch = useAppDispatch();
-  const tag = useAppSelector((state) => state.leftPanel);
+  const leftPanel = useAppSelector((state) => state.leftPanel);
   const [deleteButtonState, toggleDeleteButton] = useState(false);
   // const [delayHandler, setDelayHandler] = useState(0);
 
@@ -23,7 +23,7 @@ const TagItem: React.FC<SingleTag> = (props) => {
    * Handles the mouse hovering over the tag.
    * @param {any} event - The mouse enter event.
    */
-  function handleMouseEnter(event: any) {
+  function handleMouseEnter() {
     toggleDeleteButton(true);
   }
 
@@ -39,13 +39,13 @@ const TagItem: React.FC<SingleTag> = (props) => {
    */
   function handleClick() {
     dispatch(setFilter(props.id));
-    dispatch(setSelectedTag(props.id));
+    dispatch(setSelectedTag(props));
   }
 
   return (
     <ListItemButton
       // eslint-disable-next-line eqeqeq
-      selected={tag.selectedTag == props.id}
+      selected={leftPanel.selectedTag.id == props.id}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
