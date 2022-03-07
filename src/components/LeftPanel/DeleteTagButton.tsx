@@ -2,8 +2,9 @@
 import {useAppDispatch, useAppSelector} from '../../app/hooks';
 import * as ContainerClass from '../../misc/constants';
 import {setTaskList} from '../../features/mainPanel/main-panel-slice';
-import {SingleTag, TaskForTags} from '../../model/tag';
+import {SingleTag} from '../../model/tag';
 import {deleteTag, deleteTask} from '../../misc/database';
+import {SingleTaskItem} from '../../model/task';
 
 import axios from 'axios';
 import {TiDelete} from 'react-icons/Ti';
@@ -21,8 +22,6 @@ import {setAllTags} from '../../features/leftPanel/left-panel-slice';
 
 const useStyles = makeStyles(() => ({
   deleteTagButton: {
-    // position: 'absolute',
-    // right: '5%',
     padding: 0,
   },
   trashCan: {
@@ -43,7 +42,6 @@ interface DeleteButtonInterface {
 const DeleteTagButton: React.FC<DeleteButtonInterface> = (props) => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
-  const mainPanel = useAppSelector((state) => state.mainPanel);
   const leftPanel = useAppSelector((state) => state.leftPanel);
 
   const [open, setOpen] = useState(false);
@@ -61,15 +59,33 @@ const DeleteTagButton: React.FC<DeleteButtonInterface> = (props) => {
    * Deletes tasks under tag and the tag and updates the task list and tag list.
    */
   const handleDeleteTaskEvent = () => {
-    props.tagData.relationships.tasks.data.forEach((element: TaskForTags) => {
-      deleteTask(+element.id);
-    });
+    deleteAllTasks();
     getTasks();
-    deleteTag(props.tagData.id);
     closeModal();
     getTags();
   };
 
+  const deleteAllTasks = () => {
+    (async () => {
+      await axios
+          .get(`${ContainerClass.databaseLink}/labels`, {
+            headers: {
+              'Authorization': `token ${localStorage.getItem('token')}`,
+            },
+          })
+          .then((resp) => {
+            const filteredTasks = resp.data['included']
+                .filter((element: SingleTaskItem) =>
+                  element.attributes.label_id == props.tagData.id);
+            filteredTasks.forEach((element: SingleTaskItem) => {
+              deleteTask(+element.id);
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+    })();
+  };
   /**
    * Retrieves all the tasks from the backend and recursively calls itself
    * until the data on the mainPanel.data has been updated with the new data.
@@ -85,9 +101,13 @@ const DeleteTagButton: React.FC<DeleteButtonInterface> = (props) => {
           })
           .then((resp) => {
             const tasks = resp.data['included'];
-            if (tasks.length > 0 && tasks.length === mainPanel.data.length) {
+            const filteredTasks = tasks
+                .filter((element: SingleTaskItem) =>
+                  element.attributes.label_id == props.tagData.id);
+            if (filteredTasks.length > 0) {
               getTasks();
             } else {
+              deleteTag(props.tagData.id);
               dispatch(setTaskList(tasks));
             }
           })
@@ -114,8 +134,6 @@ const DeleteTagButton: React.FC<DeleteButtonInterface> = (props) => {
           .then((resp) => {
             const tags = resp.data['data'];
             if (tags.length === leftPanel.allTags.length) {
-              // recursively call database until the currentList
-              // has been updated
               getTags();
             } else {
               dispatch(setAllTags(tags));
