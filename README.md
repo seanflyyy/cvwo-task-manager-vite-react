@@ -1,3 +1,7 @@
+## Future Enhancements 
+- Auto tagging
+- Use comma instead of on or assign to do string splitting, more elegant. Utilize some artificial intelligence package to do context translation
+- Multi tagging functionality
 ## To run application locally
 
 `git clone`
