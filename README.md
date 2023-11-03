@@ -1,4 +1,7 @@
-## Future Enhancements 
+# Task Manager
+Task Manager ReactJS, Vite powered Web application which allows for creation, editing and deletion of tasks, in addition to tagging
+
+# Future Enhancements 
 - Auto tagging
 - Use comma instead of on or assign to do string splitting, more elegant. Utilize some artificial intelligence package to do context translation
 - Multi tagging functionality
